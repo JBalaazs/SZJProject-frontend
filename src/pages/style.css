@@ -1,0 +1,85 @@
+/*Registration / Login styles:*/
+
+.title{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.outsideDIV{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.insideDIV{
+    border: solid 1px black;
+    padding: 90px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputStyle {
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    width: 275px;
+}
+
+/*Phone view:*/
+
+@media (max-width: 768px) {
+    .insideDIV{
+        padding: 75px;
+    }
+}
+
+@media (max-width: 425px) {
+    .insideDIV{
+        padding: 40px;
+    }
+}
+
+@media (max-width: 330px) {
+    .insideDIV{
+        padding: 20px;
+    }
+}
+
+/*Menu:*/
+
+.menuButton{
+    width: 200px;
+    margin: 10px;
+}
+
+.backButton{
+    position: absolute;
+    left: 20px;
+    top: 30px;
+    width: 100px;
+}
+
+/*Login texts:*/
+
+.successText{
+    color: green;
+    text-align: center;
+}
+
+.errorText{
+    color: red;
+    text-align: center;
+}
+
+/*Registration texts:*/
+
+.conditionDIV{
+    text-align: center;
+    margin-top: 25px;
+}
