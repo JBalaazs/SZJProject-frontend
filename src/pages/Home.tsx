@@ -1,12 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import './style.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigateService } from '../service/navigateService';
 
 export default function Home () {
 
-    /*Navigate:*/
+    /*Service:*/
 
-    const navigate = useNavigate();
+    const navigateService = useNavigateService();
 
     /*Return:*/
 
@@ -15,8 +15,8 @@ export default function Home () {
         
             <div className='insideDIV insideDIV_PLUS'>
 
-                <button className='btn btn-primary menuButton' onClick={() => navigate('/login')}>Login</button>
-                <button className='btn btn-primary menuButton' onClick={() => navigate('/registration')}>Registration</button>
+                <button className='btn btn-primary menuButton' onClick={() => navigateService.navigate('/login')}>Login</button>
+                <button className='btn btn-primary menuButton' onClick={() => navigateService.navigate('/registration')}>Registration</button>
 
             </div>
         

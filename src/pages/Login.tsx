@@ -2,13 +2,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './style.css';
 import { useState } from 'react';
 import { useUserService } from '../service/userService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigateService } from '../service/navigateService';
 
 export default function Login () {
-
-    /*Navigate:*/
-
-    const navigate = useNavigate();
 
     /*useState:*/
 
@@ -19,6 +15,7 @@ export default function Login () {
     /*Service:*/
 
     const userData = useUserService();
+    const navigateService = useNavigateService();
 
 
     /*onChange:*/
@@ -67,7 +64,7 @@ export default function Login () {
         <>
             <div className='outsideDIV'>
                 
-                <button className="btn btn-primary backButton" onClick={() => navigate('/')}>Back</button>
+                <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
 
                 <div className='insideDIV'>
         
