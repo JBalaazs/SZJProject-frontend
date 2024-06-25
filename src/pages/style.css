@@ -123,3 +123,21 @@
     align-self: center;
     margin-bottom: 10px;
 }
+
+/*BuyIt:*/
+
+.buyItBox{
+    height: 600px;
+    margin: 100px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.buyItInside{
+    border: solid 1px blue;
+    height: 600px;
+    width: 800px;
+}
