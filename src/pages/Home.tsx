@@ -17,6 +17,7 @@ export default function Home () {
 
                 <button className='btn btn-primary menuButton' onClick={() => navigateService.navigate('/login')}>Login</button>
                 <button className='btn btn-primary menuButton' onClick={() => navigateService.navigate('/registration')}>Registration</button>
+                <button className='btn btn-primary menuButton' onClick={() => navigateService.navigate('/webshop')}>Webshop</button>
 
             </div>
         
