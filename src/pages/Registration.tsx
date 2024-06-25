@@ -1,13 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import './style.css';
 import { useState } from "react";
-import { eventNames } from "process";
+import { useNavigateService } from "../service/navigateService";
 
 export default function Registration () {
-
-    /*Navigate:*/
-
-    const navigate = useNavigate();
 
     /*useState:*/
 
@@ -15,6 +10,10 @@ export default function Registration () {
     const [password, setPassword] = useState('');
     const [atLeast5Characters, setAtLeast5Characters] = useState(false);
     const [atLeast1UppercaseLetter, setAtLeast1UppercaseLetter] = useState(false);
+
+    /*Service:*/
+
+    const navigateService = useNavigateService();
 
     /*onChange:*/
 
@@ -73,7 +72,7 @@ export default function Registration () {
 
             <div className='outsideDIV'>
             
-                <button className="btn btn-primary backButton" onClick={() => navigate('/')}>Back</button>
+                <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
 
                 <div className='insideDIV'>
 
