@@ -2,6 +2,7 @@
 
 .title{
     text-align: center;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -82,4 +83,43 @@
 .conditionDIV{
     text-align: center;
     margin-top: 25px;
+}
+
+/*Webshop:*/
+
+.productsOutside{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.productsInside{
+    height: 350px;
+    width: 250px;
+    margin: 50px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    border: solid 1px black;
+    box-shadow: 1px 2px 3px black;
+}
+
+.productTitle{
+    font-weight: bold;
+    text-align: center;
+    font-size: 22.5px;
+}
+
+.productDescription{
+    text-align: center;
+}
+
+.buyProduct{
+    width: 100px;
+    align-self: center;
+    margin-bottom: 10px;
 }
