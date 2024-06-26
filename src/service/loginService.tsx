@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useUserService } from '../service/userService';
 
 export function useLoginService () {
 
@@ -8,10 +7,7 @@ export function useLoginService () {
     const [usernameText, setUsernameText] = useState('');
     const [passwordText, setPasswordText] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
-    /*Service:*/
-
-    const userData = useUserService();
+    const [token, setToken] = useState('');
 
     /*onChange:*/
 
@@ -29,37 +25,54 @@ export function useLoginService () {
 
     /*Function:*/
 
-    const handleLogin = (usernameText: string, passwordText: string) => {
-
-        if(usernameText && passwordText)
+    async function loginUser(username: string, password: string) {
+        
+        if(username && password)
         {
 
-            let trueOrFalse = userData.login(usernameText, passwordText);
+            try{
 
-            if(trueOrFalse)
-            {
+                const response = await fetch('http://localhost:8081/api/user/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({username, password})
+                });
+    
+                if(!response.ok)
+                {
+                    throw new Error('Failed to login: ' + response.statusText);
+                }
+    
+                const data = await response.json();
+                setToken(data);
+                console.log('Login successful!', data);
+
                 setErrorMessage('Successful login.');
+    
             }
-            else
-            {
+            catch(error){
                 setErrorMessage('Incorrect username or password.');
             }
 
         }
         else
         {
+
             setErrorMessage('Empty input(s).');
+
         }
 
     }
 
     return{
-        handleLogin, 
         errorMessage,
         onChange_Username,
         onChange_Password,
         usernameText,
-        passwordText
+        passwordText,
+        loginUser
     }
 
 }
