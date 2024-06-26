@@ -26,7 +26,9 @@ export default function Login () {
                     <h2 className='title'>Login</h2>
                     <input type='text' placeholder='Username' className='inputStyle' onChange={loginService.onChange_Username} />
                     <input type='password' placeholder='Password' className='inputStyle' onChange={loginService.onChange_Password} />
-                    <button className='btn btn-primary menuButton' onClick={() => loginService.handleLogin(loginService.usernameText, loginService.passwordText)}>Login</button>
+                    <button className='btn btn-primary menuButton' onClick={async () => {
+                        await loginService.loginUser(loginService.usernameText, loginService.passwordText)
+                    }}>Login</button>
 
                     {
                         loginService.errorMessage.includes('Successful') ? (
