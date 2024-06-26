@@ -1,4 +1,4 @@
-import './style.css';
+import '../design/style.css';
 import { useNavigateService } from '../service/navigateService';
 
 export default function Webshop () {
@@ -12,7 +12,7 @@ export default function Webshop () {
             
             <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
 
-            <h1 className='title'>Shop Now and Experience the Difference!</h1>
+            <h1 className='title_Webshop'>Shop Now and Experience the Difference!</h1>
 
             <div className='productsOutside'>
 
