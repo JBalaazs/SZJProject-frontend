@@ -8,6 +8,7 @@ export function useRegistrationService () {
     const [password, setPassword] = useState('');
     const [atLeast5Characters, setAtLeast5Characters] = useState(false);
     const [atLeast1UppercaseLetter, setAtLeast1UppercaseLetter] = useState(false);
+    const [registerSuccessful, setRegisterSuccessful] = useState('');
 
     /*onChange:*/
 
@@ -31,6 +32,7 @@ export function useRegistrationService () {
         {
 
             setAtLeast5Characters(true);
+            setPassword(passwordTest);
 
         }
 
@@ -44,15 +46,27 @@ export function useRegistrationService () {
         {
 
             setAtLeast1UppercaseLetter(true);
-
-        }
-
-        if(atLeast1UppercaseLetter && atLeast5Characters)
-        {
-
             setPassword(passwordTest);
 
         }
+
+    }
+
+    /*Function:*/
+
+    const registration = () => {
+
+        fetch('http://localhost:8081/api/user/auth/register', {
+            
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, password})
+
+        })
+
+        setRegisterSuccessful('Successful registration. Click here!');
 
     }
 
@@ -60,7 +74,9 @@ export function useRegistrationService () {
         onChange_username,
         onChange_password,
         atLeast1UppercaseLetter,
-        atLeast5Characters
+        atLeast5Characters,
+        registration,
+        registerSuccessful
     }
 
 }

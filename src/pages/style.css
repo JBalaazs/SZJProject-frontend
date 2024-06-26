@@ -85,6 +85,21 @@
     margin-top: 25px;
 }
 
+.succesfullRegistration{
+    color: green;
+    font-weight: bold;
+}
+
+.succesfullRegistration:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.beforeRegistration{
+    color: red;
+    font-weight: bold;
+}
+
 /*Webshop:*/
 
 .productsOutside{
