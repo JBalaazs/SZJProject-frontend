@@ -1,4 +1,4 @@
-import './style.css';
+import '../design/style.css';
 import { useNavigateService } from '../service/navigateService';
 import { useRegistrationService } from '../service/registrationService';
 
@@ -19,14 +19,14 @@ export default function Registration () {
             
                 <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
 
-                <div className='insideDIV'>
+                <div className='insideDIV_Login'>
 
-                    <h2 className='title'>Registration</h2>
+                    <h2 className='title_Login'>Registration</h2>
 
                     <input type="text" className="inputStyle" placeholder="Username" onChange={registrationService.onChange_username}/>
                     <input type="password" className="inputStyle" placeholder="Password" onChange={registrationService.onChange_password}/>
 
-                    <button className='btn btn-primary menuButton' disabled={!registrationService.atLeast5Characters || !registrationService.atLeast1UppercaseLetter} onClick={registrationService.registration}>Registration</button>
+                    <button className='btn btn-primary homeButton' disabled={!registrationService.atLeast5Characters || !registrationService.atLeast1UppercaseLetter} onClick={registrationService.registration}>Registration</button>
 
                     <div className="conditionDIV">
                         <p>{registrationService.atLeast5Characters ? '✔' : '✘'} Password must be at least 5 characters long.</p>

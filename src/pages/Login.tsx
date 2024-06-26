@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import './style.css';
+import '../design/style.css';
 import { useLoginService } from '../service/loginService';
 import { useNavigateService } from '../service/navigateService';
 
@@ -16,17 +16,17 @@ export default function Login () {
     /*Return:*/
 
     return(
-        <>
+        <div className='LoginDesign'>
             <div className='outsideDIV'>
                 
                 <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
 
-                <div className='insideDIV'>
+                <div className='insideDIV_Login'>
         
-                    <h2 className='title'>Login</h2>
+                    <h2 className='title_Login'>Login</h2>
                     <input type='text' placeholder='Username' className='inputStyle' onChange={loginService.onChange_Username} />
                     <input type='password' placeholder='Password' className='inputStyle' onChange={loginService.onChange_Password} />
-                    <button className='btn btn-primary menuButton' onClick={async () => {
+                    <button className='btn btn-primary loginButton' onClick={async () => {
                         await loginService.loginUser(loginService.usernameText, loginService.passwordText)
                     }}>Login</button>
 
@@ -41,7 +41,7 @@ export default function Login () {
                 </div>
 
             </div>
-        </>
+        </div>
     );
 
 }
