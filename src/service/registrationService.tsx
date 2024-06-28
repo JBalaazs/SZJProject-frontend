@@ -15,9 +15,13 @@ export function useRegistrationService () {
 
     const onChange_username : React.ChangeEventHandler<HTMLInputElement> = (event) => {
 
-        if(event.target.value.length > 0)
+        let usernameTest = event.target.value;
+
+        const validCharacters = /^[a-zA-Z][A-Za-z0-9]+$/.test(usernameTest);
+
+        if( validCharacters )
         {
-            setUsername(event.target.value);
+            setUsername(usernameTest);
             setCorrectUsername(true);
         }
         else
@@ -30,7 +34,6 @@ export function useRegistrationService () {
     const onChange_password : React.ChangeEventHandler<HTMLInputElement> = (event) => {
 
         let passwordTest = event.target.value;
-
         if(passwordTest.length < 5)
         {
 
