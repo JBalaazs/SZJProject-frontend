@@ -13,20 +13,20 @@ export default function Registration () {
 
     return(
 
-
+        <div className='RegistrationDesign'>
 
             <div className='outsideDIV'>
             
                 <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
 
-                <div className='insideDIV_Login'>
+                <div className='insideDIV_Registration'>
 
-                    <h2 className='title_Login'>Registration</h2>
+                    <h2 className='title_Registration'>Registration</h2>
 
-                    <input type="text" className="inputStyle" placeholder="Username" onChange={registrationService.onChange_username}/>
-                    <input type="password" className="inputStyle" placeholder="Password" onChange={registrationService.onChange_password}/>
+                    <input type="text" className="inputStyle_Registration" placeholder="Username" onChange={registrationService.onChange_username}/>
+                    <input type="password" className="inputStyle_Registration" placeholder="Password" onChange={registrationService.onChange_password}/>
 
-                    <button className='btn btn-primary homeButton' disabled={!registrationService.atLeast5Characters || !registrationService.atLeast1UppercaseLetter} onClick={registrationService.registration}>Registration</button>
+                    <button className='btn btn-light registrationButton' disabled={(!registrationService.atLeast5Characters || !registrationService.atLeast1UppercaseLetter) || !registrationService.correctUsername} onClick={registrationService.registration}>Registration</button>
 
                     <div className="conditionDIV">
                         <p>{registrationService.atLeast5Characters ? '✔' : '✘'} Password must be at least 5 characters long.</p>
@@ -43,7 +43,8 @@ export default function Registration () {
                 </div>
             
             </div>
-
+        
+        </div>
 
     )
 

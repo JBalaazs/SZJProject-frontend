@@ -45,7 +45,7 @@ html, body{
 .HomeDesign{
     width: 100wh;
     height: 100wh;
-    background-image: url('./pics/menu.png');
+    background-image: url('./pics/home.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -86,7 +86,7 @@ html, body{
     box-shadow: 5px 5px 5px 8px black;
 }
 
-.inputStyle {
+.inputStyle_Login {
     padding: 12px;
     margin-bottom: 15px;
     font-size: 16px;
@@ -103,9 +103,9 @@ html, body{
     border-top: solid 1px transparent;
 }
 
-.inputStyle:focus {
-    border-color: blue; /* Kiemelt szín (kék) */
-    box-shadow: 1px 1px 1px 0px blue;
+.inputStyle_Login:focus {
+    border-color: black; /* Kiemelt szín (kék) */
+    box-shadow: 1px 1px 1px 0px black;
 }
 
 .loginButton{
@@ -132,6 +132,7 @@ html, body{
 .conditionDIV{
     text-align: center;
     margin-top: 25px;
+    color: white;
 }
 
 .succesfullRegistration{
@@ -142,6 +143,71 @@ html, body{
 .beforeRegistration{
     color: red;
     font-weight: bold;
+}
+
+.RegistrationDesign{
+    width: 100wh;
+    height: 100wh;
+    background-image: url('pics/registration.webp');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.insideDIV_Registration{
+    border: solid 1px white;
+    padding: 90px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-shadow: 5px 5px 5px 8px white;
+}
+
+.title_Registration{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.inputStyle_Registration {
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-radius: 25px;
+    width: 275px;
+    outline: none;
+    transition: border-color 0.5s, box-shadow 0.5s;
+    font-weight: 500;
+    background-color: transparent;
+    border-bottom: solid 3px white;
+    border-left: solid 1px transparent;
+    border-right: solid 1px transparent;
+    border-top: solid 1px transparent;
+}
+
+.inputStyle_Registration:focus {
+    border-color: white; /* Kiemelt szín (kék) */
+    box-shadow: 1px 1px 1px 0px white;
+}
+
+.inputStyle_Registration::placeholder{
+    color: white;
+}
+
+.registrationButton{
+    width: 200px;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.registrationButton:hover{
+    background-color: gray;
+    border: solid 1px gray;
+    color: white;
 }
 
 /*Webshop:*/
@@ -215,12 +281,34 @@ html, body{
     .insideDIV_Home{
         padding: 75px;
     }
-    .menuButton{
-        width: 175px;;
+    .homeButton{
+        width: 175px;
     }
     .insideDIV_Login{
         padding: 75px;
     }
+    .insideDIV_Registration{
+        padding: 50px;
+    }
+}
+
+@media (max-width: 563px) {
+    .insideDIV_Registration{
+        padding: 30px;
+    }
+    .conditionDIV{
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 494px) {
+    .registrationButton{
+        width: 150px;
+    }
+    .inputStyle_Registration{
+        width: 250px;
+    }
+
 }
 
 @media (max-width: 487px) {
@@ -233,7 +321,7 @@ html, body{
     .insideDIV_Login{
         padding: 40px;
     }
-    .inputStyle{
+    .inputStyle_Login{
         width: 200px;
         padding: 8px;
         font-size: 14px;
@@ -254,8 +342,8 @@ html, body{
     .insideDIV_Home{
         padding: 40px;
     }
-    .menuButton{
-        width: 150px;;
+    .homeButton{
+        width: 150px;
     }
 }
 
@@ -263,7 +351,7 @@ html, body{
     .insideDIV_Home{
         padding: 20px;
     }
-    .menuButton{
+    .homeButton{
         width: 125px;
     }
 }
