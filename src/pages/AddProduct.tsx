@@ -34,6 +34,16 @@ export default function AddProduct () {
 
                 </div>
 
+                {
+                    addProductService.products?.map(x => {
+                        return(
+                            <>
+                                <h1>{x.seller}</h1>
+                            </>
+                        );
+                    })
+                }
+
             </div>
 
         </>

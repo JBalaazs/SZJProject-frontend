@@ -1,4 +1,24 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
+
+enum EnumType {
+    New = 'New',
+    Used = 'Used',
+    Refurbished = "Refurbished"
+}
+
+interface productSturct{
+
+    product_id: number,
+    available: boolean,
+    creation_date: Date,
+    description: string,
+    price: number,
+    product_condition: EnumType,
+    product_name: string,
+    seller: string,
+    stock: number
+
+}
 
 export function useAddProductService () {
 
@@ -10,6 +30,7 @@ export function useAddProductService () {
     const [stock, setStock] = useState('');
     const [productCondition, setProductCondition] = useState('New');
     const [characterCount, setCharacterCount] = useState(0);
+    const [products, setProducts] = useState<productSturct[] | null>(null);
 
     /*onChange:*/
 
@@ -51,6 +72,16 @@ export function useAddProductService () {
 
     }
 
+    /*useEffect:*/
+
+    useEffect(() => {
+
+        fetch('http://localhost:8081/api/products')
+            .then(res => res.json())
+            .then(data => setProducts(data))
+
+    }, [])
+
     /*Function:*/
 
 
@@ -63,7 +94,8 @@ export function useAddProductService () {
         onChange_Price,
         onChange_Stock,
         onChange_ProductCondition,
-        characterCount
+        characterCount,
+        products
     }
 
 }
