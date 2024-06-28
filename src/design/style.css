@@ -42,6 +42,14 @@ html, body{
     width: 100px;
 }
 
+.addProductButton{
+    position: absolute;
+    left: 120px;
+    top: 30px;
+    width: 120px;
+    margin-left: 10px;
+}
+
 .HomeDesign{
     width: 100wh;
     height: 100wh;
@@ -273,6 +281,35 @@ html, body{
     border: solid 1px blue;
     height: 600px;
     width: 800px;
+}
+
+/*AddProduct*/
+
+.insideDIV_Login{
+    border: solid 1px black;
+    padding: 90px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-shadow: 5px 5px 5px 8px black;
+}
+
+.inputStyle_AddProduct {
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #080808;
+    width: 275px;
+    outline: none;
+    transition: border-color 0.5s, box-shadow 0.5s;
+    font-weight: 500;
+    background-color: transparent;
+    border-bottom: solid 3px black;
+    border-left: solid 1px transparent;
+    border-right: solid 1px transparent;
+    border-top: solid 1px transparent;
 }
 
 /*Phone view:*/
