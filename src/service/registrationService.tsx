@@ -8,13 +8,22 @@ export function useRegistrationService () {
     const [password, setPassword] = useState('');
     const [atLeast5Characters, setAtLeast5Characters] = useState(false);
     const [atLeast1UppercaseLetter, setAtLeast1UppercaseLetter] = useState(false);
+    const [correctUsername, setCorrectUsername] = useState(false);
     const [registerSuccessful, setRegisterSuccessful] = useState('');
 
     /*onChange:*/
 
     const onChange_username : React.ChangeEventHandler<HTMLInputElement> = (event) => {
 
-        setUsername(event.target.value);
+        if(event.target.value.length > 0)
+        {
+            setUsername(event.target.value);
+            setCorrectUsername(true);
+        }
+        else
+        {
+            setCorrectUsername(false);
+        }
 
     }
 
@@ -76,7 +85,8 @@ export function useRegistrationService () {
         atLeast1UppercaseLetter,
         atLeast5Characters,
         registration,
-        registerSuccessful
+        registerSuccessful,
+        correctUsername
     }
 
 }
