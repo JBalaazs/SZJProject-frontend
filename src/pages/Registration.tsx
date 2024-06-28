@@ -31,7 +31,7 @@ export default function Registration () {
                     <div className="conditionDIV">
                         <p>{registrationService.atLeast5Characters ? '✔' : '✘'} Password must be at least 5 characters long.</p>
                         <p>{registrationService.atLeast1UppercaseLetter ? '✔' : '✘'} Password must be contain at least one uppercase letter.</p>
-                        <p>{registrationService.atLeast5Characters && registrationService.atLeast1UppercaseLetter ? '✔' : '✘'} Correct password.</p>
+                        <p>{registrationService.correctUsername ? '✔' : '✘'} Correct username (3-10 characters).</p>
                         {registrationService.registerSuccessful.length > 0 ?
                         (
                             <p className='succesfullRegistration' onClick={() => navigateService.navigate('/login')}>{registrationService.registerSuccessful}</p>

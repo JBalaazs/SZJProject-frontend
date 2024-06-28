@@ -19,7 +19,7 @@ export function useRegistrationService () {
 
         const validCharacters = /^[a-zA-Z][A-Za-z0-9]+$/.test(usernameTest);
 
-        if( validCharacters )
+        if( validCharacters && (usernameTest.length >= 3 && usernameTest.length < 10) )
         {
             setUsername(usernameTest);
             setCorrectUsername(true);
@@ -85,9 +85,9 @@ export function useRegistrationService () {
     return{
         onChange_username,
         onChange_password,
+        registration,
         atLeast1UppercaseLetter,
         atLeast5Characters,
-        registration,
         registerSuccessful,
         correctUsername
     }
