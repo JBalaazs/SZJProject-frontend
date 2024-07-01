@@ -46,7 +46,9 @@ export function useLoginService () {
                 }
     
                 const data = await response.json();
-                setToken(data);
+                setToken(data.data);
+                console.log(data.data);
+                localStorage.setItem('token', data.data);
                 console.log('Login successful!', data);
 
                 setErrorMessage('Successful login.');
