@@ -1,58 +1,48 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState } from "react";
 
 export function useAddProductService () {
 
     /*useState:*/
 
-    const [productName, setProductName] = useState('');
-    const [productDescription, setDescription] = useState('');
-    const [price, setPrice] = useState(0);
-    const [stock, setStock] = useState(0);
-    const [productCondition, setProductCondition] = useState('New');
     const [characterCount, setCharacterCount] = useState(0);
+
+    const [productDatas, setProductDatas] = useState({
+
+        productName: '',
+        productDescription: '',
+        price: 0,
+        stock: 0,
+        productCondition: 'New'
+
+    });
 
     /*onChange:*/
 
-    const onChange_Name : React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 
-        setProductName(event.target.value);
+        const {name, value} = event.target;
 
-    }
+        setProductDatas(prevProduct => ({
 
-    const onChange_Description : React.ChangeEventHandler<HTMLInputElement> = (event) => {
+            ...prevProduct,
+            [name]: name == 'price' || name == 'stock' ? Number(value) : value
 
-        setCharacterCount(event.target.value.length);
+        }));
 
-        if(event.target.value.length <= 100)
+        if(name == 'productDescription') 
         {
 
-            setDescription(event.target.value);
+            setCharacterCount(value.length);
 
         }
-
-    }
-
-    const onChange_Price : React.ChangeEventHandler<HTMLInputElement> = (event) => {
-
-        setPrice(Number(event.target.value));
-
-    }
-
-    const onChange_Stock : React.ChangeEventHandler<HTMLInputElement> = (event) => {
-
-        setStock(Number(event.target.value));
-
-    }
-
-    const onChange_ProductCondition = (event : ChangeEvent<HTMLSelectElement>) => {
-
-        setProductCondition(event.target.value);
 
     }
 
     /*Function:*/
 
     const addNewProduct = () => {
+
+        console.log("Hmm: " + productDatas.productDescription);
 
         const token = localStorage.getItem('token');
         console.log(token);
@@ -64,20 +54,19 @@ export function useAddProductService () {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({productName, productDescription, productCondition, price, stock})
+            body: JSON.stringify(productDatas)
 
         })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
     }
 
     /*Return:*/
 
     return{
-        onChange_Name,
-        onChange_Description,
-        onChange_Price,
-        onChange_Stock,
-        onChange_ProductCondition,
+        handleChange,
         addNewProduct,
         characterCount
     }

@@ -19,12 +19,12 @@ export default function AddProduct () {
                 
                 <div className="insideDIV_Login">
 
-                    <input type="text" placeholder="Name" className="inputStyle_AddProduct" onChange={addProductService.onChange_Name}/>
-                    <input type="text" placeholder="Description" className="inputStyle_AddProduct" onChange={addProductService.onChange_Description}/>
+                    <input type="text" name="productName" placeholder="Name" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
+                    <input type="text" name="productDescription" placeholder="Description" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
                     {addProductService.characterCount < 100 ? <p style={{color: "green"}}>{addProductService.characterCount}/100</p> : <p style={{color: "red"}}>{addProductService.characterCount}/100</p>}
-                    <input type="text" placeholder="Price" className="inputStyle_AddProduct" onChange={addProductService.onChange_Price}/>
-                    <input type="number" placeholder="Stock" className="inputStyle_AddProduct" onChange={addProductService.onChange_Stock}/>
-                    <select className="inputStyle_AddProduct" onChange={addProductService.onChange_ProductCondition}>
+                    <input type="text" name="price" placeholder="Price" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
+                    <input type="number" name="stock" placeholder="Stock" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
+                    <select className="inputStyle_AddProduct" name="productCondition" onChange={addProductService.handleChange}>
                         <option>New</option>
                         <option>Used</option>
                         <option>Refurbished</option>
