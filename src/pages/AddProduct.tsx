@@ -30,19 +30,9 @@ export default function AddProduct () {
                         <option>Refurbished</option>
                     </select>
 
-                    <button className="btn btn-primary loginButton">Add product</button>
+                    <button className="btn btn-primary loginButton" onClick={addProductService.addNewProduct}>Add product</button>
 
                 </div>
-
-                {
-                    addProductService.products?.map(x => {
-                        return(
-                            <>
-                                <h1>{x.seller}</h1>
-                            </>
-                        );
-                    })
-                }
 
             </div>
 

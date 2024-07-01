@@ -1,11 +1,13 @@
 import '../design/style.css';
 import { useNavigateService } from '../service/navigateService';
+import { useWebshopService } from '../service/webshopService';
 
 export default function Webshop () {
 
     /*Serive:*/
 
     const navigateService = useNavigateService();
+    const webshopService = useWebshopService();
 
     /*Return:*/
 
@@ -19,39 +21,31 @@ export default function Webshop () {
 
             <div className='productsOutside'>
 
-                <div className='productsInside'>
+                {
 
-                    <p className='productTitle'>Title</p>
+                    webshopService.products?.map(x => {
 
-                    <p className='productDescription'>Description about a product. Somebody want to sell it, now you can buy it. MAX 210 available</p>
+                        return(
 
-                    <button className='btn btn-primary buyProduct' onClick={() => navigateService.navigate('/buyit')}>Buy It</button>
+                            <div className='productsInside' key={x.productId}>
 
-                </div>
+                                <p className='productTitle'>{x.productName}</p>
+            
+                                <p className='productDescription'>{x.description}</p>
 
-                <div className='productsInside'>
+                                <p className='productPrice'>{x.price}$</p>
+            
+                                <button className='btn btn-primary buyProduct' onClick={() => navigateService.navigate('/buyit')}>Buy It</button>
+        
+                                <p className='productStock'>{x.stock} pcs available</p>
 
-                    
+                            </div>
 
-                </div>
+                        )
 
-                <div className='productsInside'>
+                    })
 
-                                
-
-                </div>
-
-                <div className='productsInside'>
-
-                                
-
-                </div>
-
-                <div className='productsInside'>
-
-                                
-
-                </div>
+                }
 
             </div>
 

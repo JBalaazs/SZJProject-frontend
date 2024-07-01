@@ -1,42 +1,21 @@
-import { ChangeEvent, useEffect, useState } from "react"
-
-enum EnumType {
-    New = 'New',
-    Used = 'Used',
-    Refurbished = "Refurbished"
-}
-
-interface productSturct{
-
-    product_id: number,
-    available: boolean,
-    creation_date: Date,
-    description: string,
-    price: number,
-    product_condition: EnumType,
-    product_name: string,
-    seller: string,
-    stock: number
-
-}
+import { ChangeEvent, useState } from "react"
 
 export function useAddProductService () {
 
     /*useState:*/
 
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
-    const [stock, setStock] = useState('');
+    const [productName, setProductName] = useState('');
+    const [productDescription, setDescription] = useState('');
+    const [price, setPrice] = useState(0);
+    const [stock, setStock] = useState(0);
     const [productCondition, setProductCondition] = useState('New');
     const [characterCount, setCharacterCount] = useState(0);
-    const [products, setProducts] = useState<productSturct[] | null>(null);
 
     /*onChange:*/
 
     const onChange_Name : React.ChangeEventHandler<HTMLInputElement> = (event) => {
 
-        setName(event.target.value);
+        setProductName(event.target.value);
 
     }
 
@@ -48,7 +27,6 @@ export function useAddProductService () {
         {
 
             setDescription(event.target.value);
-            console.log(event.target.value);
 
         }
 
@@ -56,13 +34,13 @@ export function useAddProductService () {
 
     const onChange_Price : React.ChangeEventHandler<HTMLInputElement> = (event) => {
 
-        setPrice(event.target.value);
+        setPrice(Number(event.target.value));
 
     }
 
     const onChange_Stock : React.ChangeEventHandler<HTMLInputElement> = (event) => {
 
-        setStock(event.target.value);
+        setStock(Number(event.target.value));
 
     }
 
@@ -72,19 +50,25 @@ export function useAddProductService () {
 
     }
 
-    /*useEffect:*/
-
-    useEffect(() => {
-
-        fetch('http://localhost:8081/api/products')
-            .then(res => res.json())
-            .then(data => setProducts(data))
-
-    }, [])
-
     /*Function:*/
 
+    const addNewProduct = () => {
 
+        const token = localStorage.getItem('token');
+        console.log(token);
+
+        fetch('http://localhost:8081/api/products', {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({productName, productDescription, productCondition, price, stock})
+
+        })
+
+    }
 
     /*Return:*/
 
@@ -94,8 +78,8 @@ export function useAddProductService () {
         onChange_Price,
         onChange_Stock,
         onChange_ProductCondition,
-        characterCount,
-        products
+        addNewProduct,
+        characterCount
     }
 
 }
