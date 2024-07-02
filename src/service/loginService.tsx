@@ -1,27 +1,32 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export function useLoginService () {
 
     /*useState:*/
 
-    const [usernameText, setUsernameText] = useState('');
-    const [passwordText, setPasswordText] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [token, setToken] = useState('');
+
+    const [loginData, setLoginData] = useState({
+
+        username: '',
+        password: ''
+
+    });
 
     /*onChange:*/
 
-    const onChange_Username : React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 
-        setUsernameText(event.target.value);
+        const {name, value} = event.target;
+
+        setLoginData(prevLogin => ({
+
+            ...prevLogin,
+            [name]: value 
+
+        }));
 
     }
-
-    const onChange_Password : React.ChangeEventHandler<HTMLInputElement> = (event) => {
-
-        setPasswordText(event.target.value);
-
-    } 
 
     /*Function:*/
 
@@ -37,7 +42,7 @@ export function useLoginService () {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({username, password})
+                    body: JSON.stringify(loginData)
                 });
     
                 if(!response.ok)
@@ -45,11 +50,8 @@ export function useLoginService () {
                     throw new Error('Failed to login: ' + response.statusText);
                 }
     
-                const data = await response.json();
-                setToken(data.data);
-                console.log(data.data);
-                localStorage.setItem('token', data.data);
-                console.log('Login successful!', data);
+                const returnData = await response.json();
+                localStorage.setItem('token', returnData.data);
 
                 setErrorMessage('Successful login.');
     
@@ -72,10 +74,8 @@ export function useLoginService () {
 
     return{
         errorMessage,
-        onChange_Username,
-        onChange_Password,
-        usernameText,
-        passwordText,
+        loginData,
+        handleChange,
         loginUser
     }
 
