@@ -1,8 +1,14 @@
 import { useNavigateService } from "../service/navigateService";
+import { useBuyItService } from "../service/buyItService";
 
 export default function BuyIt () {
 
+    /*Service:*/
+
     const navigateService = useNavigateService();
+    const buyItService = useBuyItService();
+
+    /*Return:*/
 
     return(
         <>
@@ -13,7 +19,7 @@ export default function BuyIt () {
 
             <div className="buyItBox">
                 <div className="buyItInside">
-                    
+                    <p>Eredmény: {}</p>
                 </div>
                 <div className="buyItInside">
                     

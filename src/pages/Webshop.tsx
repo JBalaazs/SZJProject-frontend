@@ -1,6 +1,7 @@
 import '../design/style.css';
 import { useNavigateService } from '../service/navigateService';
 import { useWebshopService } from '../service/webshopService';
+import { useBuyItService } from '../service/buyItService';
 
 export default function Webshop () {
 
@@ -8,6 +9,7 @@ export default function Webshop () {
 
     const navigateService = useNavigateService();
     const webshopService = useWebshopService();
+    const buyItService = useBuyItService();
 
     /*Return:*/
 
@@ -27,7 +29,7 @@ export default function Webshop () {
 
                         return(
 
-                            <div className='productsInside' key={x.productId}>
+                            <div className='productsInside' key={x.productId} onClick={() => buyItService.selectedItem(x.productId)}>
 
                                 <p className='productTitle'>{x.productName}</p>
             

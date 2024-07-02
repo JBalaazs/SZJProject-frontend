@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-interface productSturct{
+export interface productStruct{
 
     productId: number,
     available: boolean,
@@ -18,7 +18,7 @@ export function useWebshopService () {
 
     /*useState:*/
 
-    const [products, setProducts] = useState<productSturct[] | null>(null);
+    const [products, setProducts] = useState<productStruct[] | null>(null);
 
     /*useEffect:*/
 
