@@ -24,10 +24,10 @@ export default function Login () {
                 <div className='insideDIV_Login'>
         
                     <h2 className='title_Login'>Login</h2>
-                    <input type='text' placeholder='Username' className='inputStyle_Login' onChange={loginService.onChange_Username} />
-                    <input type='password' placeholder='Password' className='inputStyle_Login' onChange={loginService.onChange_Password} />
+                    <input type='text' name='username' placeholder='Username' className='inputStyle_Login' onChange={loginService.handleChange} />
+                    <input type='password' name='password' placeholder='Password' className='inputStyle_Login' onChange={loginService.handleChange} />
                     <button className='btn btn-primary loginButton' onClick={async () => {
-                        await loginService.loginUser(loginService.usernameText, loginService.passwordText)
+                        await loginService.loginUser(loginService.loginData.username, loginService.loginData.password)
                     }}>Login</button>
 
                     {
