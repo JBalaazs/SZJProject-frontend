@@ -148,6 +148,11 @@ html, body{
     font-weight: bold;
 }
 
+.succesfullRegistration:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .beforeRegistration{
     color: red;
     font-weight: bold;
