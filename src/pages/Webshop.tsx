@@ -12,7 +12,7 @@ export default function Webshop () {
     /*Return:*/
 
     return(
-        <>
+        <div className='WebshopDesign'>
             
             <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
             <button className="btn btn-primary addProductButton" onClick={() => navigateService.navigate('/addproduct')}>Add product</button>
@@ -49,7 +49,7 @@ export default function Webshop () {
 
             </div>
 
-        </>
+        </div>
     );
 
 }
