@@ -1,64 +1,130 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export function useRegistrationService () {
 
     /*useState:*/
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [atLeast5Characters, setAtLeast5Characters] = useState(false);
-    const [atLeast1UppercaseLetter, setAtLeast1UppercaseLetter] = useState(false);
-    const [correctUsername, setCorrectUsername] = useState(false);
-    const [registerSuccessful, setRegisterSuccessful] = useState('');
+    const [checkRegister, setCheckRegister] = useState({
+
+        atLeast5Characters: false,
+        atLeast1UppercaseLetter: false,
+        correctUsername: false,
+        isRegisterSuccessfulOrTaken: ''
+        
+    });
+
+    const [registerData, setRegisterData] = useState({
+
+        username: '',
+        password: '',
+
+    });
 
     /*onChange:*/
 
-    const onChange_username : React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 
-        let usernameTest = event.target.value;
+        const {name, value} = event.target;
 
-        const validCharacters = /^[a-zA-Z][A-Za-z0-9]+$/.test(usernameTest);
-
-        if( validCharacters && (usernameTest.length >= 3 && usernameTest.length < 10) )
+        if(name == 'username')
         {
-            setUsername(usernameTest);
-            setCorrectUsername(true);
+
+            const validCharacters = /^[a-zA-Z][A-Za-z0-9]+$/.test(value);
+
+            if( validCharacters && (value.length >= 3 && value.length < 10) )
+            {
+
+                setRegisterData(prevRegister => ({
+
+                    ...prevRegister,
+                    username: value
+
+                }));
+
+                setCheckRegister(prevCheck => ({
+
+                    ...prevCheck,
+                    correctUsername: true
+
+                }));
+
+            }
+            else
+            {
+
+                setCheckRegister(prevCheck => ({
+
+                    ...prevCheck,
+                    correctUsername: false
+
+                }));
+
+            }
+
         }
-        else
-        {
-            setCorrectUsername(false);
-        }
 
-    }
-
-    const onChange_password : React.ChangeEventHandler<HTMLInputElement> = (event) => {
-
-        let passwordTest = event.target.value;
-        if(passwordTest.length < 5)
+        if(name == 'password')
         {
 
-            setAtLeast5Characters(false);
+            if(value.length < 5)
+            {
+        
+                setCheckRegister(prevCheck => ({
 
-        }
-        else
-        {
+                    ...prevCheck,
+                    atLeast5Characters: false
 
-            setAtLeast5Characters(true);
-            setPassword(passwordTest);
+                }));
+        
+            }
+            else
+            {
+        
+                setCheckRegister(prevCheck => ({
 
-        }
+                    ...prevCheck,
+                    atLeast5Characters: true
 
-        if(!/[A-Z]/.test(passwordTest))
-        {
+                }));
 
-            setAtLeast1UppercaseLetter(false)
+                setRegisterData(prevRegister => ({
 
-        }
-        else
-        {
+                    ...prevRegister,
+                    password: value
 
-            setAtLeast1UppercaseLetter(true);
-            setPassword(passwordTest);
+                }));
+        
+            }
+        
+            if(!/[A-Z]/.test(value))
+            {
+        
+                setCheckRegister(prevCheck => ({
+
+                    ...prevCheck,
+                    atLeast1UppercaseLetter: false
+
+                }));
+        
+            }
+            else
+            {
+        
+                setCheckRegister(prevCheck => ({
+
+                    ...prevCheck,
+                    atLeast1UppercaseLetter: true
+
+                }));
+
+                setRegisterData(prevRegister => ({
+
+                    ...prevRegister,
+                    password: value
+
+                }));
+        
+            }
 
         }
 
@@ -66,30 +132,47 @@ export function useRegistrationService () {
 
     /*Function:*/
 
-    const registration = () => {
+    const registration = async () => {
 
-        fetch('http://localhost:8081/api/user/auth/register', {
+        const response = await fetch('http://localhost:8081/api/user/auth/register', {
             
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({username, password})
+            body: JSON.stringify(registerData)
 
-        })
+        });
 
-        setRegisterSuccessful('Successful registration. Click here!');
+        if(response.ok)
+        {
+
+            setCheckRegister(prevCheck => ({
+
+                ...prevCheck,
+                isRegisterSuccessfulOrTaken: 'Successful registration. Click here!'
+    
+            }));
+
+        }
+        else
+        {
+
+            setCheckRegister(prevCheck => ({
+
+                ...prevCheck,
+                isRegisterSuccessfulOrTaken: 'This name is already taken.'
+    
+            }));
+
+        }
 
     }
 
     return{
-        onChange_username,
-        onChange_password,
         registration,
-        atLeast1UppercaseLetter,
-        atLeast5Characters,
-        registerSuccessful,
-        correctUsername
+        handleChange,
+        checkRegister
     }
 
 }
