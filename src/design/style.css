@@ -301,9 +301,92 @@
 }
 
 .buyItInside{
-    border: solid 1px blue;
     height: 600px;
     width: 800px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top: solid 4px blue;
+    border-bottom: solid 4px darkblue;
+}
+
+.buyitButton{
+    width: 250px;
+    margin-top: 35px;
+}
+
+.buyitButton:hover{
+    background-color: blue;
+    border: solid 2px black;
+    font-weight: bold;
+}
+
+.buyitTitle {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: -10px;
+    text-align: center;
+}
+
+.buyitAvailable {
+    font-size: 1em;
+    color: gray;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 300;
+}
+
+.buyitAbout{
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-top: 50px;
+    margin-bottom: 5px;
+}
+
+.buyitDescription {
+    font-size: 1em;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    margin-bottom: 50px;
+    font-weight: 350;
+}
+
+.buyitPriceTitle{
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.buyitPrice {
+    font-size: 1.2em;
+    color: gray;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.buyitDollarSign{
+    color: green;
+}
+
+.buyitInput{
+    width: 250px;
+    position: relative;
+    
+}
+
+.buyItHowMany{
+    margin-bottom: 10px;
+    color: gray;
+    font-weight: bold;
+}
+
+.buyItTotal{
+    font-weight: 500;
+    color: gray;
+    margin-top: 40px;
 }
 
 /*AddProduct*/

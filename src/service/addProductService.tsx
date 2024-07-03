@@ -42,10 +42,7 @@ export function useAddProductService () {
 
     const addNewProduct = () => {
 
-        console.log("Hmm: " + productDatas.productDescription);
-
         const token = localStorage.getItem('token');
-        console.log(token);
 
         fetch('http://localhost:8081/api/products', {
 
