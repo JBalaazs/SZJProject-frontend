@@ -15,14 +15,24 @@ export default function BuyIt () {
 
             <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/webshop')}>Back</button>
 
-            <h1 className="title">Order your item(s).</h1>
+            <h1 className="title_Webshop">Order your item(s).</h1>
 
             <div className="buyItBox">
                 <div className="buyItInside">
-                    <p>Eredmény: {}</p>
+
+                    {buyItService.collectDataByItemId()}
+
                 </div>
                 <div className="buyItInside">
-                    
+
+                    <p className="buyItHowMany">How many do you want to buy?</p>
+
+                    <input type="number" name="piece" className="buyitInput" onChange={buyItService.handleChange} min={0} max={buyItService.findPairFunction()?.stock} defaultValue={0}/>
+
+                    <p className="buyItTotal">Total: {buyItService.totalPrice()?.toFixed(2)}<span className="buyitDollarSign">$</span></p>
+
+                    <button className="btn btn-primary buyitButton">Buy</button>
+
                 </div>
             </div>
 
