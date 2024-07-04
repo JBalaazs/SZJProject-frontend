@@ -12,6 +12,7 @@ export default function Webshop () {
     /*Return:*/
 
     return(
+
         <div className='WebshopDesign'>
             
             <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
@@ -30,26 +31,27 @@ export default function Webshop () {
                             <div className='productsInside' key={x.productId}>
 
                                 <p className='productTitle'>{x.productName}</p>
-            
+
                                 <p className='productDescription'>{x.description}</p>
 
                                 <p className='productPrice'>{x.price}$</p>
-            
-                                <button className='btn btn-primary buyProduct' onClick={() => navigateService.navigate(`/buyit/${x.productId}`)}>Buy It</button>
-        
+
+                                <button className={x.seller == webshopService.getUsername() ? 'btn btn-primary modifyButton' : 'btn btn-primary buyButton'} onClick={() => x.seller == webshopService.getUsername() ? navigateService.navigate('/modify') : navigateService.navigate(`/buyit/${x.productId}`)}>{x.seller == webshopService.getUsername() ? 'Modify' : 'Buy It'}</button>
+
                                 <p className='productStock'>{x.stock} pcs available</p>
 
                             </div>
 
                         )
 
-                    })
+                    }
 
-                }
+                )}
 
             </div>
 
         </div>
+
     );
 
 }
