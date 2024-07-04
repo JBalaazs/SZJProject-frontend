@@ -1,12 +1,13 @@
 import { useNavigateService } from "../service/navigateService";
 import { useAddProductService } from "../service/addProductService";
+import { useModifyService } from "../service/modifyService";
 
 export default function Modify () {
 
-    /*Serive:*/
+    /*Service:*/
 
     const navigateService = useNavigateService();
-    const addProductService = useAddProductService();
+    const modifyService = useModifyService();
 
     /*Return:*/
 
@@ -19,12 +20,43 @@ export default function Modify () {
                 
                 <div className="insideDIV_Login">
 
-                    <input type="text" name="productName" placeholder="Name" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
-                    <input type="text" name="productDescription" placeholder="Description" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
-                    {addProductService.characterCount < 100 ? <p style={{color: "green"}}>{addProductService.characterCount}/100</p> : <p style={{color: "red"}}>{addProductService.characterCount}/100</p>}
-                    <input type="text" name="price" placeholder="Price" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
+                    <input 
+                        type="text"
+                        defaultValue={modifyService.productDatasThatWillBeModify()?.productName}
+                        name="productName"
+                        placeholder="Name"
+                        className="inputStyle_AddProduct"
+                        onChange={modifyService.handleChange}/>
 
-                    <button className="btn btn-primary loginButton" onClick={addProductService.addNewProduct}>Modify product</button>
+                    <input 
+                        type="text"
+                        defaultValue={modifyService.productDatasThatWillBeModify()?.description}
+                        name="productDescription"
+                        placeholder="Description"
+                        className="inputStyle_AddProduct"
+                        onChange={modifyService.handleChange}/>
+
+                    {
+
+                        modifyService.characterCount < 100 ? 
+                        <p style={{color: "green"}}>{modifyService.characterCount == 0 ? 
+                            modifyService.productDatasThatWillBeModify()?.description.length : 
+                            modifyService.characterCount}/100</p> : 
+                            <p style={{color: "red"}}>{modifyService.characterCount}/100</p>
+                    
+                    }
+
+                    <input 
+                        type="text"
+                        defaultValue={modifyService.productDatasThatWillBeModify()?.price}
+                        name="price" placeholder="Price"
+                        className="inputStyle_AddProduct"
+                        onChange={modifyService.handleChange}/>
+
+                    <button
+                        className="btn btn-primary loginButton"
+                        onClick={modifyService.addModifyProduct}>
+                        Modify product</button>
 
                 </div>
 
