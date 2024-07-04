@@ -16,7 +16,7 @@ function App() {
       <Route path='/webshop' element={<Webshop />} />
       <Route path='/buyit/:productId' element={<BuyIt />} />
       <Route path='/addproduct' element={<AddProduct />} />
-      <Route path='/modify' element={<Modify />} />
+      <Route path='/modify/:productId' element={<Modify />} />
     </Routes>
   );
 }
