@@ -264,10 +264,24 @@
     text-align: center;
 }
 
-.buyProduct{
+.buyButton{
     width: 100px;
     align-self: center;
     margin-bottom: 10px;
+}
+
+.modifyButton{
+    width: 100px;
+    align-self: center;
+    margin-bottom: 10px;
+    background-color: red;
+    color: white;
+    border: solid 1px red;
+    font-weight: bold;
+}
+
+.modifyButton:hover{
+    background-color: gray;
 }
 
 .title_Webshop{

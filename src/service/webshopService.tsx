@@ -28,12 +28,47 @@ export function useWebshopService () {
             .then(res => res.json())
             .then(data => setProducts(data))
 
-    }, [])
+    }, []);
+
+    /*Function:*/
+
+    function parseJwt (token : string) 
+    {
+
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        return JSON.parse(jsonPayload);
+
+    }
+
+    const getUsername = ()  => {
+
+        const token = localStorage.getItem('token');
+        const userData = token ? parseJwt(token) : null;
+        const username = userData ? userData.sub : 'Unknown user';
+
+        const findPair = products?.some(p => p.seller == username);
+
+        if(findPair)
+        {
+
+            return username;
+
+        }
+
+        return username;
+
+    }
 
     /*Return:*/
 
     return{
-        products
+        products,
+        getUsername
     }
 
 }
