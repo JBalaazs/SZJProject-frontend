@@ -58,6 +58,11 @@ export default function Modify () {
                         onClick={modifyService.addModifyProduct}>
                         Modify product</button>
 
+                    <button
+                        className="btn btn-primary modifyButton" style={{width: '200px'}}
+                        onClick={modifyService.deleteProduct}>
+                        Delete product</button>
+
                 </div>
 
             </div>

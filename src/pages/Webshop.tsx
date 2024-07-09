@@ -36,7 +36,11 @@ export default function Webshop () {
 
                                 <p className='productPrice'>{x.price}$</p>
 
-                                <button className={x.seller == webshopService.getUsername() ? 'btn btn-primary modifyButton' : 'btn btn-primary buyButton'} onClick={() => x.seller == webshopService.getUsername() ? navigateService.navigate(`/modify/${x.productId}`) : navigateService.navigate(`/buyit/${x.productId}`)}>{x.seller == webshopService.getUsername() ? 'Modify' : 'Buy It'}</button>
+                                <button 
+                                    className={x.seller == webshopService.getUsername() ? 'btn btn-primary modifyButton' : 'btn btn-primary buyButton'} 
+                                    onClick={() => x.seller == webshopService.getUsername() ? navigateService.navigate(`/modify/${x.productId}`) : navigateService.navigate(`/buyit/${x.productId}`)}
+                                    disabled={localStorage.getItem('token') ? false : true}>
+                                    {x.seller == webshopService.getUsername() ? 'Modify' : 'Buy It'}</button>
 
                                 <p className='productStock'>{x.stock} pcs available</p>
 
