@@ -94,13 +94,20 @@ export function useBuyItService () {
 
     }
 
+    const addToCart = () => {
+
+        console.log("Add to cart!");
+
+    }
+
     /*Return:*/
 
     return{
         collectDataByItemId,
         handleChange,
         totalPrice,
-        findPairFunction
+        findPairFunction,
+        addToCart
     }
 
 }

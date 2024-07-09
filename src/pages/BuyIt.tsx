@@ -27,11 +27,20 @@ export default function BuyIt () {
 
                     <p className="buyItHowMany">How many do you want to buy?</p>
 
-                    <input type="number" name="piece" className="buyitInput" onChange={buyItService.handleChange} min={0} max={buyItService.findPairFunction()?.stock} defaultValue={0}/>
+                    <input type="number"
+                        name="piece" 
+                        className="buyitInput" 
+                        onChange={buyItService.handleChange} 
+                        min={0} 
+                        max={buyItService.findPairFunction()?.stock} 
+                        defaultValue={0}/>
 
                     <p className="buyItTotal">Total: {buyItService.totalPrice()?.toFixed(2)}<span className="buyitDollarSign">$</span></p>
 
-                    <button className="btn btn-primary buyitButton">Buy</button>
+                    <button 
+                        className="btn btn-primary buyitButton" 
+                        onClick={buyItService.addToCart}>
+                        Buy</button>
 
                 </div>
             </div>

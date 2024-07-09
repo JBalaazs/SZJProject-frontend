@@ -106,13 +106,20 @@ export function useModifyService () {
 
     }
 
+    const deleteProduct = () => {
+
+        console.log("Delete.");
+
+    }
+
     /*Return:*/
 
     return{
         handleChange,
         characterCount,
         addModifyProduct,
-        productDatasThatWillBeModify
+        productDatasThatWillBeModify,
+        deleteProduct
     }
     
 }
