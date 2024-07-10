@@ -1,12 +1,14 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { productStruct, useWebshopService } from "./webshopService";
+import { useNavigateService } from "./navigateService";
 
 export function useModifyService () {
 
     /*Service:*/
 
     const webshopService = useWebshopService();
+    const navigateService = useNavigateService();
 
     /*selectedId from URL:*/
 
@@ -90,7 +92,7 @@ export function useModifyService () {
 
         const token = localStorage.getItem('token');
 
-        fetch(process.env.REACT_APP_API_URL + '/products', {
+        fetch(`${process.env.REACT_APP_API_URL}/products`, {
 
             method: 'PUT',
             headers: {
@@ -104,11 +106,28 @@ export function useModifyService () {
             console.error('Error:', error);
         });
 
+        navigateService.navigate('/webshop');
+
     }
 
     const deleteProduct = () => {
 
-        console.log("Delete.");
+        const token = localStorage.getItem('token');
+
+        fetch(`${process.env.REACT_APP_API_URL}/products?productId=${productId}`, {
+
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        navigateService.navigate('/webshop');
 
     }
 
