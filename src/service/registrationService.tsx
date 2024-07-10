@@ -134,7 +134,7 @@ export function useRegistrationService () {
 
     const registration = async () => {
 
-        const response = await fetch(process.env.REACT_APP_API_URL + '/user/auth/register', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/auth/register`, {
             
             method: 'POST',
             headers: {
