@@ -1,6 +1,11 @@
 import { ChangeEvent, useState } from "react";
+import { useNavigateService } from "./navigateService";
 
 export function useAddProductService () {
+
+    /*Service:*/
+
+    const navigateService = useNavigateService();
 
     /*useState:*/
 
@@ -57,6 +62,8 @@ export function useAddProductService () {
         .catch(error => {
             console.error('Error:', error);
         });
+
+        navigateService.navigate('/webshop');
 
     }
 

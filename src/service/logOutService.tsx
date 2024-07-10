@@ -19,6 +19,8 @@ export function useLogOutService () {
 
         localStorage.removeItem('token');
 
+        window.location.reload();
+
     }
 
     /*Return:*/
