@@ -40,7 +40,7 @@ export default function BuyIt () {
                     <button 
                         className="btn btn-primary buyitButton" 
                         onClick={buyItService.addToCart}>
-                        Buy</button>
+                        Add To Cart</button>
 
                 </div>
             </div>

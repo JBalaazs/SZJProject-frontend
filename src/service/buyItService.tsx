@@ -96,7 +96,12 @@ export function useBuyItService () {
 
     const addToCart = () => {
 
-        console.log("Add to cart!");
+        if(pieceOfProduct > 0)
+        {
+
+            console.log(`Add to cart! ${pieceOfProduct}`);
+
+        }
 
     }
 
