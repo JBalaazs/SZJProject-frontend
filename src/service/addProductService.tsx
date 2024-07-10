@@ -44,7 +44,7 @@ export function useAddProductService () {
 
         const token = localStorage.getItem('token');
 
-        fetch('http://localhost:8081/api/products', {
+        fetch(process.env.REACT_APP_API_URL + '/products', {
 
             method: 'POST',
             headers: {
