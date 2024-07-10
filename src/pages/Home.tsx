@@ -1,12 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../design/style.css';
 import { useNavigateService } from '../service/navigateService';
+import { useLogOutService } from '../service/logOutService';
 
 export default function Home () {
 
     /*Service:*/
 
     const navigateService = useNavigateService();
+    const logOutService = useLogOutService();
 
     /*Return:*/
 
@@ -16,9 +18,26 @@ export default function Home () {
             
                 <div className='insideDIV_Home'>
 
-                    <button className='btn btn-primary homeButton' onClick={() => navigateService.navigate('/login')}>Login</button>
-                    <button className='btn btn-primary homeButton' onClick={() => navigateService.navigate('/registration')}>Registration</button>
-                    <button className='btn btn-primary homeButton' onClick={() => navigateService.navigate('/webshop')}>Webshop</button>
+                    <button 
+                        className='btn btn-primary homeButton'
+                        onClick={() => navigateService.navigate('/login')}>
+                        Login</button>
+
+                    <button
+                        className='btn btn-primary homeButton'
+                        onClick={() => navigateService.navigate('/registration')}>
+                        Registration</button>
+
+                    <button
+                        className='btn btn-primary homeButton'
+                        onClick={() => navigateService.navigate('/webshop')}>
+                        Webshop</button>
+
+                    <button
+                        className='btn btn-primary homeButton'
+                        onClick={logOutService.logout}
+                        disabled={localStorage.getItem('token') ? false : true}>
+                        Logout</button>
 
                 </div>
             
