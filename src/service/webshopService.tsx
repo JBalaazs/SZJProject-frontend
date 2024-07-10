@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 export interface productStruct{
 
@@ -24,7 +24,7 @@ export function useWebshopService () {
 
     useEffect(() => {
 
-        fetch('http://localhost:8081/api/products')
+        fetch(`${process.env.REACT_APP_API_URL}/products`)
             .then(res => res.json())
             .then(data => setProducts(data))
 
