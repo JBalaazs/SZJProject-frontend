@@ -26,6 +26,12 @@ export default function Webshop () {
                 disabled={localStorage.getItem('token') ? false : true}>
                 Add product</button>
 
+            <button 
+                className="btn btn-primary cartButton" 
+                onClick={() => navigateService.navigate('/cart')}
+                disabled={localStorage.getItem('token') ? false : true}>
+                Cart</button>
+
             <h1 className='title_Webshop'>Shop Now and Experience the Difference!</h1>
 
             <div className='productsOutside'>
