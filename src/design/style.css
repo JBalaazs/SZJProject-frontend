@@ -50,6 +50,14 @@
     margin-left: 10px;
 }
 
+.cartButton{
+    position: absolute;
+    left: 250px;
+    top: 30px;
+    width: 120px;
+    margin-left: 10px;
+}
+
 .HomeDesign{
     width: 100wh;
     height: 100wh;
@@ -434,6 +442,34 @@
 
 .inputStyle_AddProduct:focus {
     border-bottom: solid 3px blue;
+}
+
+/*Cart:*/
+
+.insideDIV_Cart{
+    height: auto;
+    width: 500px;
+    border-radius: 20px;
+    padding: 15px;
+}
+
+.productList{
+    border: solid 1px black;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.productPrice_Cart{
+    border: solid 1px black;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
 }
 
 /*Phone view:*/
