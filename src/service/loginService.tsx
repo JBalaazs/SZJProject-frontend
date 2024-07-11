@@ -1,6 +1,12 @@
 import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useNavigateService } from "./navigateService";
 
 export function useLoginService () {
+
+    /*Service:*/
+
+    const navigateService = useNavigateService();
 
     /*useState:*/
 
@@ -54,6 +60,8 @@ export function useLoginService () {
                 localStorage.setItem('token', returnData.data);
 
                 setErrorMessage('Successful login.');
+
+                navigateService.navigate('/');
     
             }
             catch(error){

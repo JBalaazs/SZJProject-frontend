@@ -20,13 +20,26 @@ export default function Home () {
 
                     <button 
                         className='btn btn-primary homeButton'
-                        onClick={() => navigateService.navigate('/login')}>
-                        Login</button>
+                        onClick={() => localStorage.getItem('token') ? navigateService.navigate('/client') : navigateService.navigate('/login')}>
+                        {localStorage.getItem('token') ? 'Client Site' : 'Login'}</button>
 
-                    <button
-                        className='btn btn-primary homeButton'
-                        onClick={() => navigateService.navigate('/registration')}>
-                        Registration</button>
+                    {
+
+                        localStorage.getItem('token') ? (
+
+                            <></>
+
+                        ) : (
+
+                            <button
+                            className='btn btn-primary homeButton'
+                            onClick={() => navigateService.navigate('/registration')}>
+                            Registration</button>
+
+                        )
+
+                    }
+                
 
                     <button
                         className='btn btn-primary homeButton'
