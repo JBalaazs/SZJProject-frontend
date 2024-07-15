@@ -38,7 +38,8 @@ export default function BuyIt () {
                     <p className="buyItTotal">Total: {buyItService.totalPrice()?.toFixed(2)}<span className="buyitDollarSign">$</span></p>
 
                     <button 
-                        className="btn btn-primary buyitButton" 
+                        className={buyItService.pieceOfProduct > 0 ? "btn btn-primary buyitButton" : "btn btn-danger buyitButton"}
+                        disabled={buyItService.pieceOfProduct > 0 ? false : true}
                         onClick={buyItService.addToCart}>
                         Add To Cart</button>
 

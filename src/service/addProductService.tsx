@@ -64,6 +64,7 @@ export function useAddProductService () {
         });
 
         navigateService.navigate('/webshop');
+        window.location.reload();
 
     }
 

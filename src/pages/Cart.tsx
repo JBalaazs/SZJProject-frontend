@@ -1,10 +1,12 @@
+import { useCartService } from "../service/cartService";
 import { useNavigateService } from "../service/navigateService"
 
 export default function Cart () {
 
-    /*Serive:*/
+    /*Service:*/
 
     const navigateService = useNavigateService();
+    const cartService = useCartService();
 
     /*Return:*/
 
@@ -16,33 +18,14 @@ export default function Cart () {
 
             <div className="insideDIV_Cart">
 
-                <div className="productList">
+                {cartService.cartList()}
 
-                    <h3>Cart.</h3>
-                    <button className="btn btn-danger">Törlés</button>
-
-                </div>
-
-                <div className="productList">
-
-                    <h3>Cart.</h3>
-                    <button className="btn btn-danger">Törlés</button>
-
-                </div>
-
-                <div className="productList">
-
-                    <h3>Cart.</h3>
-                    <button className="btn btn-danger">Törlés</button>
-
-                </div>
-
-                <div className="productPrice_Cart">
+{/*                 <div className="productPrice_Cart">
 
                     <h3>28.5 <span className="buyitDollarSign">$</span></h3>
-                    <button className="btn btn-success">Vásárlás</button>
+                    <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}}>Vásárlás</button>
 
-                </div>
+                </div> */}
                 
             </div>
 
