@@ -99,7 +99,20 @@ export function useBuyItService () {
         if(pieceOfProduct > 0)
         {
 
-            console.log(`Add to cart! ${pieceOfProduct}`);
+            const token = localStorage.getItem('token');
+
+            let quantity = pieceOfProduct;
+
+            fetch(`${process.env.REACT_APP_API_URL}/carts/add`, {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({productId, quantity})
+
+            })
 
         }
 
@@ -112,7 +125,8 @@ export function useBuyItService () {
         handleChange,
         totalPrice,
         findPairFunction,
-        addToCart
+        addToCart,
+        pieceOfProduct
     }
 
 }
