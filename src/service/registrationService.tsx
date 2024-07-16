@@ -1,6 +1,11 @@
 import { ChangeEvent, useState } from "react";
+import { useNavigateService } from "./navigateService";
 
 export function useRegistrationService () {
+
+    /*Service:*/
+
+    const navigateService = useNavigateService();
 
     /*useState:*/
 
@@ -169,10 +174,43 @@ export function useRegistrationService () {
 
     }
 
+    const afterRegistration = () => {
+
+        if(checkRegister.isRegisterSuccessfulOrTaken.includes('Successful'))
+        {
+
+            return{
+                pTag:
+                    <p className='succesfullRegistration' onClick={() => navigateService.navigate('/login')}>{checkRegister.isRegisterSuccessfulOrTaken}</p>
+            }
+
+        }
+        else if(checkRegister.isRegisterSuccessfulOrTaken.includes('taken'))
+        {
+
+            return{
+                pTag:
+                <p className='beforeRegistration'>{checkRegister.isRegisterSuccessfulOrTaken}</p>
+            }
+
+        }
+        else
+        {
+
+            return{
+                pTag:
+                    <p className='beforeRegistration'>Register and click here!</p>
+            }
+
+        }
+
+    }
+
     return{
         registration,
         handleChange,
-        checkRegister
+        checkRegister,
+        afterRegistration,
     }
 
 }

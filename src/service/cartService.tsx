@@ -44,6 +44,25 @@ export function useCartService () {
         
     }
 
+    const deleteFromCartById = (productId: number) => {
+
+        const token = localStorage.getItem('token');
+
+        fetch(`${process.env.REACT_APP_API_URL}/carts/remove`, {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({productId})
+
+        })
+
+        window.location.reload();
+
+    }
+
     const cartList = () => {
 
         let totalPrice = 0;
@@ -60,8 +79,16 @@ export function useCartService () {
                 return(
                     <div className="productList">
     
-                        <h3>{findPairs.productName} <span style={{fontSize: '20px'}}>({findPairs.price * x.quantity} <span className="buyitDollarSign">$</span> - {x.quantity} pcs)</span></h3>
-                        <button className="btn btn-danger modifyButton">Törlés</button>
+                        <h3>
+                            {findPairs.productName} 
+                            <span style={{fontSize: '20px'}}> ({findPairs.price * x.quantity} 
+                            <span className="buyitDollarSign">$</span> 
+                            - {x.quantity} pcs)</span>
+                        </h3>
+
+                        <button 
+                            className="btn btn-danger modifyButton"
+                            onClick={() => deleteFromCartById(x.productId)}>Delete</button>
             
                     </div>
                 );
@@ -76,7 +103,7 @@ export function useCartService () {
                 <div className="productPrice_Cart">
 
                     <h3>{totalPrice} <span className="buyitDollarSign">$</span></h3>
-                    <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}}>Vásárlás</button>
+                    <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}}>Buy</button>
 
                 </div>
 

@@ -520,6 +520,59 @@ button:hover {
     background-color: #0056b3;
 }
 
+/*menuBar:*/
+
+.menuBar{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    background-color: gray;
+}
+
+.menuBar button{
+    width: auto;
+    background-color: gray;
+    height: 60px;
+    border-radius: 0px;
+}
+
+.menuBar button:hover{
+    background-color: gainsboro;
+    color: black;
+}
+
+.menuBar h4{
+    color: white;
+    border: solid 1px white;
+    padding: 5px;
+}
+
+.menuBar h4:hover{
+    color: black;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+.menuToggle {
+    display: none;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menuItems {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
 /*Phone view:*/
 
 @media (max-width: 768px) {
@@ -534,6 +587,27 @@ button:hover {
     }
     .insideDIV_Registration{
         padding: 50px;
+    }
+}
+
+@media (max-width: 686px) {
+    .menuBar{
+        flex-direction: column;
+        height: auto;
+    }
+    .menuToggle {
+        display: flex;
+        position: absolute;
+        right: 10px;
+    }
+    .menuItems {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    .menuItems.open {
+        display: flex;
     }
 }
 

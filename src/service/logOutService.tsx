@@ -1,4 +1,10 @@
+import { useNavigateService } from "./navigateService";
+
 export function useLogOutService () {
+
+    /*Service:*/
+
+    const navigateService = useNavigateService();
 
     /*Function:*/
 
@@ -19,7 +25,7 @@ export function useLogOutService () {
 
         localStorage.removeItem('token');
 
-        window.location.reload();
+        navigateService.navigate('/');
 
     }
 

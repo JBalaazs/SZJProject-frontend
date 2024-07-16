@@ -2,6 +2,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../design/style.css';
 import { useNavigateService } from '../service/navigateService';
 import { useLogOutService } from '../service/logOutService';
+import { useMenuBarService } from '../service/menuBarService';
+import { useHomeService } from '../service/homeService';
 
 export default function Home () {
 
@@ -9,6 +11,8 @@ export default function Home () {
 
     const navigateService = useNavigateService();
     const logOutService = useLogOutService();
+    const menuBarService = useMenuBarService();
+    const homeService = useHomeService();
 
     /*Return:*/
 
@@ -20,23 +24,12 @@ export default function Home () {
 
                     <button 
                         className='btn btn-primary homeButton'
-                        onClick={() => localStorage.getItem('token') ? navigateService.navigate('/client') : navigateService.navigate('/login')}>
-                        {localStorage.getItem('token') ? 'Client Site' : 'Login'}</button>
+                        onClick={homeService.LoginOrClientSite().nextTo}>
+                        {homeService.LoginOrClientSite().title}</button>
 
                     {
 
-                        localStorage.getItem('token') ? (
-
-                            <></>
-
-                        ) : (
-
-                            <button
-                            className='btn btn-primary homeButton'
-                            onClick={() => navigateService.navigate('/registration')}>
-                            Registration</button>
-
-                        )
+                        homeService.LoginOrClientSite().registrationButton
 
                     }
                 
@@ -49,7 +42,7 @@ export default function Home () {
                     <button
                         className='btn btn-primary homeButton'
                         onClick={logOutService.logout}
-                        disabled={localStorage.getItem('token') ? false : true}>
+                        style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>
                         Logout</button>
 
                 </div>

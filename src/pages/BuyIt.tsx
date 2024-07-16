@@ -1,11 +1,10 @@
-import { useNavigateService } from "../service/navigateService";
 import { useBuyItService } from "../service/buyItService";
+import MenuBar from "../components/menuBar";
 
 export default function BuyIt () {
 
     /*Service:*/
 
-    const navigateService = useNavigateService();
     const buyItService = useBuyItService();
 
     /*Return:*/
@@ -13,7 +12,7 @@ export default function BuyIt () {
     return(
         <>
 
-            <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/webshop')}>Back</button>
+            <MenuBar />
 
             <h1 className="title_Webshop">Order your item(s).</h1>
 

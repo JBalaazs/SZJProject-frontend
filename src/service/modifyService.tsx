@@ -45,6 +45,8 @@ export function useModifyService () {
 
             });
 
+            setCharacterCount(modifyData.productDescription.length);
+
         }
 
     }, [productId, webshopService.products]);

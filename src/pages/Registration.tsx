@@ -1,6 +1,7 @@
 import '../design/style.css';
 import { useNavigateService } from '../service/navigateService';
 import { useRegistrationService } from '../service/registrationService';
+import MenuBar from "../components/menuBar";
 
 export default function Registration () {
 
@@ -17,7 +18,7 @@ export default function Registration () {
 
             <div className='outsideDIV'>
             
-                <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
+                <MenuBar />
 
                 <div className='insideDIV_Registration'>
 
@@ -29,18 +30,12 @@ export default function Registration () {
                     <button className='btn btn-light registrationButton' disabled={(!registrationService.checkRegister.atLeast5Characters || !registrationService.checkRegister.atLeast1UppercaseLetter) || !registrationService.checkRegister.correctUsername} onClick={registrationService.registration}>Registration</button>
 
                     <div className="conditionDIV">
+                        
                         <p>{registrationService.checkRegister.atLeast5Characters ? '✔' : '✘'} Password must be at least 5 characters long.</p>
                         <p>{registrationService.checkRegister.atLeast1UppercaseLetter ? '✔' : '✘'} Password must be contain at least one uppercase letter.</p>
                         <p>{registrationService.checkRegister.correctUsername ? '✔' : '✘'} Correct username (3-10 characters).</p>
-                        
-                        {registrationService.checkRegister.isRegisterSuccessfulOrTaken.includes('Successful') ?
-                        (
-                            <p className='succesfullRegistration' onClick={() => navigateService.navigate('/login')}>{registrationService.checkRegister.isRegisterSuccessfulOrTaken}</p>
-                        ) : registrationService.checkRegister.isRegisterSuccessfulOrTaken.includes('taken') ? (
-                            <p className='beforeRegistration'>{registrationService.checkRegister.isRegisterSuccessfulOrTaken}</p>
-                        ) : (
-                            <p className='beforeRegistration'>Register and click here!</p>
-                        )}
+
+                        {registrationService.afterRegistration().pTag}
                         
                     </div>
 

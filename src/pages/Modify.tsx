@@ -1,12 +1,13 @@
 import { useNavigateService } from "../service/navigateService";
-import { useAddProductService } from "../service/addProductService";
 import { useModifyService } from "../service/modifyService";
+import MenuBar from "../components/menuBar";
+import { useAddProductService } from "../service/addProductService";
 
 export default function Modify () {
 
     /*Service:*/
 
-    const navigateService = useNavigateService();
+    const addProductService = useAddProductService();
     const modifyService = useModifyService();
 
     /*Return:*/
@@ -14,7 +15,7 @@ export default function Modify () {
     return(
         <>
 
-            <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/webshop')}>Back</button>
+            <MenuBar />
 
             <div className="outsideDIV">
                 
@@ -36,15 +37,7 @@ export default function Modify () {
                         className="inputStyle_AddProduct"
                         onChange={modifyService.handleChange}/>
 
-                    {
-
-                        modifyService.characterCount < 100 ? 
-                        <p style={{color: "green"}}>{modifyService.characterCount == 0 ? 
-                            modifyService.productDatasThatWillBeModify()?.description.length : 
-                            modifyService.characterCount}/100</p> : 
-                            <p style={{color: "red"}}>{modifyService.characterCount}/100</p>
-                    
-                    }
+                    {addProductService.textByCharacterCount(modifyService.characterCount).pTag}
 
                     <input 
                         type="text"
