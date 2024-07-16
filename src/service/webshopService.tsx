@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigateService } from "./navigateService";
+import { useMenuBarService } from "./menuBarService";
 
 export interface productStruct{
 
@@ -15,6 +17,11 @@ export interface productStruct{
 }
 
 export function useWebshopService () {
+
+    /*Service:*/
+
+    const navigateService = useNavigateService();
+    const menuBarService = useMenuBarService();
 
     /*useState:*/
 
@@ -64,11 +71,47 @@ export function useWebshopService () {
 
     }
 
+    const webshopButton = (product: productStruct) => {        
+
+            if(product.seller == getUsername())
+            {
+
+                return(
+
+                    
+                        <button 
+                            className='btn btn-primary modifyButton'
+                            onClick={() => navigateService.navigate(`/modify/${product.productId}`)}
+                            disabled={menuBarService.isDisabled()}>
+                            Modify</button>
+
+                )
+
+            }
+            else
+            {
+
+                return(
+
+                    
+                        <button 
+                            className='btn btn-primary buyButton' 
+                            onClick={() => navigateService.navigate(`/buyit/${product.productId}`)}
+                            disabled={menuBarService.isDisabled()}>
+                            Buy It</button>
+                    
+                )
+
+            }        
+
+    }
+
     /*Return:*/
 
     return{
         products,
-        getUsername
+        getUsername,
+        webshopButton
     }
 
 }

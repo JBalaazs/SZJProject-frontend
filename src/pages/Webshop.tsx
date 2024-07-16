@@ -1,6 +1,7 @@
 import '../design/style.css';
 import { useNavigateService } from '../service/navigateService';
 import { useWebshopService } from '../service/webshopService';
+import MenuBar from "../components/menuBar";
 
 export default function Webshop () {
 
@@ -15,22 +16,7 @@ export default function Webshop () {
 
         <div className='WebshopDesign'>
             
-            <button 
-                className="btn btn-primary backButton" 
-                onClick={() => navigateService.navigate('/')}>
-                Back</button>
-
-            <button 
-                className="btn btn-primary addProductButton" 
-                onClick={() => navigateService.navigate('/addproduct')}
-                disabled={localStorage.getItem('token') ? false : true}>
-                Add product</button>
-
-            <button 
-                className="btn btn-primary cartButton" 
-                onClick={() => navigateService.navigate('/cart')}
-                disabled={localStorage.getItem('token') ? false : true}>
-                Cart</button>
+            <MenuBar />
 
             <h1 className='title_Webshop'>Shop Now and Experience the Difference!</h1>
 
@@ -50,11 +36,7 @@ export default function Webshop () {
 
                                 <p className='productPrice'>{x.price}$</p>
 
-                                <button 
-                                    className={x.seller == webshopService.getUsername() ? 'btn btn-primary modifyButton' : 'btn btn-primary buyButton'} 
-                                    onClick={() => x.seller == webshopService.getUsername() ? navigateService.navigate(`/modify/${x.productId}`) : navigateService.navigate(`/buyit/${x.productId}`)}
-                                    disabled={localStorage.getItem('token') ? false : true}>
-                                    {x.seller == webshopService.getUsername() ? 'Modify' : 'Buy It'}</button>
+                                {webshopService.webshopButton(x)}
 
                                 <p className='productStock'>{x.stock} pcs available</p>
 

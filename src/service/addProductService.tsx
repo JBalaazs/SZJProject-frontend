@@ -68,11 +68,39 @@ export function useAddProductService () {
 
     }
 
+    const textByCharacterCount = (numberOfCharacters: number) => {
+
+        if(numberOfCharacters < 100)
+        {
+
+            return{
+
+                pTag:
+                    <p style={{color: "green"}}>{numberOfCharacters}/100</p>
+
+            }
+
+        }
+        else
+        {
+
+            return{
+
+                pTag:
+                    <p style={{color: "red"}}>{numberOfCharacters}/100</p>
+
+            }
+
+        }
+
+    }
+
     /*Return:*/
 
     return{
         handleChange,
         addNewProduct,
+        textByCharacterCount,
         characterCount
     }
 

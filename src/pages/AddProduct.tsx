@@ -1,11 +1,10 @@
-import { useNavigateService } from "../service/navigateService";
 import { useAddProductService } from "../service/addProductService";
+import MenuBar from "../components/menuBar";
 
 export default function AddProduct () {
 
     /*Serive:*/
 
-    const navigateService = useNavigateService();
     const addProductService = useAddProductService();
 
     /*Return:*/
@@ -13,7 +12,7 @@ export default function AddProduct () {
     return(
         <>
 
-            <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/webshop')}>Back</button>
+            <MenuBar />
 
             <div className="outsideDIV">
                 
@@ -21,7 +20,9 @@ export default function AddProduct () {
 
                     <input type="text" name="productName" placeholder="Name" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
                     <input type="text" name="productDescription" placeholder="Description" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
-                    {addProductService.characterCount < 100 ? <p style={{color: "green"}}>{addProductService.characterCount}/100</p> : <p style={{color: "red"}}>{addProductService.characterCount}/100</p>}
+
+                    {addProductService.textByCharacterCount(addProductService.characterCount).pTag}
+
                     <input type="text" name="price" placeholder="Price" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
                     <input type="number" name="stock" placeholder="Stock" className="inputStyle_AddProduct" onChange={addProductService.handleChange}/>
                     <select className="inputStyle_AddProduct" name="productCondition" onChange={addProductService.handleChange}>

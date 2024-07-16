@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../design/style.css';
 import { useLoginService } from '../service/loginService';
 import { useNavigateService } from '../service/navigateService';
+import MenuBar from "../components/menuBar";
 
 export default function Login () {
 
@@ -19,7 +20,7 @@ export default function Login () {
         <div className='LoginDesign'>
             <div className='outsideDIV'>
                 
-                <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
+                <MenuBar />
 
                 <div className='insideDIV_Login'>
         

@@ -1,4 +1,5 @@
-import { useNavigateService } from "../service/navigateService"
+import { useNavigateService } from "../service/navigateService";
+import MenuBar from "../components/menuBar";
 
 export default function Client () {
 
@@ -11,7 +12,7 @@ export default function Client () {
     return(
         <div className="outsideDIV">
 
-            <button className="btn btn-primary backButton" onClick={() => navigateService.navigate('/')}>Back</button>
+            <MenuBar />
             
             <div className="card-container">
                 <h2>Bank Card Details</h2>
