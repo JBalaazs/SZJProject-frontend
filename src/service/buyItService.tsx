@@ -105,7 +105,7 @@ export function useBuyItService () {
         cartService.cartItems?.cartItems.map(x => {
 
             const findExist = webshopService.products?.find(p => x.productId == Number(productId));
-            const findPair = webshopService.products?.find(p => x.productId == Number(productId) && p.stock > x.quantity);
+            const findPair = webshopService.products?.find(p => x.productId == Number(productId) && p.stock >= (x.quantity + pieceOfProduct));
 
             if(!findExist)
             {
@@ -117,8 +117,7 @@ export function useBuyItService () {
 
                 isStock = true;
 
-            }
-            else
+            }else
             {
 
                 isStock = false;
