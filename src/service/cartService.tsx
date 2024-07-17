@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { useWebshopService } from "./webshopService";
 
 interface cartData {
@@ -20,6 +20,24 @@ export function useCartService () {
     /*useState:*/
 
     const [cartItems, setCartItems] = useState<cartData | null>(null);
+    const [popUp, setPopUp] = useState(false);
+    const [productId, setProductId] = useState(0);
+    const [deletePcs, setDeletePcs] = useState(0);
+
+    /*onChange:*/
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+        const {name, value} = event.target;
+
+        if(name == "delete")
+        {
+
+            setDeletePcs(Number(value));
+            
+        }
+
+    }
 
     /*Function:*/
 
@@ -47,9 +65,7 @@ export function useCartService () {
     const deleteFromCartById = (productId: number) => {
 
         const token = localStorage.getItem('token');
-        const quantity = 1;
-
-        console.log(productId);
+        const quantity = deletePcs;
 
         fetch(`${process.env.REACT_APP_API_URL}/carts/remove`, {
 
@@ -66,9 +82,21 @@ export function useCartService () {
 
     }
 
+    const showPopUp = (productId: number) => {
+
+        setPopUp(!popUp);
+
+        setProductId(productId);
+
+        setDeletePcs(0);
+
+    }
+
     const cartList = () => {
 
         let totalPrice = 0;
+
+        const findPairForCartDatas = cartItems?.cartItems.find(c => c.productId == productId);
 
         const ListOfCart = cartItems?.cartItems.map(x => {
 
@@ -91,8 +119,8 @@ export function useCartService () {
 
                         <button 
                             className="btn btn-danger modifyButton"
-                            onClick={() => deleteFromCartById(x.productId)}>Delete</button>
-            
+                            onClick={() =>showPopUp(x.productId)}>Delete</button>
+
                     </div>
                 );
 
@@ -107,6 +135,38 @@ export function useCartService () {
 
                     <h3>{totalPrice.toFixed(2)} <span className="buyitDollarSign">$</span></h3>
                     <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}}>Buy</button>
+
+                </div>
+
+                <div className={`popUp ${popUp ? 'open' : ''}`}>
+
+                    <div className="deletePanel">
+
+                        <h1 className="deleteTitle">DELETE</h1>
+                        <p className="deletePcs">({findPairForCartDatas?.quantity}pcs)</p>
+
+                        <button 
+                            className="btn btn-danger X_Button"
+                            onClick={() => setPopUp(!popUp)}>X</button>
+
+                        <label htmlFor="delete" className="labelCart">Enter the number of delete:</label>
+
+                        <input
+                            name="delete"
+                            type="number"
+                            className="inputCart" 
+                            onChange={handleChange}
+                            value={deletePcs}
+                            min={1}
+                            max={findPairForCartDatas?.quantity}
+                            placeholder="Type PCS of delete.."/>
+
+                        <button 
+                            className="btn btn-danger modifyButton"
+                            onClick={() => deleteFromCartById(productId)}
+                            disabled={deletePcs == 0 ? true : false}>OK</button>
+
+                    </div>
 
                 </div>
 
