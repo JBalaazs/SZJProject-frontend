@@ -135,7 +135,8 @@ export function useCartService () {
     /*Return:*/
 
     return {
-        cartList
+        cartList,
+        cartItems
     }  
 
 }

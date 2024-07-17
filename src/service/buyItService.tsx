@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import '../design/style.css';
 import { useNavigateService } from "./navigateService";
+import { useCartService } from "./cartService";
 
 export function useBuyItService () {
 
@@ -22,6 +23,7 @@ export function useBuyItService () {
 
     const webshopService = useWebshopService();
     const navigateService = useNavigateService();
+    const cartService = useCartService();
 
     /*selectedId from URL:*/
 
@@ -98,7 +100,34 @@ export function useBuyItService () {
 
     const addToCart = () => {
 
-        if(pieceOfProduct > 0)
+        let isStock = false;
+
+        cartService.cartItems?.cartItems.map(x => {
+
+            const findExist = webshopService.products?.find(p => x.productId == Number(productId));
+            const findPair = webshopService.products?.find(p => x.productId == Number(productId) && p.stock > x.quantity);
+
+            if(!findExist)
+            {
+
+                isStock = true;
+
+            }else if(findPair)
+            {
+
+                isStock = true;
+
+            }
+            else
+            {
+
+                isStock = false;
+
+            }
+
+        })
+
+        if(pieceOfProduct > 0 && isStock)
         {
 
             const token = localStorage.getItem('token');
@@ -122,6 +151,41 @@ export function useBuyItService () {
 
     }
 
+    const buyItButton_Input = () => {
+
+        if(pieceOfProduct > 0)
+        {
+
+            return{
+
+                buttonTag:
+                    <button 
+                        className="btn btn-primary buyitButton"
+                        disabled={false}
+                        onClick={addToCart}>
+                        Add To Cart</button>
+
+            }
+
+        }
+        else
+        {
+
+            return{
+
+                buttonTag:
+                    <button 
+                        className="btn btn-danger buyitButton"
+                        disabled={true}
+                        onClick={addToCart}>
+                        Add To Cart</button>
+
+            }
+
+        }
+
+    }
+
     /*Return:*/
 
     return{
@@ -130,7 +194,8 @@ export function useBuyItService () {
         totalPrice,
         findPairFunction,
         addToCart,
-        pieceOfProduct
+        pieceOfProduct,
+        buyItButton_Input
     }
 
 }

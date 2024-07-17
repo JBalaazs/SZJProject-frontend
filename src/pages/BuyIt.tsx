@@ -25,7 +25,7 @@ export default function BuyIt () {
                 <div className="buyItInside">
 
                     <p className="buyItHowMany">How many do you want to buy?</p>
-
+                        
                     <input type="number"
                         name="piece" 
                         className="buyitInput" 
@@ -36,11 +36,11 @@ export default function BuyIt () {
 
                     <p className="buyItTotal">Total: {buyItService.totalPrice()?.toFixed(2)}<span className="buyitDollarSign">$</span></p>
 
-                    <button 
-                        className={buyItService.pieceOfProduct > 0 ? "btn btn-primary buyitButton" : "btn btn-danger buyitButton"}
-                        disabled={buyItService.pieceOfProduct > 0 ? false : true}
-                        onClick={buyItService.addToCart}>
-                        Add To Cart</button>
+                    {
+
+                        buyItService.buyItButton_Input().buttonTag
+
+                    }
 
                 </div>
             </div>
