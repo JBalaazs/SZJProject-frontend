@@ -84,7 +84,7 @@ export function useCartService () {
     
                         <h3>
                             {findPairs.productName} 
-                            <span style={{fontSize: '20px'}}> ({findPairs.price * x.quantity} 
+                            <span style={{fontSize: '20px'}}> ({(findPairs.price * x.quantity).toFixed(2)} 
                             <span className="buyitDollarSign">$</span> 
                             - {x.quantity} pcs)</span>
                         </h3>
@@ -105,7 +105,7 @@ export function useCartService () {
                 {ListOfCart}
                 <div className="productPrice_Cart">
 
-                    <h3>{totalPrice} <span className="buyitDollarSign">$</span></h3>
+                    <h3>{totalPrice.toFixed(2)} <span className="buyitDollarSign">$</span></h3>
                     <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}}>Buy</button>
 
                 </div>
