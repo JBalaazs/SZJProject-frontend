@@ -1,6 +1,5 @@
 import MenuBar from "../components/menuBar";
 import { useCartService } from "../service/cartService";
-import { useNavigateService } from "../service/navigateService"
 
 export default function Cart () {
 
