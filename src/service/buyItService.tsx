@@ -2,6 +2,7 @@ import { productStruct, useWebshopService } from "./webshopService";
 import { useParams } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import '../design/style.css';
+import { useNavigateService } from "./navigateService";
 
 export function useBuyItService () {
 
@@ -20,6 +21,7 @@ export function useBuyItService () {
     /*Service:*/
 
     const webshopService = useWebshopService();
+    const navigateService = useNavigateService();
 
     /*selectedId from URL:*/
 
@@ -113,6 +115,8 @@ export function useBuyItService () {
                 body: JSON.stringify({productId, quantity})
 
             })
+
+            navigateService.navigate('/webshop');
 
         }
 

@@ -1,7 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useNavigateService } from "../service/navigateService"
 import { useState } from "react";
-import { useLogOutService } from "../service/logOutService";
 import { useMenuBarService } from "../service/menuBarService";
 import { useMatch } from "react-router-dom";
 
@@ -11,7 +10,6 @@ const MenuBar = () => {
 
     const navigateService = useNavigateService();
     const location = useLocation();
-    const logOutService = useLogOutService();
     const menuBarService = useMenuBarService();
 
     /*useState:*/
