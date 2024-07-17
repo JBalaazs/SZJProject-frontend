@@ -47,6 +47,9 @@ export function useCartService () {
     const deleteFromCartById = (productId: number) => {
 
         const token = localStorage.getItem('token');
+        const quantity = 1;
+
+        console.log(productId);
 
         fetch(`${process.env.REACT_APP_API_URL}/carts/remove`, {
 
@@ -55,7 +58,7 @@ export function useCartService () {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({productId})
+            body: JSON.stringify({productId, quantity})
 
         })
 
