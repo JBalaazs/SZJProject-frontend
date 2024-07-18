@@ -20,8 +20,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     box-shadow: 5px 5px 5px 8px black;
+    animation: slideIn_DIV 0.5s ease-in;
 }
 
 .homeButton{
@@ -182,8 +182,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     box-shadow: 5px 5px 5px 8px white;
+    animation: slideIn_DIV 0.5s ease-in;
 }
 
 .title_Registration{
@@ -249,9 +249,9 @@
     justify-content: space-evenly;
     padding-left: 10px;
     padding-right: 10px;
-
     border: solid 1px black;
     box-shadow: 1px 2px 3px black;
+    animation: slideIn_DIV 0.5s ease-in;
 }
 
 .productTitle{
@@ -420,8 +420,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     box-shadow: 5px 5px 5px 8px black;
+    animation: slideIn_DIV 0.5s ease-in;
 }
 
 .inputStyle_AddProduct {
@@ -451,6 +451,7 @@
     width: 500px;
     border-radius: 20px;
     padding: 15px;
+    animation: slideIn_DIV 0.5s ease-in;
 }
 
 .productList{
@@ -500,6 +501,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    animation: slideIn_Delete 1s ease-out;
 }
 
 .X_Button{
@@ -538,6 +540,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 450px;
+    animation: slideIn_DIV 0.5s ease-in;
 }
 
 .card-container h2 {
@@ -730,5 +733,29 @@ button:hover {
     }
     .homeButton{
         width: 125px;
+    }
+}
+
+/*KeyFrames:*/
+
+@keyframes slideIn_DIV {
+    from{
+        opacity: 0;
+        transform: translateY(10%);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn_Delete {
+    from{
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
     }
 }
