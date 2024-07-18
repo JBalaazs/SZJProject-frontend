@@ -1,8 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { useNavigateService } from "../service/navigateService"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMenuBarService } from "../service/menuBarService";
 import { useMatch } from "react-router-dom";
+import { useCartService } from "../service/cartService";
 
 const MenuBar = () => {
 
@@ -11,6 +12,7 @@ const MenuBar = () => {
     const navigateService = useNavigateService();
     const location = useLocation();
     const menuBarService = useMenuBarService();
+    const cartService = useCartService();
 
     /*useState:*/
 
@@ -68,7 +70,7 @@ const MenuBar = () => {
                 <button onClick={() => navigateService.navigate('/webshop')}>Webshop</button>
                 <button onClick={() => navigateService.navigate('/client')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Client Site</button>
                 <button onClick={() => navigateService.navigate('/addproduct')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Add product</button>
-                <button onClick={() => navigateService.navigate('/cart')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Cart</button>
+                <button onClick={() => navigateService.navigate('/cart')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Cart ({cartService.cartItems?.cartItems && cartService.cartItems?.cartItems.length > 0 ? cartService.cartItems?.cartItems.length : 0})</button>
 
                 <button onClick={menuBarService.loginOrLogout().service}>
                     {menuBarService.loginOrLogout().title}</button>

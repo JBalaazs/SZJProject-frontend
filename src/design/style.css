@@ -532,6 +532,16 @@
     margin-top: -40px;
 }
 
+.clearAll_Box{
+    display: flex;
+    justify-content: center;
+}
+
+.clearAll{
+    margin-top: 10px;
+    width: 200px;
+}
+
 /*Client:*/
 
 .card-container {
