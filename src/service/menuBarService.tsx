@@ -30,7 +30,7 @@ export function useMenuBarService () {
 
             return{
                 service: logOutService.logout,
-                title: 'Logout'
+                isLogin: 'none'
             }
 
         }
