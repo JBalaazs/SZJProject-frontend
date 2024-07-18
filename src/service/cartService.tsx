@@ -92,6 +92,25 @@ export function useCartService () {
 
     }
 
+    const clearAll = () => {
+
+        const token = localStorage.getItem('token');
+
+        fetch(`${process.env.REACT_APP_API_URL}/carts/clear`, {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            
+
+        })
+
+        window.location.reload();
+
+    }
+
     const cartList = () => {
 
         let totalPrice = 0;
@@ -136,6 +155,10 @@ export function useCartService () {
                     <h3>{totalPrice.toFixed(2)} <span className="buyitDollarSign">$</span></h3>
                     <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}}>Buy</button>
 
+                </div>
+
+                <div className="clearAll_Box">
+                    <button className="btn btn-danger clearAll" onClick={clearAll}>Clear All</button>
                 </div>
 
                 <div className={`popUp ${popUp ? 'open' : ''}`}>

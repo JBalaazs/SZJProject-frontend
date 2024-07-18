@@ -102,6 +102,13 @@ export function useBuyItService () {
 
         let isStock = false;
 
+        if(!cartService.cartItems?.cartItems.length) /*After clear there are not elements.*/
+        {
+
+            isStock = true;
+            
+        }
+
         cartService.cartItems?.cartItems.map(x => {
 
             const findExist = webshopService.products?.find(p => x.productId == Number(productId));
@@ -145,6 +152,8 @@ export function useBuyItService () {
             })
 
             navigateService.navigate('/webshop');
+
+            window.location.reload();
 
         }
 
