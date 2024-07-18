@@ -15,6 +15,7 @@ const MenuBar = () => {
     /*useState:*/
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     /*useMatch:*/
 
@@ -56,6 +57,12 @@ const MenuBar = () => {
 
     }
 
+    const toggleDropDown = () => {
+
+        setIsDropdownOpen(!isDropdownOpen);
+
+    }
+
     /*Return:*/
 
     return(
@@ -66,14 +73,21 @@ const MenuBar = () => {
             <div className={`menuItems ${isMenuOpen ? 'open' : ''}`}>
                 <button onClick={() => navigateService.navigate(getBackRoute())}>Back</button>
                 <button onClick={() => navigateService.navigate('/webshop')}>Webshop</button>
-                <button onClick={() => navigateService.navigate('/client')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Client Site</button>
                 <button onClick={() => navigateService.navigate('/addproduct')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Add product</button>
                 <button onClick={() => navigateService.navigate('/cart')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Cart</button>
 
-                <button onClick={menuBarService.loginOrLogout().service}>
-                    {menuBarService.loginOrLogout().title}</button>
+                <button onClick={() => navigateService.navigate('/login')} style={{display: `${menuBarService.loginOrLogout().isLogin}`}}>Login</button>
 
             </div>
+
+            <div className="profile" onClick={toggleDropDown} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}></div>
+                <div className={`toggleDropDown ${isDropdownOpen ? 'show' : ''}`}>
+                
+                    <button className="toggleDropDownButton" onClick={() => navigateService.navigate('/client')}>Profile</button>
+                    <button className="toggleDropDownButton" onClick={menuBarService.loginOrLogout().service}>Logout</button>
+                
+            </div>
+
         </div>
     )
 

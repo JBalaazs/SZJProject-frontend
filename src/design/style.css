@@ -634,6 +634,42 @@ button:hover {
     gap: 20px;
 }
 
+.menuBar .profile{
+    display: flex;
+    align-items: center;
+    border: solid 1px red;
+    position: absolute;
+    right: 3%;
+    top: 10px;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.toggleDropDown{
+    display: none;
+}
+
+.toggleDropDown.show{
+    display: flex;
+    position: absolute;
+    right: 3%;
+    top: 65px;
+    flex-direction: column;
+    background-color: gray;
+    border-radius: 15px;
+}
+
+.menuBar .toggleDropDownButton{
+    background-color: white;
+    color: black;
+    border: solid 1px black;
+    width: 100px;
+    border-radius: 15px;
+    margin: 5px;
+}
+
 /*Phone view:*/
 
 @media (max-width: 768px) {
@@ -659,7 +695,7 @@ button:hover {
     .menuToggle {
         display: flex;
         position: absolute;
-        right: 10px;
+        left: 10px;
     }
     .menuItems {
         display: none;
@@ -669,6 +705,11 @@ button:hover {
     }
     .menuItems.open {
         display: flex;
+    }
+    .menuBar .profile{
+        position: absolute;
+        top: 20px;
+        right: 3%;
     }
 }
 
