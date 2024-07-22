@@ -219,7 +219,9 @@ export function useCartService () {
 
     return {
         cartList,
-        cartItems
+        cartItems,
+        parseJwt
+        
     }  
 
 }

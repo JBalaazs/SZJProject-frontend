@@ -661,6 +661,15 @@ button:hover {
     display: none;
 }
 
+.toggleDropDown p{
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
 .toggleDropDown.show{
     display: flex;
     position: absolute;
