@@ -51,7 +51,7 @@ export function useMenuBarService () {
 
     return{
         isDisabled,
-        loginOrLogout
+        loginOrLogout,
     }
 
 }

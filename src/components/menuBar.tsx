@@ -18,6 +18,24 @@ const MenuBar = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [balance, setBalance] = useState(0);
+
+    /*useEffect:*/
+
+    const token = localStorage.getItem('token');
+
+    useEffect(() => {
+
+        if(token)
+        {
+
+            fetch(`${process.env.REACT_APP_API_URL}/user/balance?id=${cartService.parseJwt(token)?.userId}`)
+                .then(res => res.json())
+                .then(data => setBalance(data.data))
+
+        }
+        
+    })
 
     /*useMatch:*/
 
@@ -85,10 +103,11 @@ const MenuBar = () => {
             <div className="profile" onClick={toggleDropDown} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}></div>
                 <div className={`toggleDropDown ${isDropdownOpen ? 'show' : ''}`}>
                 
+                    <p>{balance.toFixed(2)} $</p>
                     <button className="toggleDropDownButton" onClick={() => navigateService.navigate('/client')}>Profile</button>
                     <button className="toggleDropDownButton" onClick={menuBarService.loginOrLogout().service}>Logout</button>
                 
-            </div>
+                </div>
 
         </div>
     )
