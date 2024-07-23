@@ -678,6 +678,9 @@ button:hover {
     flex-direction: column;
     background-color: gray;
     border-radius: 15px;
+    padding: 10px;
+    align-items: center;
+    width: auto;
 }
 
 .menuBar .toggleDropDownButton{
