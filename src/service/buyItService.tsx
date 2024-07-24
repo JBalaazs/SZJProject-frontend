@@ -10,6 +10,7 @@ export function useBuyItService () {
     /*useState:*/
 
     const [pieceOfProduct, setPieceOfProduct] = useState(0);
+    const [error, setError] = useState('');
 
     /*onChange:*/
 
@@ -128,6 +129,7 @@ export function useBuyItService () {
             {
 
                 isStock = false;
+                setError('All of these are in your cart.');
 
             }
 
@@ -161,7 +163,7 @@ export function useBuyItService () {
 
     const buyItButton_Input = () => {
 
-        if(pieceOfProduct > 0)
+        if(pieceOfProduct > 0 && Number(findPairFunction()?.stock) >= pieceOfProduct)
         {
 
             return{
@@ -171,7 +173,12 @@ export function useBuyItService () {
                         className="btn btn-primary buyitButton"
                         disabled={false}
                         onClick={addToCart}>
-                        Add To Cart</button>
+                        Add To Cart</button>,
+
+                error:
+                    error ? (
+                        <p className="errorText">{error}</p>
+                    ) : null
 
             }
 
@@ -203,7 +210,8 @@ export function useBuyItService () {
         findPairFunction,
         addToCart,
         pieceOfProduct,
-        buyItButton_Input
+        buyItButton_Input,
+        error
     }
 
 }

@@ -551,6 +551,15 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 450px;
     animation: slideIn_DIV 0.5s ease-in;
+    margin: 20px;
+}
+
+.userData{
+    display: flex;
+    flex-direction: row;
+    margin: 80px;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-container h2 {
@@ -693,6 +702,13 @@ button:hover {
 }
 
 /*Phone view:*/
+
+@media (max-width: 969px) {
+    .userData{
+        display: flex;
+        flex-direction: column;
+    }
+}
 
 @media (max-width: 768px) {
     .insideDIV_Home{
