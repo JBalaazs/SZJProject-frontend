@@ -42,6 +42,12 @@ export default function BuyIt () {
 
                     }
 
+                    {
+
+                        buyItService.buyItButton_Input().error
+
+                    }
+
                 </div>
             </div>
 
