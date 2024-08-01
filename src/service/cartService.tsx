@@ -110,6 +110,27 @@ export function useCartService () {
         window.location.reload();
 
     }
+    
+    const createOrder = () => {
+
+        const token = localStorage.getItem('token');
+
+        if(token)
+        {
+
+            fetch(`${process.env.REACT_APP_API_URL}/orders/create?userId=${parseJwt(token)?.userId}`, {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+
+            })
+            
+        }
+
+    }
 
     const cartList = () => {
 
@@ -153,7 +174,7 @@ export function useCartService () {
                 <div className="productPrice_Cart">
 
                     <h3>{totalPrice.toFixed(2)} <span className="buyitDollarSign">$</span></h3>
-                    <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}}>Buy</button>
+                    <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}} onClick={createOrder}>Buy</button>
 
                 </div>
 
