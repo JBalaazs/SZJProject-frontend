@@ -17,9 +17,19 @@ export function useClientService () {
 
     });
 
+    const [address, setAddress] = useState({
+        
+        country: '',
+        city: '',
+        street: '',
+        zipCode: ''
+
+    });
+
     /*onChange:*/
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
         const { name, value } = event.target;
 
         if (name === 'cardNumber') {
@@ -105,7 +115,51 @@ export function useClientService () {
                 ...regEx,
                 newBalance: Number(value)
 
-            }))
+            }));
+
+        }
+
+        if(name == 'city') {
+
+            setAddress(prevAddress => ({
+
+                ...prevAddress,
+                city: value
+
+            }));
+
+        }
+
+        if(name == 'country') {
+
+            setAddress(prevAddress => ({
+
+                ...prevAddress,
+                country: value
+
+            }));
+
+        }
+
+        if(name == 'street') {
+
+            setAddress(prevAddress => ({
+
+                ...prevAddress,
+                street: value
+
+            }));
+
+        }
+
+        if(name == 'zipCode') {
+
+            setAddress(prevAddress => ({
+
+                ...prevAddress,
+                zipCode: value
+
+            }));
 
         }
 
