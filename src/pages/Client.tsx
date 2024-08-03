@@ -51,19 +51,19 @@ export default function Client () {
                     <form>
                         <div className="form-group">
                             <label >City</label>
-                            <input type="text" name="city" placeholder="Budapest" required />
+                            <input type="text" name="city" placeholder="Budapest" onChange={clientService.handleChange} required />
                         </div>
                         <div className="form-group">
                             <label>Country</label>
-                            <input type="text" name="country" placeholder="Hungary" required />
+                            <input type="text" name="country" placeholder="Hungary" onChange={clientService.handleChange} required />
                         </div>
                         <div className="form-group">
                             <label>Street</label>
-                            <input type="text" name="street" placeholder="Szeles st." required />
+                            <input type="text" name="street" placeholder="Szeles st." onChange={clientService.handleChange} required />
                         </div>
                         <div className="form-group">
                             <label>Zip code</label>
-                            <input type="text" name="zipCode" placeholder="X." required />
+                            <input type="text" name="zipCode" placeholder="X." onChange={clientService.handleChange} required />
                         </div>
 
                         <button type="submit">Save</button>
