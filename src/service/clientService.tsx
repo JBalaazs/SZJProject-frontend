@@ -7,13 +7,23 @@ export function useClientService () {
     const [formattedValue_cardNumber, setFormattedValue_cardNumber] = useState('');
     const [formattedValue_date, setFormattedValue_date] = useState('');
 
-    const [regEx, setRegEx] = useState({
+    const [bankData, setBankData] = useState({
 
         cardNumber: '',
         holderName: '',
         expirationDate: '',
         cvv: '',
-        newBalance: 0
+        addBalance: 0
+
+    });
+
+    const [errorBankData, setErrorBankData] = useState({
+
+        cardNumber: '',
+        holderName: '',
+        expirationDate: '',
+        cvv: '',
+        addBalance: ''
 
     });
 
@@ -26,6 +36,19 @@ export function useClientService () {
 
     });
 
+    /*Function:*/
+
+    const setError = (name: string, isValid: boolean) => {
+
+        setErrorBankData(prev => ({
+
+            ...prev,
+            [name]: isValid ? 'green' : 'red'
+
+        }));
+
+    }
+
     /*onChange:*/
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,37 +58,44 @@ export function useClientService () {
         if (name === 'cardNumber') {
 
             const cleanedValue = value.replace(/\s+/g, '');
-
+            
             const validCardNumber = /^[0-9]{0,16}$/;
 
-            if (validCardNumber.test(cleanedValue)) {
+            const formattedValue = cleanedValue.match(/.{1,4}/g)?.join(' ') || '';
+            setFormattedValue_cardNumber(formattedValue);
 
-                const formattedValue = cleanedValue.match(/.{1,4}/g)?.join(' ') || '';
-                setFormattedValue_cardNumber(formattedValue);
+            const isValid = validCardNumber.test(cleanedValue) && cleanedValue.length == 16;
 
-                setRegEx(regEx => ({
-                    ...regEx,
+            if (isValid) {
+
+                setBankData(data => ({
+                    ...data,
                     cardNumber: cleanedValue
                 }));
 
             }
+
+            setError('cardNumber', isValid);
+
         }
 
-        if(name == 'cardName') {
+        if(name == 'holderName') {
 
-            const validCharacters = /^[A-Za-z]+(?:\s[A-Za-z]+){1,}$/.test(value);
+            const isValid = /^[A-Za-z]+(?:\s[A-Za-z]+){1,}$/.test(value);
 
-            if(validCharacters)
+            if(isValid)
             {
 
-                setRegEx(regEx => ({
+                setBankData(data => ({
 
-                    ...regEx,
+                    ...data,
                     holderName: value
 
                 }));
 
             }
+
+            setError('holderName', isValid);
 
         }
 
@@ -73,49 +103,73 @@ export function useClientService () {
 
             const cleanedValue = value.replace(/\D/g, '');
 
-            const valid = /^[0-9]{0,2}[0-9]{0,2}$/;
+            const valid = /^[0-9]{0,4}$/;
         
             if (valid.test(cleanedValue)) {
                 
                 const formattedValue = cleanedValue.match(/.{1,2}/g)?.join('/') || '';
-                setFormattedValue_date(formattedValue);
-                
-                setRegEx(regEx => ({
-                    ...regEx,
-                    expirationDate: formattedValue
-                }));
 
-                console.log(regEx.expirationDate)
+                const [month, year] = formattedValue.split('/').map(Number);
+
+                const isValidMonth = month >= 1 && month <= 12;
+                const isValidYear = year >= 0 && year <= 99;
+
+                setFormattedValue_date(formattedValue);
+
+                const isValid = isValidMonth && isValidYear;
+
+                if(isValidMonth && isValidYear)
+                {
+                
+                    setBankData(data => ({
+                        ...data,
+                        expirationDate: formattedValue
+                    }));
+
+                }
+
+                setError('expirationDate', isValid);
 
             }
         }
 
         if(name == 'cvv') {
 
-            const isValid = /^[0-9]{0,3}$/.test(value);
+            const isValid = /^[0-9]{0,3}$/.test(value) && value.length == 3;
 
             if(isValid)
             {
 
-                setRegEx(regEx => ({
+                setBankData(data => ({
 
-                    ...regEx,
+                    ...data,
                     cvv: value
 
                 }));
 
             }
 
+            setError('cvv', isValid);
+
         }
 
-        if(name == 'money') {
+        if(name == 'addBalance') {
 
-            setRegEx(regEx => ({
+            const isValid = /^[0-9]$/.test(value);
 
-                ...regEx,
-                newBalance: Number(value)
+            if(isValid)
+            {
 
-            }));
+                setBankData(data => ({
+
+                    ...data,
+                    addBalance: Number(value)
+    
+                }));
+
+            }
+
+            setError('addBalance', isValid);
 
         }
 
@@ -176,7 +230,7 @@ export function useClientService () {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify(regEx)
+            body: JSON.stringify(bankData)
 
         });
 
@@ -186,8 +240,8 @@ export function useClientService () {
 
     return{
         handleChange,
-        regEx,
         getMoney,
+        errorBankData,
         formattedValue_cardNumber,
         formattedValue_date
     }

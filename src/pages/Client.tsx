@@ -6,7 +6,6 @@ export default function Client () {
 
     /*Service:*/
 
-    const navigateService = useNavigateService();
     const clientService = useClientService();
 
     /*Return:*/
@@ -24,25 +23,26 @@ export default function Client () {
                     <form>
                         <div className="form-group">
                             <label >Card Number</label>
-                            <input type="text" name="cardNumber" maxLength={19} placeholder="1234 5678 9123 4567" value={clientService.formattedValue_cardNumber} onChange={clientService.handleChange} required />
+                            <input type="text" name="cardNumber" maxLength={19} placeholder="1234 5678 9123 4567" value={clientService.formattedValue_cardNumber} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.cardNumber}`}} required />
                         </div>
                         <div className="form-group">
                             <label>Card Holder Name</label>
-                            <input type="text" name="cardName" placeholder="John Doe" onChange={clientService.handleChange} required />
+                            <input type="text" name="holderName" placeholder="John Doe" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.holderName}`}} required />
                         </div>
                         <div className="form-group">
                             <label>Expiry Date</label>
-                            <input type="text" name="expiryDate" maxLength={5} placeholder="MM/YY" value={clientService.formattedValue_date} onChange={clientService.handleChange} required />
+                            <input type="text" name="expiryDate" maxLength={5} placeholder="MM/YY" value={clientService.formattedValue_date} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.expirationDate}`}} required />
                         </div>
                         <div className="form-group">
                             <label>CVV</label>
-                            <input type="text" name="cvv" maxLength={3} placeholder="123" onChange={clientService.handleChange} required />
+                            <input type="text" name="cvv" maxLength={3} placeholder="123" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.cvv}`}} required />
                         </div>
                         <div className="form-group">
                             <label>Withdraw Value ($)</label>
-                            <input type="number" name="money" maxLength={3} placeholder="123" onChange={clientService.handleChange} required />
+                            <input type="number" name="addBalance" maxLength={3} placeholder="123" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.addBalance}`}} required />
                         </div>
-                        <button type="submit" onClick={clientService.getMoney}>Submit</button>
+
+                        <button onClick={clientService.getMoney}>Submit</button>
                     </form>
                 </div>
 
@@ -66,7 +66,7 @@ export default function Client () {
                             <input type="text" name="zipCode" placeholder="X." onChange={clientService.handleChange} required />
                         </div>
 
-                        <button type="submit">Save</button>
+                        <button>Save</button>
                     </form>
                 </div>
 
