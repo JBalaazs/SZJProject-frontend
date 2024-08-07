@@ -13,7 +13,7 @@ export function useClientService () {
         holderName: '',
         expirationDate: '',
         cvv: '',
-        addBalance: 0
+        newBalance: 0
 
     });
 
@@ -23,7 +23,7 @@ export function useClientService () {
         holderName: '',
         expirationDate: '',
         cvv: '',
-        addBalance: ''
+        newBalance: ''
 
     });
 
@@ -46,6 +46,14 @@ export function useClientService () {
             [name]: isValid ? 'green' : 'red'
 
         }));
+
+    }
+
+    const isFormValid = () => {
+
+        console.log(!Object.values(errorBankData).includes('red'));
+
+        return !Object.values(errorBankData).includes('red');
 
     }
 
@@ -153,9 +161,9 @@ export function useClientService () {
 
         }
 
-        if(name == 'addBalance') {
+        if(name == 'newBalance') {
 
-            const isValid = /^[0-9]$/.test(value);
+            const isValid = /^[0-9]{1,}$/.test(value);
 
             if(isValid)
             {
@@ -163,13 +171,13 @@ export function useClientService () {
                 setBankData(data => ({
 
                     ...data,
-                    addBalance: Number(value)
+                    newBalance: Number(value)
     
                 }));
 
             }
 
-            setError('addBalance', isValid);
+            setError('newBalance', isValid);
 
         }
 
@@ -241,9 +249,10 @@ export function useClientService () {
     return{
         handleChange,
         getMoney,
+        isFormValid,
         errorBankData,
         formattedValue_cardNumber,
-        formattedValue_date
+        formattedValue_date,
     }
 
 }
