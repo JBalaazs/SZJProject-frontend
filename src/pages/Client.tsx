@@ -1,6 +1,6 @@
-import { useNavigateService } from "../service/navigateService";
 import MenuBar from "../components/menuBar";
 import { useClientService } from "../service/clientService";
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function Client () {
 
@@ -39,10 +39,10 @@ export default function Client () {
                         </div>
                         <div className="form-group">
                             <label>Withdraw Value ($)</label>
-                            <input type="number" name="addBalance" maxLength={3} placeholder="123" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.addBalance}`}} required />
+                            <input type="number" name="newBalance" maxLength={3} placeholder="123" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.newBalance}`}} required />
                         </div>
 
-                        <button onClick={clientService.getMoney}>Submit</button>
+                        <button onClick={clientService.getMoney} className="btn btn-primary" disabled={!clientService.isFormValid()}>Submit</button>
                     </form>
                 </div>
 
