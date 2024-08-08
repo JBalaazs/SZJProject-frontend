@@ -1,11 +1,15 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 export function useClientService () {
 
     /*useState:*/
 
-    const [formattedValue_cardNumber, setFormattedValue_cardNumber] = useState('');
-    const [formattedValue_date, setFormattedValue_date] = useState('');
+    const [formattedValue, setFormattedValue] = useState({
+
+        cardNumber: '',
+        expirationDate: ''
+        
+    })
 
     const [bankData, setBankData] = useState({
 
@@ -81,6 +85,39 @@ export function useClientService () {
 
     }
 
+    const setBank_useState = (isValid: boolean, name: string, value: string) => {
+
+        if(isValid)
+        {
+
+            setBankData(prev => ({
+
+                ...prev,
+                [name]: name == 'newBalance' ? Number(value) : value
+
+            }));
+
+        }
+
+    } 
+
+    const setAddress_useState = (isValid: boolean, name: string, value: string) => {
+                
+        if(isValid)
+        {
+        
+            setAddress(prev => ({
+            
+                ...prev,
+                [name]: value
+                
+            
+            }));
+        
+        }
+
+    }
+
     /*onChange:*/
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,18 +133,17 @@ export function useClientService () {
             const validCardNumber = /^[0-9]{0,16}$/;
 
             const formattedValue = cleanedValue.match(/.{1,4}/g)?.join(' ') || '';
-            setFormattedValue_cardNumber(formattedValue);
+
+            setFormattedValue(prev => ({
+
+                ...prev,
+                cardNumber: formattedValue
+
+            }))
 
             const isValid = validCardNumber.test(cleanedValue) && cleanedValue.length == 16;
 
-            if (isValid) {
-
-                setBankData(data => ({
-                    ...data,
-                    cardNumber: cleanedValue
-                }));
-
-            }
+            setBank_useState(isValid, 'cardNumber', cleanedValue);
 
             setErrorBank('cardNumber', isValid);
 
@@ -117,17 +153,7 @@ export function useClientService () {
 
             const isValid = /^[A-Za-z]+(?:\s[A-Za-z]+){1,}$/.test(value);
 
-            if(isValid)
-            {
-
-                setBankData(data => ({
-
-                    ...data,
-                    holderName: value
-
-                }));
-
-            }
+            setBank_useState(isValid, 'holderName', value);
 
             setErrorBank('holderName', isValid);
 
@@ -148,17 +174,19 @@ export function useClientService () {
                 const isValidMonth = month >= 1 && month <= 12;
                 const isValidYear = year >= 0 && year <= 99;
 
-                setFormattedValue_date(formattedValue);
+                setFormattedValue(prev => ({
+
+                    ...prev,
+                    expirationDate: formattedValue
+
+                }))
 
                 const isValid = isValidMonth && isValidYear;
 
-                if(isValidMonth && isValidYear)
+                if(isValid)
                 {
-                
-                    setBankData(data => ({
-                        ...data,
-                        expirationDate: formattedValue
-                    }));
+
+                    setBank_useState(isValid, 'expirationDate', formattedValue);
 
                 }
 
@@ -174,12 +202,7 @@ export function useClientService () {
             if(isValid)
             {
 
-                setBankData(data => ({
-
-                    ...data,
-                    cvv: value
-
-                }));
+                setBank_useState(isValid, 'cvv', value);
 
             }
 
@@ -194,12 +217,7 @@ export function useClientService () {
             if(isValid)
             {
 
-                setBankData(data => ({
-
-                    ...data,
-                    newBalance: Number(value)
-    
-                }));
+                setBank_useState(isValid, 'newBalance', value);
 
             }
 
@@ -213,17 +231,7 @@ export function useClientService () {
 
             const isValid = /^[A-Za-z]{0,}$/.test(value) && value.length > 0;
 
-            if(isValid)
-            {
-
-                setAddress(prevAddress => ({
-
-                    ...prevAddress,
-                    city: value
-    
-                }));
-
-            }
+            setAddress_useState(isValid, 'city', value);
 
             setErrorAddress('city', isValid);
 
@@ -233,17 +241,7 @@ export function useClientService () {
 
             const isValid = /^[A-Za-z]{0,}$/.test(value) && value.length > 0;
 
-            if(isValid)
-            {
-
-                setAddress(prevAddress => ({
-
-                    ...prevAddress,
-                    country: value
-    
-                }));
-
-            }
+            setAddress_useState(isValid, 'country', value);
 
             setErrorAddress('country', isValid);
 
@@ -253,17 +251,7 @@ export function useClientService () {
 
             const isValid = /^[A-Za-z]+(?:\s[A-Za-z]+){1,}$/.test(value) && value.length > 0;
 
-            if(isValid)
-            {
-
-                setAddress(prevAddress => ({
-
-                    ...prevAddress,
-                    street: value
-    
-                }));
-
-            }
+            setAddress_useState(isValid, 'street', value);
 
             setErrorAddress('street', isValid);
 
@@ -273,17 +261,7 @@ export function useClientService () {
 
             const isValid = /^(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)$/.test(value) && value.length > 0;
 
-            if(isValid)
-            {
-
-                setAddress(prevAddress => ({
-
-                    ...prevAddress,
-                    zipCode: value
-    
-                }));
-
-            }
+            setAddress_useState(isValid, 'zipCode', value);
 
             setErrorAddress('zipCode', isValid);
 
@@ -317,8 +295,7 @@ export function useClientService () {
         isFormValidAddressData,
         errorBankData,
         errorAddressData,
-        formattedValue_cardNumber,
-        formattedValue_date,
+        formattedValue
     }
 
 }

@@ -23,7 +23,7 @@ export default function Client () {
                     <form>
                         <div className="form-group">
                             <label >Card Number</label>
-                            <input type="text" name="cardNumber" maxLength={19} placeholder="1234 5678 9123 4567" value={clientService.formattedValue_cardNumber} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.cardNumber}`}} required />
+                            <input type="text" name="cardNumber" maxLength={19} placeholder="1234 5678 9123 4567" value={clientService.formattedValue.cardNumber} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.cardNumber}`}} required />
                         </div>
                         <div className="form-group">
                             <label>Card Holder Name</label>
@@ -31,7 +31,7 @@ export default function Client () {
                         </div>
                         <div className="form-group">
                             <label>Expiry Date</label>
-                            <input type="text" name="expiryDate" maxLength={5} placeholder="MM/YY" value={clientService.formattedValue_date} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.expirationDate}`}} required />
+                            <input type="text" name="expiryDate" maxLength={5} placeholder="MM/YY" value={clientService.formattedValue.expirationDate} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.expirationDate}`}} required />
                         </div>
                         <div className="form-group">
                             <label>CVV</label>
