@@ -254,15 +254,14 @@ export function useCartService () {
                             type="number"
                             className="inputCart_Delete" 
                             onChange={handleChange}
-                            value={deletePcs}
-                            min={1}
+                            min={0}
                             max={findPairForCartDatas?.quantity}
-                            placeholder="Type PCS of delete.."/>
+                            placeholder="0"/>
 
                         <button 
                             className="btn btn-danger modifyButton"
                             onClick={() => deleteFromCartById(productId)}
-                            disabled={deletePcs == 0 ? true : false}>OK</button>
+                            disabled={deletePcs == 0 || deletePcs > Number(findPairForCartDatas?.quantity) ? true : false}>OK</button>
 
                     </div>
 
