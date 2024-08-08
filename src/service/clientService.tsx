@@ -36,9 +36,18 @@ export function useClientService () {
 
     });
 
+    const [errorAddressData, setErrorAddressData] = useState({
+
+        country: '',
+        city: '',
+        street: '',
+        zipCode: ''
+        
+    });
+
     /*Function:*/
 
-    const setError = (name: string, isValid: boolean) => {
+    const setErrorBank = (name: string, isValid: boolean) => {
 
         setErrorBankData(prev => ({
 
@@ -49,11 +58,26 @@ export function useClientService () {
 
     }
 
-    const isFormValid = () => {
+    const setErrorAddress = (name: string, isValid: boolean) => {
 
-        console.log(!Object.values(errorBankData).includes('red'));
+        setErrorAddressData(prev => ({
+
+            ...prev,
+            [name]: isValid ? 'green' : 'red'
+
+        }))
+
+    }
+
+    const isFormValidBankData = () => {
 
         return !Object.values(errorBankData).includes('red');
+
+    }
+
+    const isFormValidAddressData = () => {
+
+        return !Object.values(errorAddressData).includes('red');
 
     }
 
@@ -62,6 +86,8 @@ export function useClientService () {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const { name, value } = event.target;
+
+        /*BANK:*/
 
         if (name === 'cardNumber') {
 
@@ -83,7 +109,7 @@ export function useClientService () {
 
             }
 
-            setError('cardNumber', isValid);
+            setErrorBank('cardNumber', isValid);
 
         }
 
@@ -103,7 +129,7 @@ export function useClientService () {
 
             }
 
-            setError('holderName', isValid);
+            setErrorBank('holderName', isValid);
 
         }
 
@@ -136,7 +162,7 @@ export function useClientService () {
 
                 }
 
-                setError('expirationDate', isValid);
+                setErrorBank('expirationDate', isValid);
 
             }
         }
@@ -157,7 +183,7 @@ export function useClientService () {
 
             }
 
-            setError('cvv', isValid);
+            setErrorBank('cvv', isValid);
 
         }
 
@@ -177,51 +203,89 @@ export function useClientService () {
 
             }
 
-            setError('newBalance', isValid);
+            setErrorBank('newBalance', isValid);
 
         }
 
+        /*ADDRESS:*/
+
         if(name == 'city') {
 
-            setAddress(prevAddress => ({
+            const isValid = /^[A-Za-z]{0,}$/.test(value) && value.length > 0;
 
-                ...prevAddress,
-                city: value
+            if(isValid)
+            {
 
-            }));
+                setAddress(prevAddress => ({
+
+                    ...prevAddress,
+                    city: value
+    
+                }));
+
+            }
+
+            setErrorAddress('city', isValid);
 
         }
 
         if(name == 'country') {
 
-            setAddress(prevAddress => ({
+            const isValid = /^[A-Za-z]{0,}$/.test(value) && value.length > 0;
 
-                ...prevAddress,
-                country: value
+            if(isValid)
+            {
 
-            }));
+                setAddress(prevAddress => ({
+
+                    ...prevAddress,
+                    country: value
+    
+                }));
+
+            }
+
+            setErrorAddress('country', isValid);
 
         }
 
         if(name == 'street') {
 
-            setAddress(prevAddress => ({
+            const isValid = /^[A-Za-z]+(?:\s[A-Za-z]+){1,}$/.test(value) && value.length > 0;
 
-                ...prevAddress,
-                street: value
+            if(isValid)
+            {
 
-            }));
+                setAddress(prevAddress => ({
+
+                    ...prevAddress,
+                    street: value
+    
+                }));
+
+            }
+
+            setErrorAddress('street', isValid);
 
         }
 
         if(name == 'zipCode') {
 
-            setAddress(prevAddress => ({
+            const isValid = /^(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)$/.test(value) && value.length > 0;
 
-                ...prevAddress,
-                zipCode: value
+            if(isValid)
+            {
 
-            }));
+                setAddress(prevAddress => ({
+
+                    ...prevAddress,
+                    zipCode: value
+    
+                }));
+
+            }
+
+            setErrorAddress('zipCode', isValid);
 
         }
 
@@ -249,8 +313,10 @@ export function useClientService () {
     return{
         handleChange,
         getMoney,
-        isFormValid,
+        isFormValidBankData,
+        isFormValidAddressData,
         errorBankData,
+        errorAddressData,
         formattedValue_cardNumber,
         formattedValue_date,
     }

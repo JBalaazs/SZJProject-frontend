@@ -42,7 +42,7 @@ export default function Client () {
                             <input type="number" name="newBalance" maxLength={3} placeholder="123" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorBankData.newBalance}`}} required />
                         </div>
 
-                        <button onClick={clientService.getMoney} className="btn btn-primary" disabled={!clientService.isFormValid()}>Submit</button>
+                        <button onClick={clientService.getMoney} className="btn btn-primary" disabled={!clientService.isFormValidBankData()}>Submit</button>
                     </form>
                 </div>
 
@@ -51,22 +51,22 @@ export default function Client () {
                     <form>
                         <div className="form-group">
                             <label >City</label>
-                            <input type="text" name="city" placeholder="Budapest" onChange={clientService.handleChange} required />
+                            <input type="text" name="city" placeholder="Budapest" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData.city}`}} required />
                         </div>
                         <div className="form-group">
                             <label>Country</label>
-                            <input type="text" name="country" placeholder="Hungary" onChange={clientService.handleChange} required />
+                            <input type="text" name="country" placeholder="Hungary" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData.country}`}} required />
                         </div>
                         <div className="form-group">
                             <label>Street</label>
-                            <input type="text" name="street" placeholder="Szeles st." onChange={clientService.handleChange} required />
+                            <input type="text" name="street" placeholder="Szeles st." onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData.street}`}} required />
                         </div>
                         <div className="form-group">
                             <label>Zip code</label>
-                            <input type="text" name="zipCode" placeholder="X." onChange={clientService.handleChange} required />
+                            <input type="text" name="zipCode" placeholder="X." onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData.zipCode}`}} required />
                         </div>
 
-                        <button>Save</button>
+                        <button className="btn btn-primary" disabled={!clientService.isFormValidAddressData()}>Save</button>
                     </form>
                 </div>
 
