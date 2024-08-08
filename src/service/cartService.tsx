@@ -254,7 +254,6 @@ export function useCartService () {
                             type="number"
                             className="inputCart_Delete" 
                             onChange={handleChange}
-                            
                             min={0}
                             max={findPairForCartDatas?.quantity}
                             placeholder="0"/>
