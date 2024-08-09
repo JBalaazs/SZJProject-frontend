@@ -63,7 +63,7 @@ export default function Client () {
                         </div>
                         <div className="form-group">
                             <label>Zip code</label>
-                            <input type="text" name="zipCode" placeholder="X." onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData.zipCode}`}} required />
+                            <input type="text" name="zipCode" placeholder="3540" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData.zipCode}`}} required />
                         </div>
 
                         <button className="btn btn-primary" disabled={!clientService.isFormValidAddressData()}>Save</button>

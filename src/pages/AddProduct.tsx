@@ -3,7 +3,7 @@ import MenuBar from "../components/menuBar";
 
 export default function AddProduct () {
 
-    /*Serive:*/
+    /*Service:*/
 
     const addProductService = useAddProductService();
 
