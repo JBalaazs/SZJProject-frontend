@@ -259,7 +259,7 @@ export function useClientService () {
 
         if(name == 'zipCode') {
 
-            const isValid = /^(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)$/.test(value) && value.length > 0;
+            const isValid = /^[0-9]{4}$/.test(value) && value.length > 0;
 
             setAddress_useState(isValid, 'zipCode', value);
 
@@ -294,8 +294,9 @@ export function useClientService () {
         isFormValidBankData,
         isFormValidAddressData,
         errorBankData,
+        formattedValue,
         errorAddressData,
-        formattedValue
+        address
     }
 
 }

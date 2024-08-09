@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent } from "react";
 import { useWebshopService } from "./webshopService";
+import { useClientService } from "./clientService";
 
 interface cartData {
 
@@ -16,19 +17,23 @@ export function useCartService () {
     /*Service:*/
 
     const webshopService = useWebshopService();
+    const { errorAddressData, handleChange, address, isFormValidAddressData } = useClientService();
 
     /*useState:*/
 
     const [cartItems, setCartItems] = useState<cartData | null>(null);
+
     const [popUpDelete, setPopUpDelete] = useState(false);
     const [popUpBuy, setPopUpBuy] = useState(false);
+    const [popUpPurchase, setPopUpPurchase] = useState(false);
+
     const [productId, setProductId] = useState(0);
     const [deletePcs, setDeletePcs] = useState(0);
-    const [email, setEmail] = useState('');
+    const [successPay, setSuccessPay] = useState(false);
 
     /*onChange:*/
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleChangeCart = (event: ChangeEvent<HTMLInputElement>) => {
 
         const {name, value} = event.target;
 
@@ -37,26 +42,6 @@ export function useCartService () {
 
             setDeletePcs(Number(value));
             
-        }
-
-        if(name == "email")
-        {
-
-            const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-
-            if(valid)
-            {
-
-                setEmail(value);
-
-            }
-            else
-            {
-
-                setEmail('');
-
-            }
-
         }
 
     }
@@ -176,9 +161,18 @@ export function useCartService () {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token
                 },
-                body: JSON.stringify({email})
+                body: JSON.stringify({
+                    country: address.country,
+                    city: address.city,
+                    street: address.street,
+                    zipCode: address.zipCode
+                })
 
             })
+
+            setPopUpBuy(!popUpBuy)
+
+            setPopUpPurchase(!popUpPurchase)
 
         }
 
@@ -240,7 +234,7 @@ export function useCartService () {
 
                     <div className="popUpPanel">
 
-                        <h1 className="popUpPTitle">DELETE</h1>
+                        <h1 className="popUpTitle">DELETE</h1>
                         <p className="deletePcs">({findPairForCartDatas?.quantity}pcs)</p>
 
                         <button 
@@ -253,7 +247,7 @@ export function useCartService () {
                             name="delete"
                             type="number"
                             className="inputCart_Delete" 
-                            onChange={handleChange}
+                            onChange={handleChangeCart}
                             min={0}
                             max={findPairForCartDatas?.quantity}
                             placeholder="0"/>
@@ -273,18 +267,85 @@ export function useCartService () {
 
                     <div className="popUpPanel">
 
-                        <h1 className="popUpPTitle">BUY</h1>
+                        <h1 className="popUpTitle">BUY</h1>
 
                         <button 
                             className="btn btn-danger X_Button"
                             onClick={() => setPopUpBuy(!popUpBuy)}>X</button>
 
-                        <label className="labelCart">Address?</label>
+                        <label className="labelCart">You have to set your address data:</label>
+
+                        <div className="payInputs">
+
+                            <input
+                                type="text"
+                                className="inputCart_Pay"
+                                placeholder="Country (Hungary)"
+                                name="country"
+                                onChange={handleChange}
+                                style={{borderColor: `${errorAddressData.country}`}}
+                                required
+                                />
+
+                            <input
+                                type="text"
+                                className="inputCart_Pay"
+                                placeholder="City (Budapest)"
+                                name="city"
+                                onChange={handleChange}
+                                style={{borderColor: `${errorAddressData.city}`}}
+                                required
+                                />
+
+                        </div>
+
+                        <div className="payInputs">
+
+                            <input
+                                type="text"
+                                className="inputCart_Pay"
+                                placeholder="Street (Szeles st.)"
+                                name="street"
+                                onChange={handleChange}
+                                style={{borderColor: `${errorAddressData.street}`}}
+                                required
+                                />
+
+                            <input
+                                type="text"
+                                className="inputCart_Pay"
+                                placeholder="zipCode (3540)"
+                                name="zipCode"
+                                onChange={handleChange}
+                                style={{borderColor: `${errorAddressData.zipCode}`}}
+                                required
+                                />
+
+                        </div>
 
                         <button 
                             className="btn btn-danger modifyButton"
                             onClick={buyTheContentsOfTheCart}
-                            disabled={email.length == 0 ? true : false}>PAY</button>
+                            disabled={!isFormValidAddressData()}
+                            >PAY</button>
+
+                    </div>
+
+                </div>
+
+                {/*SUCCESSFUL PURCHASE:*/}
+
+                <div className={`popUp ${popUpPurchase ? 'open' : ''}`}>
+
+                    <div className="popUpPanel">
+
+                        <h1 className="popUpTitle">Successful purchase.</h1>
+
+                        <button 
+                            className="btn btn-danger X_Button"
+                            onClick={() => setPopUpPurchase(!popUpPurchase)}>X</button>
+
+                        <label className="labelCart">Order datas.</label>
 
                     </div>
 
