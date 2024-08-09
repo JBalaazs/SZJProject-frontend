@@ -556,6 +556,12 @@
     width: 200px;
 }
 
+.haveAddress{
+    padding: 20px;
+    border: solid 1px black;
+    border-radius: 10px;
+}
+
 /*Client:*/
 
 .card-container {

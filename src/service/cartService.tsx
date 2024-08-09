@@ -12,6 +12,17 @@ interface cartData {
 
 }
 
+interface addressData {
+
+    id: number,
+    city: string,
+    country: string,
+    street: string,
+    zipCode: string,
+    userId: number
+
+}
+
 export function useCartService () {
 
     /*Service:*/
@@ -29,7 +40,8 @@ export function useCartService () {
 
     const [productId, setProductId] = useState(0);
     const [deletePcs, setDeletePcs] = useState(0);
-    const [successPay, setSuccessPay] = useState(false);
+
+    const [addressData, setAddressData] = useState<addressData | null>(null);
 
     /*onChange:*/
 
@@ -45,6 +57,23 @@ export function useCartService () {
         }
 
     }
+
+    /*useEffect:*/
+
+    useEffect(() => {
+
+        const token = localStorage.getItem('token');
+
+        if(token)
+        {
+
+            fetch(`${process.env.REACT_APP_API_URL}/user/address?userId=${parseJwt(token)?.userId}`)
+                .then(res => res.json())
+                .then(data => setAddressData(data))
+
+        }
+
+    }, [])
 
     /*Function:*/
 
@@ -178,6 +207,37 @@ export function useCartService () {
 
     }
 
+    const doYouHaveAddress = (): boolean => {
+
+        /*
+        
+            Térjen vissza 'True'-val vagy 'False'-al.
+
+            Ha 'True', akkor ne kérjen be a 'Buy' ablakban 'Address' adatokat.
+            Ha 'False', akkor nyilván kérjen be adatokat.
+
+            'True' esetén írja is ki az adatokat.
+        
+        */
+
+        const token = localStorage.getItem('token');
+
+        if(token)
+        {
+
+            if(addressData?.userId == parseJwt(token)?.userId)
+            {
+
+                return true;
+
+            }
+
+        }
+
+        return false;
+
+    }
+
     const cartList = () => {
 
         let totalPrice = 0;
@@ -273,60 +333,91 @@ export function useCartService () {
                             className="btn btn-danger X_Button"
                             onClick={() => setPopUpBuy(!popUpBuy)}>X</button>
 
-                        <label className="labelCart">You have to set your address data:</label>
+                        {
 
-                        <div className="payInputs">
+                            !doYouHaveAddress() ? (
 
-                            <input
-                                type="text"
-                                className="inputCart_Pay"
-                                placeholder="Country (Hungary)"
-                                name="country"
-                                onChange={handleChange}
-                                style={{borderColor: `${errorAddressData.country}`}}
-                                required
-                                />
+                                <>
 
-                            <input
-                                type="text"
-                                className="inputCart_Pay"
-                                placeholder="City (Budapest)"
-                                name="city"
-                                onChange={handleChange}
-                                style={{borderColor: `${errorAddressData.city}`}}
-                                required
-                                />
+                                    <label className="labelCart">You have to set your address data:</label>
 
-                        </div>
+                                    <div className="payInputs">
 
-                        <div className="payInputs">
+                                        <input
+                                            type="text"
+                                            className="inputCart_Pay"
+                                            placeholder="Country (Hungary)"
+                                            name="country"
+                                            onChange={handleChange}
+                                            style={{borderColor: `${errorAddressData.country}`}}
+                                            required
+                                            />
 
-                            <input
-                                type="text"
-                                className="inputCart_Pay"
-                                placeholder="Street (Szeles st.)"
-                                name="street"
-                                onChange={handleChange}
-                                style={{borderColor: `${errorAddressData.street}`}}
-                                required
-                                />
+                                        <input
+                                            type="text"
+                                            className="inputCart_Pay"
+                                            placeholder="City (Budapest)"
+                                            name="city"
+                                            onChange={handleChange}
+                                            style={{borderColor: `${errorAddressData.city}`}}
+                                            required
+                                            />
 
-                            <input
-                                type="text"
-                                className="inputCart_Pay"
-                                placeholder="zipCode (3540)"
-                                name="zipCode"
-                                onChange={handleChange}
-                                style={{borderColor: `${errorAddressData.zipCode}`}}
-                                required
-                                />
+                                    </div>
 
-                        </div>
+                                    <div className="payInputs">
+
+                                        <input
+                                            type="text"
+                                            className="inputCart_Pay"
+                                            placeholder="Street (Szeles st.)"
+                                            name="street"
+                                            onChange={handleChange}
+                                            style={{borderColor: `${errorAddressData.street}`}}
+                                            required
+                                            />
+
+                                        <input
+                                            type="text"
+                                            className="inputCart_Pay"
+                                            placeholder="zipCode (3540)"
+                                            name="zipCode"
+                                            onChange={handleChange}
+                                            style={{borderColor: `${errorAddressData.zipCode}`}}
+                                            required
+                                            />
+
+                                    </div>
+                                
+                                </>
+
+                            ) : (
+
+                                <>
+                                
+                                    <div className="haveAddress">
+
+                                        <label>Your address data:</label>
+
+                                        <ul>
+                                            <li>Country: {addressData?.country}</li>
+                                            <li>City: {addressData?.city}</li>
+                                            <li>Street: {addressData?.street}</li>
+                                            <li>Zip code: {addressData?.zipCode}</li>
+                                        </ul>
+
+                                    </div>
+
+                                </>
+
+                            )
+
+                        }                        
 
                         <button 
                             className="btn btn-danger modifyButton"
                             onClick={buyTheContentsOfTheCart}
-                            disabled={!isFormValidAddressData()}
+                            disabled={!doYouHaveAddress() ? !isFormValidAddressData() : false}
                             >PAY</button>
 
                     </div>
