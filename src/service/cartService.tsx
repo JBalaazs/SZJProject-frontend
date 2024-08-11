@@ -41,7 +41,7 @@ export function useCartService () {
     const [productId, setProductId] = useState(0);
     const [deletePcs, setDeletePcs] = useState(0);
 
-    const [addressData, setAddressData] = useState<addressData | null>(null);
+    const [addressData, setAddressData] = useState<addressData[] | null>(null);
 
     /*onChange:*/
 
@@ -67,13 +67,36 @@ export function useCartService () {
         if(token)
         {
 
-            fetch(`${process.env.REACT_APP_API_URL}/user/address?userId=${parseJwt(token)?.userId}`)
-                .then(res => res.json())
-                .then(data => setAddressData(data))
+            fetch(`${process.env.REACT_APP_API_URL}/user/address`, {
+
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+
+            })
+            .then(res => res.json())
+            .then(data => setAddressData(data.data))
 
         }
 
-    }, [])
+    }, []);
+
+    useEffect(() => {
+
+        const token = localStorage.getItem('token');
+
+        if(token)
+        {
+
+            fetch(`${process.env.REACT_APP_API_URL}/carts?userId=${parseJwt(token)?.userId}`)
+                .then(res => res.json())
+                .then(data => setCartItems(data.data))
+                
+        }
+
+    }, []);
 
     /*Function:*/
 
@@ -183,7 +206,7 @@ export function useCartService () {
         if(token)
         {
 
-            fetch(`${process.env.REACT_APP_API_URL}/orders/pay?userId=${parseJwt(token)?.userId}`, {
+            fetch(`${process.env.REACT_APP_API_URL}/orders/pay`, {
 
                 method: 'POST',
                 headers: {
@@ -222,15 +245,10 @@ export function useCartService () {
 
         const token = localStorage.getItem('token');
 
-        if(token)
+        if(addressData)
         {
-
-            if(addressData?.userId == parseJwt(token)?.userId)
-            {
-
-                return true;
-
-            }
+            
+            return true;
 
         }
 
@@ -335,6 +353,12 @@ export function useCartService () {
 
                         {
 
+                            <h1>ah: {doYouHaveAddress().toString()}</h1>
+
+                        }
+
+                        {
+
                             !doYouHaveAddress() ? (
 
                                 <>
@@ -400,10 +424,10 @@ export function useCartService () {
                                         <label>Your address data:</label>
 
                                         <ul>
-                                            <li>Country: {addressData?.country}</li>
+                                            {/* <li>Country: {addressData?.country}</li>
                                             <li>City: {addressData?.city}</li>
                                             <li>Street: {addressData?.street}</li>
-                                            <li>Zip code: {addressData?.zipCode}</li>
+                                            <li>Zip code: {addressData?.zipCode}</li> */}
                                         </ul>
 
                                     </div>
@@ -446,23 +470,6 @@ export function useCartService () {
         )
 
     }
-
-    /*useEffect:*/
-
-    useEffect(() => {
-
-        const token = localStorage.getItem('token');
-
-        if(token)
-        {
-
-            fetch(`${process.env.REACT_APP_API_URL}/carts?userId=${parseJwt(token)?.userId}`)
-                .then(res => res.json())
-                .then(data => setCartItems(data.data))
-                
-        }
-
-    }, [])
 
     /*Return:*/
 

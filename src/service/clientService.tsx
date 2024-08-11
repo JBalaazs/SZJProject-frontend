@@ -273,7 +273,7 @@ export function useClientService () {
 
         const token = localStorage.getItem('token');
 
-        fetch(`${process.env.REACT_APP_API_URL}/user/update/balance`, {
+        fetch(`${process.env.REACT_APP_API_URL}/user/balance`, {
 
             method: 'POST',
             headers: {
