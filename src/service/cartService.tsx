@@ -41,7 +41,7 @@ export function useCartService () {
     const [productId, setProductId] = useState(0);
     const [deletePcs, setDeletePcs] = useState(0);
 
-    const [addressData, setAddressData] = useState<addressData[] | null>(null);
+    const [addressData, setAddressData] = useState<addressData | null>(null);
 
     /*onChange:*/
 
@@ -151,6 +151,29 @@ export function useCartService () {
 
     }
 
+    const getAddress = () => {
+
+        const token = localStorage.getItem('token');
+
+        if(token)
+        {
+
+            fetch(`${process.env.REACT_APP_API_URL}/user/address`, {
+
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+
+            })
+            .then(res => res.json())
+            .then(data => setAddressData(data.data))
+
+        }
+
+    }
+
     const showPopUpBuy = () => {
 
         setPopUpBuy(!popUpBuy);
@@ -232,22 +255,9 @@ export function useCartService () {
 
     const doYouHaveAddress = (): boolean => {
 
-        /*
-        
-            Térjen vissza 'True'-val vagy 'False'-al.
-
-            Ha 'True', akkor ne kérjen be a 'Buy' ablakban 'Address' adatokat.
-            Ha 'False', akkor nyilván kérjen be adatokat.
-
-            'True' esetén írja is ki az adatokat.
-        
-        */
-
-        const token = localStorage.getItem('token');
-
         if(addressData)
         {
-            
+
             return true;
 
         }
@@ -353,12 +363,6 @@ export function useCartService () {
 
                         {
 
-                            <h1>ah: {doYouHaveAddress().toString()}</h1>
-
-                        }
-
-                        {
-
                             !doYouHaveAddress() ? (
 
                                 <>
@@ -417,22 +421,61 @@ export function useCartService () {
 
                             ) : (
 
-                                <>
+                                <div className="haveItems">
                                 
                                     <div className="haveAddress">
 
-                                        <label>Your address data:</label>
-
                                         <ul>
-                                            {/* <li>Country: {addressData?.country}</li>
+
+                                            <li>Country: {addressData?.country}</li>
                                             <li>City: {addressData?.city}</li>
                                             <li>Street: {addressData?.street}</li>
-                                            <li>Zip code: {addressData?.zipCode}</li> */}
+                                            <li>Zip code: {addressData?.zipCode}</li>
+
                                         </ul>
 
                                     </div>
 
-                                </>
+                                    <div className="haveProducts">
+
+                                        <ul>
+
+                                            {
+
+                                                cartItems?.cartItems.map(x => {
+
+                                                    const findPairs = webshopService.products?.find(p => p.productId == x.productId);
+
+                                                    if(findPairs)
+                                                    {
+
+                                                        return(
+                                                            <>
+                                                            
+                                                                <li>{findPairs.productName} ({findPairs.price}<span className="buyitDollarSign">$</span>)</li>
+
+                                                            </>
+                                                        )
+
+                                                    }
+
+                                                })
+
+                                            }
+
+                                        </ul>
+
+                                    </div>
+
+                                    <div className="havePrice">
+
+                                        <ul>
+                                            <li>{totalPrice}<span className="buyitDollarSign">$</span></li>
+                                        </ul>
+
+                                    </div>
+
+                                </div>
 
                             )
 

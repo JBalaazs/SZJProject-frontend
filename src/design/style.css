@@ -556,10 +556,43 @@
     width: 200px;
 }
 
+.haveItems{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+}
+
 .haveAddress{
     padding: 20px;
-    border: solid 1px black;
-    border-radius: 10px;
+    border-right: solid 1px black;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    text-align: left;
+}
+
+.haveItems ul{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.haveProducts{
+    padding: 20px;
+    text-align: left;
+    align-items: center;
+    border-right: solid 1px black;
+    display: flex;
+}
+
+.havePrice{
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    font-size: 40px;
 }
 
 /*Client:*/
