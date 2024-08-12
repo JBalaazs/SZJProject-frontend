@@ -286,6 +286,28 @@ export function useClientService () {
 
     }
 
+    const saveAddress = () => {
+
+        const token = localStorage.getItem('token');
+
+        fetch(`${process.env.REACT_APP_API_URL}/user/address`, {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                country: address.country,
+                city: address.city,
+                street: address.street,
+                zipCode: address.zipCode
+            })
+
+        })
+
+    }
+
     /*Return:*/
 
     return{
@@ -296,7 +318,8 @@ export function useClientService () {
         errorBankData,
         formattedValue,
         errorAddressData,
-        address
+        address,
+        saveAddress
     }
 
 }
