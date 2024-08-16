@@ -2,6 +2,7 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { useClientService } from "./clientService";
 import { GET } from "../endpoints/GET";
 import { POST } from "../endpoints/POST";
+import { DELETE } from "../endpoints/DELETE";
 
 export function useCartService () {
 
@@ -13,6 +14,7 @@ export function useCartService () {
 
     const endpoints_GET = GET();
     const endpoints_POST = POST();
+    const endpoints_DELETE = DELETE();
 
     /*useState:*/
 
@@ -48,6 +50,21 @@ export function useCartService () {
 
     }, []);
 
+    useEffect(() => {
+
+        const isOpen = localStorage.getItem('isOpen');
+
+        if(Boolean(isOpen) == true && popUpBuy == false)
+        {
+
+            endpoints_DELETE.deleteOrder();
+            
+            localStorage.removeItem('isOpen');
+
+        }
+
+    }, [])
+
     /*Function:*/
 
     const deleteFromCartById = (productId: number) => {
@@ -76,6 +93,8 @@ export function useCartService () {
 
         createOrder();
 
+        localStorage.setItem('isOpen', 'true');
+
     }
 
     const clearAll = () => {
@@ -100,6 +119,12 @@ export function useCartService () {
             endpoints_POST.payTheCartsPrice(address);
 
         }
+        else if(endpoints_GET.addressData)
+        {
+
+            endpoints_POST.payTheCartsPrice(endpoints_GET.addressData);
+
+        }
 
         setPopUpBuy(!popUpBuy);
 
@@ -109,14 +134,7 @@ export function useCartService () {
 
     const doYouHaveAddress = (): boolean => {        
 
-        if(endpoints_GET.addressData)
-        {
-
-            return true;
-
-        }
-
-        return false;
+        return endpoints_GET.addressData?.city != undefined;
 
     }
 

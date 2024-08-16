@@ -168,6 +168,13 @@ export function useRegistrationService () {
 
     const afterRegistration = () => {
 
+        if (!checkRegister || !checkRegister.isRegisterSuccessfulOrTaken) {
+            return {
+                pTag:
+                    <p className='beforeRegistration'>Register and click here!</p>
+            };
+        }
+
         if(checkRegister?.isRegisterSuccessfulOrTaken.includes('Successful'))
         {
 

@@ -62,6 +62,8 @@ export function useAddProductService () {
 
         navigateService.navigate('/webshop');
 
+        window.location.reload();
+
     }
 
     const textByCharacterCount = (numberOfCharacters: number) => {

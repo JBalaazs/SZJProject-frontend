@@ -2,17 +2,12 @@ import { useState } from "react";
 import { addressType } from "../interfaces/InterfaceCollection";
 import { cartType } from "../interfaces/InterfaceCollection";
 import { extendedProductType } from "../interfaces/InterfaceCollection";
-import { ParseJWT } from "./ParseJWT";
 
 export function GET () {
 
     /*Token:*/
 
     const token = localStorage.getItem('token');
-
-    /*ParseJWT:*/
-
-    const decodeJwt = ParseJWT();
 
     /*useState:*/
 
@@ -45,7 +40,15 @@ export function GET () {
         if(token)
         {
 
-            fetch(`${process.env.REACT_APP_API_URL}/carts?userId=${decodeJwt.parseJwt(token)?.userId}`)
+            fetch(`${process.env.REACT_APP_API_URL}/carts`, {
+
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+
+            })
             .then(res => res.json())
             .then(data => setCartItems(data.data))
 
@@ -58,9 +61,17 @@ export function GET () {
         if(token)
         {
 
-            fetch(`${process.env.REACT_APP_API_URL}/user/balance?id=${decodeJwt.parseJwt(token)?.userId}`)
-                .then(res => res.json())
-                .then(data => setBalance(data.data))
+            fetch(`${process.env.REACT_APP_API_URL}/user/balance`, {
+
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+
+            })
+            .then(res => res.json())
+            .then(data => setBalance(data.data))
 
         }
 

@@ -24,10 +24,28 @@ export function DELETE () {
 
     }
 
+    const deleteOrder = () => {
+
+        fetch(`${process.env.REACT_APP_API_URL}/orders?orderId=${1}`, {
+
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    }
+
     /*Return:*/
 
     return{
-        deleteProduct
+        deleteProduct,
+        deleteOrder
     }
 
 }

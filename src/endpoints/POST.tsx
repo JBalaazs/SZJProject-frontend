@@ -1,15 +1,10 @@
 import { addressType, authType, bankType, productType } from "../interfaces/InterfaceCollection";
-import { ParseJWT } from "./ParseJWT";
 
 export function POST () {
 
     /*Token:*/
 
     const token = localStorage.getItem('token');
-
-    /*ParseJWT:*/
-
-    const decodeJwt = ParseJWT();
 
     /*Function:*/
 
@@ -75,12 +70,12 @@ export function POST () {
 
     }
 
-    const createOrder = () => { /*Something wrong.*/
+    const createOrder = () => {
 
         if(token)
         {
 
-            fetch(`${process.env.REACT_APP_API_URL}/orders/create?userId=${decodeJwt.parseJwt(token)?.userId}`, {
+            fetch(`${process.env.REACT_APP_API_URL}/orders`, {
 
                 method: 'POST',
                 headers: {
@@ -94,7 +89,7 @@ export function POST () {
 
     }
 
-    const payTheCartsPrice = (address: addressType) => { /*Something wrong.*/
+    const payTheCartsPrice = (address: addressType) => {
 
         fetch(`${process.env.REACT_APP_API_URL}/orders/pay`, {
 
@@ -104,13 +99,17 @@ export function POST () {
                 'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({
+
                 country: address.country,
                 city: address.city,
                 street: address.street,
                 zipCode: address.zipCode
+
             })
 
         })
+
+        window.location.reload();
 
     }
 

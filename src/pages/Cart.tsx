@@ -43,14 +43,21 @@ export default function Cart () {
                 <div className="productPrice_Cart">
 
                     <h3>{cartService.productActions.totalPrice_BuyTag().toFixed(2)} <span className="buyitDollarSign">$</span></h3>
-                    <button className="btn btn-success buyButton" style={{fontWeight: 'bold'}} onClick={cartService.popUps.showPopUpBuy}>Buy</button>
+                    <button 
+                        className="btn btn-success buyButton" 
+                        style={{fontWeight: 'bold'}} 
+                        onClick={cartService.popUps.showPopUpBuy}
+                        disabled={cartService.productActions.totalPrice_BuyTag() > 0 ? false : true}>Buy</button>
 
                 </div>
 
                 {/*CLEAR ALL - Tag:*/}
 
                 <div className="clearAll_Box">
-                    <button className="btn btn-danger clearAll" onClick={cartService.productActions.clearAll}>Clear All</button>
+                    <button 
+                        className="btn btn-danger clearAll" 
+                        onClick={cartService.productActions.clearAll}
+                        disabled={cartService.productActions.totalPrice_BuyTag() > 0 ? false : true}>Clear All</button>
                 </div>
 
                 {/*DELETE - PopUp:*/}
@@ -151,6 +158,12 @@ export default function Cart () {
                                             style={{borderColor: `${cartService.productInfo.errorAddressData?.zipCode}`}}
                                             required
                                             />
+
+                                    </div>
+
+                                    <div>
+
+                                        <p className="priceWithNoAddress">Total: {cartService.productActions.totalPrice_BuyTag()}<span className="buyitDollarSign">$</span></p>
 
                                     </div>
                                 
