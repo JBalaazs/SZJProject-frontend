@@ -1,5 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import { useNavigateService } from "./navigateService";
+import { checkRegisterType } from "../interfaces/InterfaceCollection";
+import { authType } from "../interfaces/InterfaceCollection";
+import { POST } from "../endpoints/POST";
 
 export function useRegistrationService () {
 
@@ -9,21 +12,13 @@ export function useRegistrationService () {
 
     /*useState:*/
 
-    const [checkRegister, setCheckRegister] = useState({
+    const [checkRegister, setCheckRegister] = useState<checkRegisterType | null>(null);
 
-        atLeast5Characters: false,
-        atLeast1UppercaseLetter: false,
-        correctUsername: false,
-        isRegisterSuccessfulOrTaken: ''
-        
-    });
+    const [registerData, setRegisterData] = useState<authType | null>(null);
+    
+    /*endpoints:*/
 
-    const [registerData, setRegisterData] = useState({
-
-        username: '',
-        password: '',
-
-    });
+    const endpoints_POST = POST();
 
     /*onChange:*/
 
@@ -44,14 +39,14 @@ export function useRegistrationService () {
                     ...prevRegister,
                     username: value
 
-                }));
+                } as authType));
 
                 setCheckRegister(prevCheck => ({
 
                     ...prevCheck,
                     correctUsername: true
 
-                }));
+                } as checkRegisterType));
 
             }
             else
@@ -62,7 +57,7 @@ export function useRegistrationService () {
                     ...prevCheck,
                     correctUsername: false
 
-                }));
+                }as checkRegisterType));
 
             }
 
@@ -79,7 +74,7 @@ export function useRegistrationService () {
                     ...prevCheck,
                     atLeast5Characters: false
 
-                }));
+                } as checkRegisterType));
         
             }
             else
@@ -90,14 +85,14 @@ export function useRegistrationService () {
                     ...prevCheck,
                     atLeast5Characters: true
 
-                }));
+                } as checkRegisterType));
 
                 setRegisterData(prevRegister => ({
 
                     ...prevRegister,
                     password: value
 
-                }));
+                } as authType));
         
             }
         
@@ -109,7 +104,7 @@ export function useRegistrationService () {
                     ...prevCheck,
                     atLeast1UppercaseLetter: false
 
-                }));
+                } as checkRegisterType));
         
             }
             else
@@ -120,14 +115,14 @@ export function useRegistrationService () {
                     ...prevCheck,
                     atLeast1UppercaseLetter: true
 
-                }));
+                } as checkRegisterType));
 
                 setRegisterData(prevRegister => ({
 
                     ...prevRegister,
                     password: value
 
-                }));
+                } as authType));
         
             }
 
@@ -139,44 +134,41 @@ export function useRegistrationService () {
 
     const registration = async () => {
 
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/auth/register`, {
-            
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(registerData)
-
-        });
-
-        if(response.ok)
+        if(registerData)
         {
 
-            setCheckRegister(prevCheck => ({
+            const response = await endpoints_POST.register(registerData)
 
-                ...prevCheck,
-                isRegisterSuccessfulOrTaken: 'Successful registration. Click here!'
+            if(response.ok)
+            {
     
-            }));
-
-        }
-        else
-        {
-
-            setCheckRegister(prevCheck => ({
-
-                ...prevCheck,
-                isRegisterSuccessfulOrTaken: 'This name is already taken.'
+                setCheckRegister(prevCheck => ({
     
-            }));
+                    ...prevCheck,
+                    isRegisterSuccessfulOrTaken: 'Successful registration. Click here!'
+        
+                } as checkRegisterType));
+    
+            }
+            else
+            {
+    
+                setCheckRegister(prevCheck => ({
+    
+                    ...prevCheck,
+                    isRegisterSuccessfulOrTaken: 'This name is already taken.'
+        
+                } as checkRegisterType));
+    
+            }
 
-        }
+        }        
 
     }
 
     const afterRegistration = () => {
 
-        if(checkRegister.isRegisterSuccessfulOrTaken.includes('Successful'))
+        if(checkRegister?.isRegisterSuccessfulOrTaken.includes('Successful'))
         {
 
             return{
@@ -185,7 +177,7 @@ export function useRegistrationService () {
             }
 
         }
-        else if(checkRegister.isRegisterSuccessfulOrTaken.includes('taken'))
+        else if(checkRegister?.isRegisterSuccessfulOrTaken.includes('taken'))
         {
 
             return{
@@ -209,8 +201,9 @@ export function useRegistrationService () {
     return{
         registration,
         handleChange,
-        checkRegister,
         afterRegistration,
+
+        checkRegister
     }
 
 }

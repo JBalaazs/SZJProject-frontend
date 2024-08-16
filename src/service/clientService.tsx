@@ -1,53 +1,27 @@
 import { useState } from "react";
+import { formattedValueType } from "../interfaces/InterfaceCollection";
+import { bankType } from "../interfaces/InterfaceCollection";
+import { errorBankType } from "../interfaces/InterfaceCollection";
+import { addressType } from "../interfaces/InterfaceCollection";
+import { POST } from "../endpoints/POST";
 
 export function useClientService () {
 
+    /*endpoints:*/
+
+    const endpoints_POST = POST();
+
     /*useState:*/
 
-    const [formattedValue, setFormattedValue] = useState({
+    const [formattedValue, setFormattedValue] = useState<formattedValueType | null>(null);
 
-        cardNumber: '',
-        expirationDate: ''
-        
-    })
+    const [bankData, setBankData] = useState<bankType | null>(null);
 
-    const [bankData, setBankData] = useState({
+    const [errorBankData, setErrorBankData] = useState<errorBankType | null>(null);
 
-        cardNumber: '',
-        holderName: '',
-        expirationDate: '',
-        cvv: '',
-        newBalance: 0
+    const [address, setAddress] = useState<addressType | null>(null);
 
-    });
-
-    const [errorBankData, setErrorBankData] = useState({
-
-        cardNumber: '',
-        holderName: '',
-        expirationDate: '',
-        cvv: '',
-        newBalance: ''
-
-    });
-
-    const [address, setAddress] = useState({
-        
-        country: '',
-        city: '',
-        street: '',
-        zipCode: ''
-
-    });
-
-    const [errorAddressData, setErrorAddressData] = useState({
-
-        country: '',
-        city: '',
-        street: '',
-        zipCode: ''
-        
-    });
+    const [errorAddressData, setErrorAddressData] = useState<addressType | null>(null);
 
     /*Function:*/
 
@@ -58,7 +32,7 @@ export function useClientService () {
             ...prev,
             [name]: isValid ? 'green' : 'red'
 
-        }));
+        } as errorBankType));
 
     }
 
@@ -69,19 +43,29 @@ export function useClientService () {
             ...prev,
             [name]: isValid ? 'green' : 'red'
 
-        }))
+        } as addressType))
 
     }
 
     const isFormValidBankData = () => {
 
-        return !Object.values(errorBankData).includes('red');
+        if(errorBankData)
+        {
+
+            return !Object.values(errorBankData).includes('red');
+
+        }
 
     }
 
     const isFormValidAddressData = () => {
 
-        return !Object.values(errorAddressData).includes('red');
+        if(errorAddressData)
+        {
+
+            return !Object.values(errorAddressData).includes('red');
+
+        }
 
     }
 
@@ -95,7 +79,7 @@ export function useClientService () {
                 ...prev,
                 [name]: name == 'newBalance' ? Number(value) : value
 
-            }));
+            } as bankType));
 
         }
 
@@ -112,7 +96,7 @@ export function useClientService () {
                 [name]: value
                 
             
-            }));
+            } as addressType));
         
         }
 
@@ -139,7 +123,7 @@ export function useClientService () {
                 ...prev,
                 cardNumber: formattedValue
 
-            }))
+            } as formattedValueType))
 
             const isValid = validCardNumber.test(cleanedValue) && cleanedValue.length == 16;
 
@@ -179,7 +163,7 @@ export function useClientService () {
                     ...prev,
                     expirationDate: formattedValue
 
-                }))
+                } as formattedValueType))
 
                 const isValid = isValidMonth && isValidYear;
 
@@ -271,40 +255,23 @@ export function useClientService () {
 
     const getMoney = () => {
 
-        const token = localStorage.getItem('token');
+        if(bankData)
+        {
 
-        fetch(`${process.env.REACT_APP_API_URL}/user/balance`, {
+            endpoints_POST.getBalance(bankData);
 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify(bankData)
-
-        });
+        }
 
     }
 
     const saveAddress = () => {
 
-        const token = localStorage.getItem('token');
+        if(address)
+        {
 
-        fetch(`${process.env.REACT_APP_API_URL}/user/address`, {
+            endpoints_POST.saveAddress(address);
 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({
-                country: address.country,
-                city: address.city,
-                street: address.street,
-                zipCode: address.zipCode
-            })
-
-        })
+        }
 
     }
 
@@ -315,11 +282,12 @@ export function useClientService () {
         getMoney,
         isFormValidBankData,
         isFormValidAddressData,
+        saveAddress,
+        
         errorBankData,
         formattedValue,
         errorAddressData,
         address,
-        saveAddress
     }
 
 }

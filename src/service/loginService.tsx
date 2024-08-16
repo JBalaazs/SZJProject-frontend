@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useNavigateService } from "./navigateService";
+import { authType } from "../interfaces/InterfaceCollection";
+import { POST } from "../endpoints/POST";
 
 export function useLoginService () {
 
@@ -12,12 +13,11 @@ export function useLoginService () {
 
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [loginData, setLoginData] = useState({
+    const [loginData, setLoginData] = useState<authType | null>(null);
 
-        username: '',
-        password: ''
+    /*endpoints:*/
 
-    });
+    const endpoints_POST = POST();
 
     /*onChange:*/
 
@@ -30,7 +30,7 @@ export function useLoginService () {
             ...prevLogin,
             [name]: value 
 
-        }));
+        } as authType));
 
     }
 
@@ -43,21 +43,22 @@ export function useLoginService () {
 
             try{
 
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/user/auth/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(loginData)
-                });
-    
-                if(!response.ok)
+                if(loginData)
                 {
-                    throw new Error('Failed to login: ' + response.statusText);
+
+                    const response = await endpoints_POST.login(loginData);
+        
+                    if(!response.ok)
+                    {
+                        throw new Error('Failed to login: ' + response.statusText);
+                    }
+        
+                    const returnData = await response.json();
+
+                    
+                    localStorage.setItem('token', returnData.data);
+
                 }
-    
-                const returnData = await response.json();
-                localStorage.setItem('token', returnData.data);
 
                 setErrorMessage('Successful login.');
 

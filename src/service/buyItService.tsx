@@ -1,9 +1,10 @@
-import { productStruct, useWebshopService } from "./webshopService";
-import { useParams } from "react-router-dom";
-import { ChangeEvent, useState } from "react";
 import '../design/style.css';
+import { useParams } from "react-router-dom";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigateService } from "./navigateService";
-import { useCartService } from "./cartService";
+import { POST } from "../endpoints/POST";
+import { GET } from "../endpoints/GET";
+import { extendedProductType } from "../interfaces/InterfaceCollection";
 
 export function useBuyItService () {
 
@@ -20,21 +21,33 @@ export function useBuyItService () {
 
     }
 
+    /*endpoints:*/
+
+    const endpoints_POST = POST();
+    const endpoints_GET = GET();
+
     /*Service:*/
 
-    const webshopService = useWebshopService();
     const navigateService = useNavigateService();
-    const cartService = useCartService();
 
     /*selectedId from URL:*/
 
     const { productId } = useParams();
 
+    /*useEffect:*/
+
+    useEffect(() => {
+
+        endpoints_GET.getProducts();
+        endpoints_GET.getCartItems();
+
+    }, [])
+
     /*Function:*/
 
-    const findPairFunction = () : productStruct | null => {
+    const findProductById = () : extendedProductType | null => {
 
-        const findPair = webshopService.products?.find(p => p.productId == Number(productId));
+        const findPair = endpoints_GET.products?.find(p => p.productId == Number(productId));
 
         if(findPair)
         {
@@ -45,51 +58,12 @@ export function useBuyItService () {
 
     }
 
-    const collectDataByItemId = () => {
-
-        const findPair = webshopService.products?.find(p => p.productId == Number(productId));
-
-        if(findPair)
-        {
-
-            return (
-            
-                <>
-
-                    <p className="buyitTitle">{findPairFunction()?.productName}</p>
-
-                    <p className="buyitAvailable">({findPairFunction()?.stock} pcs left)</p>
-
-                    <p className="buyitAbout">About the product:</p>
-
-                    <p className="buyitDescription">{findPairFunction()?.description}</p>
-
-                    <p className="buyitPriceTitle">Price:</p>
-
-                    <p className="buyitPrice">{findPairFunction()?.price.toFixed(2)} <span className="buyitDollarSign">$</span> / pcs</p>
-
-                </>
-
-            );
-
-        }
-
-    }
-
     const totalPrice = () : number | null => {
 
-        if(findPairFunction && pieceOfProduct <= Number(findPairFunction()?.stock))
+        if(findProductById)
         {
 
-            let total = Number(findPairFunction()?.price) * pieceOfProduct;
-
-            return total;
-
-        }
-        else if(findPairFunction)
-        {
-
-            let total = Number(findPairFunction()?.price) * Number(findPairFunction()?.stock);
+            let total = Number(findProductById()?.price) * pieceOfProduct;
 
             return total;
 
@@ -103,17 +77,17 @@ export function useBuyItService () {
 
         let isStock = false;
 
-        if(!cartService.cartItems?.cartItems.length) /*After clear there are not elements.*/
+        if(!endpoints_GET.cartItems?.cartItems.length) /*After clear there are not elements.*/
         {
 
             isStock = true;
             
         }
 
-        cartService.cartItems?.cartItems.map(x => {
+        endpoints_GET.cartItems?.cartItems.map(x => {
 
-            const findExist = webshopService.products?.find(p => x.productId == Number(productId));
-            const findPair = webshopService.products?.find(p => x.productId == Number(productId) && p.stock >= (x.quantity + pieceOfProduct));
+            const findExist = endpoints_GET.products?.find(p => x.productId == Number(productId));
+            const findPair =  endpoints_GET.products?.find(p => findExist && p.stock >= (x.quantity + pieceOfProduct));
 
             if(!findExist)
             {
@@ -138,20 +112,7 @@ export function useBuyItService () {
         if(pieceOfProduct > 0 && isStock)
         {
 
-            const token = localStorage.getItem('token');
-
-            let quantity = pieceOfProduct;
-
-            fetch(`${process.env.REACT_APP_API_URL}/carts/add`, {
-
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify({productId, quantity})
-
-            })
+            endpoints_POST.addToCart(Number(productId), pieceOfProduct);
 
             navigateService.navigate('/webshop');
 
@@ -163,17 +124,16 @@ export function useBuyItService () {
 
     const buyItButton_Input = () => {
 
-        if(pieceOfProduct > 0 && Number(findPairFunction()?.stock) >= pieceOfProduct)
+        if(pieceOfProduct > 0 && Number(findProductById()?.stock) >= pieceOfProduct)
         {
 
             return{
 
-                buttonTag:
-                    <button 
-                        className="btn btn-primary buyitButton"
-                        disabled={false}
-                        onClick={addToCart}>
-                        Add To Cart</button>,
+                buttonStyle:
+                    "primary",
+
+                disabled:
+                    false,
 
                 error:
                     error ? (
@@ -188,12 +148,11 @@ export function useBuyItService () {
 
             return{
 
-                buttonTag:
-                    <button 
-                        className="btn btn-danger buyitButton"
-                        disabled={true}
-                        onClick={addToCart}>
-                        Add To Cart</button>
+                buttonStyle:
+                    "danger",
+
+                disabled:
+                    true
 
             }
 
@@ -204,13 +163,12 @@ export function useBuyItService () {
     /*Return:*/
 
     return{
-        collectDataByItemId,
         handleChange,
         totalPrice,
-        findPairFunction,
+        findProductById,
         addToCart,
-        pieceOfProduct,
         buyItButton_Input,
+        pieceOfProduct,
         error
     }
 

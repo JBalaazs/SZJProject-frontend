@@ -1,4 +1,3 @@
-import { useNavigateService } from "../service/navigateService";
 import { useModifyService } from "../service/modifyService";
 import MenuBar from "../components/menuBar";
 import { useAddProductService } from "../service/addProductService";
