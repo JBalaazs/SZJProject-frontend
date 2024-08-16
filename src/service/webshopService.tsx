@@ -1,20 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigateService } from "./navigateService";
 import { useMenuBarService } from "./menuBarService";
-
-export interface productStruct{
-
-    productId: number,
-    available: boolean,
-    creationDate: Date,
-    description: string,
-    price: number,
-    productCondition: string,
-    productName: string,
-    seller: string,
-    stock: number
-
-}
+import { extendedProductType } from "../interfaces/InterfaceCollection";
+import { GET } from "../endpoints/GET";
+import { ParseJWT } from "../endpoints/ParseJWT";
 
 export function useWebshopService () {
 
@@ -23,42 +12,30 @@ export function useWebshopService () {
     const navigateService = useNavigateService();
     const menuBarService = useMenuBarService();
 
-    /*useState:*/
+    /*ParseJWT:*/
 
-    const [products, setProducts] = useState<productStruct[] | null>(null);
+    const decodeJWT = ParseJWT();
+
+    /*endpoints:*/
+
+    const endpoints_GET = GET();
 
     /*useEffect:*/
 
     useEffect(() => {
 
-        fetch(`${process.env.REACT_APP_API_URL}/products`)
-            .then(res => res.json())
-            .then(data => setProducts(data))
+        endpoints_GET.getProducts();
 
     }, []);
 
     /*Function:*/
 
-    function parseJwt (token : string) 
-    {
-
-        let base64Url = token.split('.')[1];
-        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-    
-        return JSON.parse(jsonPayload);
-
-    }
-
     const getUsername = ()  => {
 
         const token = localStorage.getItem('token');
-        const userData = token ? parseJwt(token) : null;
-        const username = userData ? userData.sub : 'Unknown user';
+        const username = token ? decodeJWT.parseJwt(token)?.username : null;
 
-        const findPair = products?.some(p => p.seller == username);
+        const findPair = endpoints_GET.products?.some(p => p.seller == username);
 
         if(findPair)
         {
@@ -71,7 +48,7 @@ export function useWebshopService () {
 
     }
 
-    const webshopButton = (product: productStruct) => {        
+    const webshopButton = (product: extendedProductType) => {        
 
             if(product.seller == getUsername())
             {
@@ -109,9 +86,10 @@ export function useWebshopService () {
     /*Return:*/
 
     return{
-        products,
         getUsername,
-        webshopButton
+        webshopButton,
+
+        endpoints_GET
     }
 
 }

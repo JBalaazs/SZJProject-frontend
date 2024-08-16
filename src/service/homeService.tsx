@@ -1,6 +1,4 @@
-import { title } from "process";
 import { useNavigateService } from "./navigateService"
-
 export function useHomeService () {
 
     /*Service:*/

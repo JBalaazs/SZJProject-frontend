@@ -1,14 +1,23 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { productStruct, useWebshopService } from "./webshopService";
 import { useNavigateService } from "./navigateService";
+import { modifyProductType } from "../interfaces/InterfaceCollection";
+import { PUT } from "../endpoints/PUT";
+import { DELETE } from "../endpoints/DELETE";
+import { GET } from "../endpoints/GET";
+import { extendedProductType } from "../interfaces/InterfaceCollection";
 
 export function useModifyService () {
 
     /*Service:*/
 
-    const webshopService = useWebshopService();
     const navigateService = useNavigateService();
+
+    /*endpoints:*/
+
+    const endpoints_PUT = PUT();
+    const endpoints_DELETE = DELETE();
+    const endpoints_GET = GET();
 
     /*selectedId from URL:*/
 
@@ -16,14 +25,7 @@ export function useModifyService () {
 
     /*useState:*/
 
-    const [modifyData, setModifyData] = useState({
-
-        productId: Number(productId),
-        productName: '',
-        productDescription: '',
-        price: 0
-        
-    });
+    const [modifyData, setModifyData] = useState<modifyProductType | null>(null);
 
     const [characterCount, setCharacterCount] = useState(0);
 
@@ -45,11 +47,16 @@ export function useModifyService () {
 
             });
 
-            setCharacterCount(modifyData.productDescription.length);
+            if(modifyData)
+            {
+
+                setCharacterCount(modifyData?.productDescription.length);
+
+            }
 
         }
 
-    }, [productId, webshopService.products]);
+    }, [productId,  endpoints_GET.products]);
 
     /*onChange:*/
 
@@ -62,7 +69,7 @@ export function useModifyService () {
             ...prevModify,
             [name]: name == 'price' ? Number(value) : value
 
-        }));
+        } as modifyProductType));
 
         if(name == 'productDescription')
         {
@@ -75,9 +82,9 @@ export function useModifyService () {
 
     /*Function:*/
 
-    const productDatasThatWillBeModify = () : productStruct | null => {
+    const productDatasThatWillBeModify = () : extendedProductType | null => {
 
-        const findPair = webshopService.products?.find(p => p.productId == Number(productId));
+        const findPair = endpoints_GET.products?.find(p => p.productId == Number(productId));
 
         if(findPair)
         {
@@ -92,21 +99,12 @@ export function useModifyService () {
 
     const addModifyProduct = () => {
 
-        const token = localStorage.getItem('token');
+        if(modifyData)
+        {
 
-        fetch(`${process.env.REACT_APP_API_URL}/products`, {
+            endpoints_PUT.addModifyProduct(modifyData);
 
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify(modifyData)
-
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        }
 
         navigateService.navigate('/webshop');
 
@@ -114,21 +112,8 @@ export function useModifyService () {
 
     const deleteProduct = () => {
 
-        const token = localStorage.getItem('token');
-
-        fetch(`${process.env.REACT_APP_API_URL}/products?productId=${productId}`, {
-
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
-
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
+        endpoints_DELETE.deleteProduct(Number(productId));
+        
         navigateService.navigate('/webshop');
 
     }
@@ -137,10 +122,11 @@ export function useModifyService () {
 
     return{
         handleChange,
-        characterCount,
         addModifyProduct,
         productDatasThatWillBeModify,
-        deleteProduct
+        deleteProduct,
+
+        characterCount
     }
     
 }

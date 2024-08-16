@@ -3,7 +3,7 @@ import { useNavigateService } from "../service/navigateService"
 import { useEffect, useState } from "react";
 import { useMenuBarService } from "../service/menuBarService";
 import { useMatch } from "react-router-dom";
-import { useCartService } from "../service/cartService";
+import { GET } from "../endpoints/GET";
 
 const MenuBar = () => {
 
@@ -12,30 +12,24 @@ const MenuBar = () => {
     const navigateService = useNavigateService();
     const location = useLocation();
     const menuBarService = useMenuBarService();
-    const cartService = useCartService();
+
+    /*endpoints:*/
+
+    const endpoints_GET = GET();
 
     /*useState:*/
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [balance, setBalance] = useState(0);
 
     /*useEffect:*/
 
-    const token = localStorage.getItem('token');
-
     useEffect(() => {
 
-        if(token)
-        {
-
-            fetch(`${process.env.REACT_APP_API_URL}/user/balance?id=${cartService.parseJwt(token)?.userId}`)
-                .then(res => res.json())
-                .then(data => setBalance(data.data))
-
-        }
+        endpoints_GET.getBalance();
+        endpoints_GET.getCartItems();
         
-    })
+    }, []);
 
     /*useMatch:*/
 
@@ -83,27 +77,47 @@ const MenuBar = () => {
 
     }
 
+    const NumberOfCartItems = (): number => {
+
+        if(endpoints_GET.cartItems?.cartItems)
+        {
+
+            if(endpoints_GET.cartItems.cartItems.length > 0)
+            {
+
+                return endpoints_GET.cartItems.cartItems.length;
+
+            }
+
+        }
+
+        return 0;
+
+    }
+
     /*Return:*/
 
     return(
         <div className="menuBar">
+
             <h4 onClick={() => navigateService.navigate('/')}>SZJ</h4>
             <h4 className="menuToggle" onClick={toggleMenu}>☰</h4>
 
             <div className={`menuItems ${isMenuOpen ? 'open' : ''}`}>
+
                 <button onClick={() => navigateService.navigate(getBackRoute())}>Back</button>
                 <button onClick={() => navigateService.navigate('/webshop')}>Webshop</button>
                 <button onClick={() => navigateService.navigate('/addproduct')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Add product</button>
-                <button onClick={() => navigateService.navigate('/cart')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Cart ({cartService.cartItems?.cartItems && cartService.cartItems?.cartItems.length > 0 ? cartService.cartItems?.cartItems.length : 0})</button>
-
+                <button onClick={() => navigateService.navigate('/cart')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Cart ({NumberOfCartItems()})</button>
                 <button onClick={() => navigateService.navigate('/login')} style={{display: `${menuBarService.loginOrLogout().isLogin}`}}>Login</button>
 
             </div>
 
             <div className="profile" onClick={toggleDropDown} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}></div>
+
                 <div className={`toggleDropDown ${isDropdownOpen ? 'show' : ''}`}>
                 
-                    <p>{balance.toFixed(2)} $</p>
+                    <p>{endpoints_GET.balance.toFixed(2)} $</p>
                     <button className="toggleDropDownButton" onClick={() => navigateService.navigate('/client')}>Profile</button>
                     <button className="toggleDropDownButton" onClick={menuBarService.loginOrLogout().service}>Logout</button>
                 

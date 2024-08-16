@@ -1,5 +1,4 @@
 import '../design/style.css';
-import { useNavigateService } from '../service/navigateService';
 import { useWebshopService } from '../service/webshopService';
 import MenuBar from "../components/menuBar";
 
@@ -7,7 +6,6 @@ export default function Webshop () {
 
     /*Service:*/
 
-    const navigateService = useNavigateService();
     const webshopService = useWebshopService();
 
     /*Return:*/
@@ -24,7 +22,7 @@ export default function Webshop () {
 
                 {
 
-                    webshopService.products?.map(x => {
+                    webshopService.endpoints_GET.products?.map(x => {
 
                         return(
 

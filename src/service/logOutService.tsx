@@ -1,3 +1,4 @@
+import { POST } from "../endpoints/POST";
 import { useNavigateService } from "./navigateService";
 
 export function useLogOutService () {
@@ -6,24 +7,15 @@ export function useLogOutService () {
 
     const navigateService = useNavigateService();
 
+    /*endpoints:*/
+
+    const endpoints_POST = POST();
+
     /*Function:*/
 
     const logout = () => {
 
-        const token = localStorage.getItem('token');
-
-        fetch(`http://localhost:8081/api/user/auth/logout`, {
-
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({})
-
-        });
-
-        localStorage.removeItem('token');
+        endpoints_POST.logOut();
 
         navigateService.navigate('/');
 
