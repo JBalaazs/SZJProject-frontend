@@ -595,6 +595,12 @@
     font-size: 40px;
 }
 
+.priceWithNoAddress{
+    font-size: 25px;
+    padding: 0px;
+    margin: 0px;
+}
+
 /*Client:*/
 
 .card-container {
