@@ -54,7 +54,7 @@ export function useCartService () {
 
         const isOpen = localStorage.getItem('isOpen');
 
-        if(Boolean(isOpen) == true && popUpBuy == false)
+        if(Boolean(isOpen) == true && popUpBuy == false) /*Somebody used F5, so the website have to CANCELD the order.*/
         {
 
             endpoints_DELETE.deleteOrder();
@@ -94,6 +94,16 @@ export function useCartService () {
         createOrder();
 
         localStorage.setItem('isOpen', 'true');
+
+    }
+
+    const exitByXButton = () => {
+
+        setPopUpBuy(!popUpBuy);
+
+        endpoints_DELETE.deleteOrder();
+
+        localStorage.removeItem('isOpen');
 
     }
 
@@ -211,6 +221,7 @@ export function useCartService () {
             showPopUpBuy,
             popUpPurchase,
             setPopUpPurchase,
+            exitByXButton
         },
     
         productInfo: {
