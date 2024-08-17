@@ -103,7 +103,7 @@ export default function Cart () {
 
                         <button 
                             className="btn btn-danger X_Button"
-                            onClick={() => cartService.popUps.setPopUpBuy(!cartService.popUps.popUpBuy)}>X</button>
+                            onClick={() => cartService.popUps.exitByXButton()}>X</button>
 
                         {
 

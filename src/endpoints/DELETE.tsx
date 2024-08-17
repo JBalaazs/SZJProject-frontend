@@ -26,7 +26,7 @@ export function DELETE () {
 
     const deleteOrder = () => {
 
-        fetch(`${process.env.REACT_APP_API_URL}/orders?orderId=${1}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/orders`, {
 
             method: 'DELETE',
             headers: {
