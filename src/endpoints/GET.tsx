@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addressType } from "../interfaces/InterfaceCollection";
+import { detailType } from "../interfaces/InterfaceCollection";
 import { cartType } from "../interfaces/InterfaceCollection";
 import { extendedProductType } from "../interfaces/InterfaceCollection";
 
@@ -11,29 +11,11 @@ export function GET () {
 
     /*useState:*/
 
-    const [addressData, setAddressData] = useState<addressType | null>(null);
     const [cartItems, setCartItems] = useState<cartType | null>(null);
     const [products, setProducts] = useState<extendedProductType[] | null>(null);
-    
-    const [balance, setBalance] = useState(0);
+    const [detail, setDetail] = useState<detailType | null>(null);
 
     /*Function:*/
-
-    const getAddress = () => {
-
-        fetch(`${process.env.REACT_APP_API_URL}/user/address`, {
-
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
-
-        })
-        .then(res => res.json())
-        .then(data => setAddressData(data.data))
-
-    }
 
     const getCartItems = () => {
 
@@ -56,27 +38,6 @@ export function GET () {
 
     }
 
-    const getBalance = () => {
-
-        if(token)
-        {
-
-            fetch(`${process.env.REACT_APP_API_URL}/user/balance`, {
-
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-
-            })
-            .then(res => res.json())
-            .then(data => setBalance(data.data))
-
-        }
-
-    }
-
     const getProducts = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}/products`)
@@ -85,20 +46,39 @@ export function GET () {
 
     }
 
+    const getDetails = () => {
+
+        if(token)
+        {
+
+            fetch(`${process.env.REACT_APP_API_URL}/user/detail`, {
+
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+    
+            })
+            .then(res => res.json())
+            .then(data => setDetail(data))
+
+        }
+
+    }
+
     /*Return:*/
 
     return{
-        getAddress,
-        addressData,
 
         getCartItems,
         cartItems,
 
-        getBalance,
-        balance,
-
         getProducts,
-        products
+        products,
+
+        getDetails,
+        detail
     }
 
 }

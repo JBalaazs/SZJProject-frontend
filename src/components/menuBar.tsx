@@ -26,7 +26,7 @@ const MenuBar = () => {
 
     useEffect(() => {
 
-        endpoints_GET.getBalance();
+        endpoints_GET.getDetails();
         endpoints_GET.getCartItems();
         
     }, []);
@@ -117,7 +117,7 @@ const MenuBar = () => {
 
                 <div className={`toggleDropDown ${isDropdownOpen ? 'show' : ''}`}>
                 
-                    <p>{endpoints_GET.balance.toFixed(2)} $</p>
+                    <p>{endpoints_GET.detail?.balance.toFixed(2)} $</p>
                     <button className="toggleDropDownButton" onClick={() => navigateService.navigate('/client')}>Profile</button>
                     <button className="toggleDropDownButton" onClick={menuBarService.loginOrLogout().service}>Logout</button>
                 
