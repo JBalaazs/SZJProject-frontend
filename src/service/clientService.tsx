@@ -298,7 +298,7 @@ export function useClientService () {
 
                 username: endpoints_GET.detail?.username, 
                 balance: endpoints_GET.detail?.balance, 
-                email: "example@example.com", 
+                email: "example@example.com",  /*saveEmail, updateEmail miss.*/
                 address: address
                 
             
