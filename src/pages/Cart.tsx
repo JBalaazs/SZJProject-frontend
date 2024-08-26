@@ -107,7 +107,7 @@ export default function Cart () {
 
                         {
 
-                            !cartService.productInfo.doYouHaveAddress() ? (
+                            !cartService.productInfo.isAddress() ? (
 
                                 <>
 
@@ -177,10 +177,10 @@ export default function Cart () {
 
                                         <ul>
 
-                                            <li>Country: {cartService.endpoints.endpoints_GET.addressData?.country}</li>
-                                            <li>City: {cartService.endpoints.endpoints_GET.addressData?.city}</li>
-                                            <li>Street: {cartService.endpoints.endpoints_GET.addressData?.street}</li>
-                                            <li>Zip code: {cartService.endpoints.endpoints_GET.addressData?.zipCode}</li>
+                                            <li>Country: {cartService.endpoints.endpoints_GET.detail?.address.country}</li>
+                                            <li>City: {cartService.endpoints.endpoints_GET.detail?.address.city}</li>
+                                            <li>Street: {cartService.endpoints.endpoints_GET.detail?.address.street}</li>
+                                            <li>Zip code: {cartService.endpoints.endpoints_GET.detail?.address.zipCode}</li>
 
                                         </ul>
 
@@ -234,7 +234,7 @@ export default function Cart () {
                         <button 
                             className="btn btn-danger modifyButton"
                             onClick={cartService.productActions.buyTheContentsOfTheCart}
-                            disabled={!cartService.productInfo.doYouHaveAddress() ? !cartService.productInfo.isFormValidAddressData() : false}
+                            disabled={!cartService.productInfo.isAddress() ? !cartService.productInfo.isFormValidAddressData() : false}
                             >PAY</button>
 
                     </div>

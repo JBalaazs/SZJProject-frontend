@@ -34,6 +34,7 @@ export interface cartType {
 
 export interface addressType {
 
+    id: number,
     city: string,
     country: string,
     street: string,
@@ -90,6 +91,15 @@ export interface checkRegisterType {
     atLeast1UppercaseLetter: boolean,
     correctUsername: boolean,
     isRegisterSuccessfulOrTaken: string
+
+}
+
+export interface detailType {
+
+    username: string,
+    balance: number,
+    email: string,
+    address: addressType
 
 }
 

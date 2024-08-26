@@ -44,7 +44,7 @@ export function useCartService () {
 
     useEffect(() => {
 
-        endpoints_GET.getAddress();
+        endpoints_GET.getDetails();
         endpoints_GET.getProducts();
         endpoints_GET.getCartItems();
 
@@ -129,10 +129,10 @@ export function useCartService () {
             endpoints_POST.payTheCartsPrice(address);
 
         }
-        else if(endpoints_GET.addressData)
+        else if(endpoints_GET.detail?.address)
         {
 
-            endpoints_POST.payTheCartsPrice(endpoints_GET.addressData);
+            endpoints_POST.payTheCartsPrice(endpoints_GET.detail.address);
 
         }
 
@@ -142,9 +142,16 @@ export function useCartService () {
 
     }
 
-    const doYouHaveAddress = (): boolean => {        
+    const isAddress = (): boolean => {        
 
-        return endpoints_GET.addressData?.city != undefined;
+        const address = endpoints_GET.detail?.address;
+
+        if(!address)
+        {
+            return false;
+        }
+
+        return address.city != undefined;
 
     }
 
@@ -227,7 +234,7 @@ export function useCartService () {
         productInfo: {
             productId,
             deletePcs,
-            doYouHaveAddress,
+            isAddress,
             errorAddressData,
             isFormValidAddressData,
         },

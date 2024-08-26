@@ -1,4 +1,4 @@
-import { addressType, authType, bankType, productType } from "../interfaces/InterfaceCollection";
+import { addressType, authType, bankType, detailType, productType } from "../interfaces/InterfaceCollection";
 
 export function POST () {
 
@@ -91,45 +91,55 @@ export function POST () {
 
     const payTheCartsPrice = (address: addressType) => {
 
-        fetch(`${process.env.REACT_APP_API_URL}/orders/pay`, {
+        if(token)
+        {
 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({
+            fetch(`${process.env.REACT_APP_API_URL}/orders/pay`, {
 
-                country: address.country,
-                city: address.city,
-                street: address.street,
-                zipCode: address.zipCode
-
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+    
+                    country: address.country,
+                    city: address.city,
+                    street: address.street,
+                    zipCode: address.zipCode
+    
+                })
+    
             })
 
-        })
+        }
 
         window.location.reload();
 
     }
 
-    const saveAddress = (address: addressType) => {
+    const saveAddress = (detail: detailType) => {
 
-        fetch(`${process.env.REACT_APP_API_URL}/user/address`, {
+        if(token)
+        {
 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({
-                country: address.country,
-                city: address.city,
-                street: address.street,
-                zipCode: address.zipCode
+            fetch(`${process.env.REACT_APP_API_URL}/user/update`, {
+
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+                    username: detail.username,
+                    balance: detail.balance,
+                    email: detail.email,
+                    address: detail.address            
+                })
+    
             })
 
-        })
+        }
 
     }
 

@@ -607,7 +607,6 @@
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 450px;
     animation: slideIn_DIV 0.5s ease-in;
     margin: 20px;
@@ -615,9 +614,14 @@
 
 .userData{
     display: flex;
-    flex-direction: row;
-    margin: 80px;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.vertical{
+    display: flex;
+    flex-direction: row;
     justify-content: center;
 }
 
@@ -659,6 +663,33 @@ button:hover {
     background-color: #0056b3;
 }
 
+.profileDIV {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+}
+
+.profilePic{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background-image: url(defaultProfilePic/default.webp);
+    background-position: center;
+    background-size: cover;
+}
+
+.betweenProfileAndData{
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border: solid 1px black;
+}
+
 /*menuBar:*/
 
 .menuBar{
@@ -672,6 +703,7 @@ button:hover {
     align-items: center;
     padding: 20px;
     background-color: gray;
+    z-index: 2;
 }
 
 .menuBar button{
@@ -715,7 +747,6 @@ button:hover {
 .menuBar .profile{
     display: flex;
     align-items: center;
-    border: solid 1px red;
     position: absolute;
     right: 3%;
     top: 10px;
@@ -723,6 +754,9 @@ button:hover {
     height: 40px;
     width: 40px;
     cursor: pointer;
+    background-image: url(defaultProfilePic/default.webp);
+    background-position: center;
+    background-size: cover;
 }
 
 .toggleDropDown{
@@ -762,12 +796,33 @@ button:hover {
 
 /*Phone view:*/
 
-@media (max-width: 969px) {
-    .userData{
+ @media (max-width: 1430px) {
+    .betweenProfileAndData{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+ }
+
+ @media (max-width: 1196px) {
+    .betweenProfileAndData{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+ }
+
+ @media (max-width: 1069px) {
+    .betweenProfileAndData{
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+ }
+
+ @media (max-width: 1017px) {
+    .vertical{
         display: flex;
         flex-direction: column;
     }
-}
+ }
 
 @media (max-width: 768px) {
     .insideDIV_Home{

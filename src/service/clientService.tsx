@@ -1,15 +1,25 @@
-import { useState } from "react";
-import { formattedValueType } from "../interfaces/InterfaceCollection";
+import { useEffect, useState } from "react";
+import { detailType, formattedValueType } from "../interfaces/InterfaceCollection";
 import { bankType } from "../interfaces/InterfaceCollection";
 import { errorBankType } from "../interfaces/InterfaceCollection";
 import { addressType } from "../interfaces/InterfaceCollection";
 import { POST } from "../endpoints/POST";
+import { GET } from "../endpoints/GET";
 
 export function useClientService () {
 
     /*endpoints:*/
 
     const endpoints_POST = POST();
+    const endpoints_GET = GET();
+
+    /*useEffect:*/
+
+    useEffect(() => {
+
+        endpoints_GET.getDetails();
+
+    }, [])
 
     /*useState:*/
 
@@ -99,6 +109,21 @@ export function useClientService () {
             } as addressType));
         
         }
+
+    }
+
+    const isAddress = (): addressType | null => {
+
+        const address = endpoints_GET.detail?.address;
+
+        if(address)
+        {
+
+            return address;
+
+        }
+
+        return null;
 
     }
 
@@ -266,10 +291,41 @@ export function useClientService () {
 
     const saveAddress = () => {
 
-        if(address)
+        if(address && endpoints_GET.detail)
         {
 
-            endpoints_POST.saveAddress(address);
+            const detail: detailType = {
+
+                username: endpoints_GET.detail?.username, 
+                balance: endpoints_GET.detail?.balance, 
+                email: "example@example.com",  /*saveEmail, updateEmail miss.*/
+                address: address
+                
+            
+            };
+
+            endpoints_POST.saveAddress(detail);
+
+        }
+
+    }
+
+    const írdki = () => {
+
+        if(address && endpoints_GET.detail)
+        {
+    
+            const detail: detailType = {
+    
+                username: endpoints_GET.detail?.username, 
+                balance: endpoints_GET.detail?.balance, 
+                email: endpoints_GET.detail?.email, 
+                address: address
+                    
+                
+            };
+    
+            console.log(detail);
 
         }
 
@@ -283,11 +339,16 @@ export function useClientService () {
         isFormValidBankData,
         isFormValidAddressData,
         saveAddress,
-        
+        isAddress,
+
         errorBankData,
         formattedValue,
         errorAddressData,
         address,
+        endpoints_GET,
+
+
+        írdki
     }
 
 }
