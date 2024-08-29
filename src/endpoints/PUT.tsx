@@ -1,4 +1,5 @@
 import { modifyProductType } from "../interfaces/InterfaceCollection";
+import { detailType } from "../interfaces/InterfaceCollection";
 
 export function PUT () {
 
@@ -26,10 +27,36 @@ export function PUT () {
 
     }
 
+    const saveAddress = (detail: detailType) => {
+
+        if(token)
+        {
+
+            fetch(`${process.env.REACT_APP_API_URL}/user/update`, {
+
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+                    username: detail.username,
+                    balance: detail.balance,
+                    email: detail.email,
+                    address: detail.address            
+                })
+    
+            })
+
+        }
+
+    }
+
     /*Return:*/
 
     return{
-        addModifyProduct
+        addModifyProduct,
+        saveAddress
     }
 
 }

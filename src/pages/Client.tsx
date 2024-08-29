@@ -26,7 +26,7 @@ export default function Client () {
                 <div className="profileData">
 
                     <h1>{clientService.endpoints_GET.detail?.username}</h1>
-                    <h3>Email.</h3>
+                    <h3>{clientService.endpoints_GET.detail?.email ? clientService.endpoints_GET.detail?.email : "Add your e-mail"}</h3>
 
                 </div>
 
@@ -73,30 +73,59 @@ export default function Client () {
                 <div className="userData">
 
                     <div className="card-container">
-                        <h2>Address Data</h2>
-                        <form>
-                            <div className="form-group">
-                                <label >City</label>
-                                <input type="text" name="city" placeholder={`${clientService.isAddress() ? clientService.isAddress()?.city : 'Budapest'}`} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData?.city}`}} required />
-                            </div>
-                            <div className="form-group">
-                                <label>Country</label>
-                                <input type="text" name="country" placeholder={`${clientService.isAddress() ? clientService.isAddress()?.country : 'Hungary'}`} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData?.country}`}} required />
-                            </div>
-                            <div className="form-group">
-                                <label>Street</label>
-                                <input type="text" name="street" placeholder={`${clientService.isAddress() ? clientService.isAddress()?.street : 'Szeles st.'}`} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData?.street}`}} required />
-                            </div>
-                            <div className="form-group">
-                                <label>Zip code</label>
-                                <input type="text" name="zipCode" placeholder={`${clientService.isAddress() ? clientService.isAddress()?.zipCode : '3540'}`} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData?.zipCode}`}} required />
-                            </div>
+                        
+                        {
 
-                            <button onClick={clientService.saveAddress} className="btn btn-primary" disabled={!clientService.isFormValidAddressData()}>{clientService.isAddress() ? 'Modify' : 'Save'}</button>
-                        </form>
+                            clientService.endpoints_GET.detail?.email || (clientService.email && clientService.nextPage) ? 
+                            (
+                                <>
+
+                                    <h2>Add your address</h2>
+                                    <form>
+                                        <div className="form-group">
+                                            <label >City</label>
+                                            <input type="text" name="city" placeholder={`${clientService.isAddress() ? clientService.isAddress()?.city : 'Budapest'}`} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData?.city}`}} required />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Country</label>
+                                            <input type="text" name="country" placeholder={`${clientService.isAddress() ? clientService.isAddress()?.country : 'Hungary'}`} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData?.country}`}} required />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Street</label>
+                                            <input type="text" name="street" placeholder={`${clientService.isAddress() ? clientService.isAddress()?.street : 'Szeles st.'}`} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData?.street}`}} required />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Zip code</label>
+                                            <input type="text" name="zipCode" placeholder={`${clientService.isAddress() ? clientService.isAddress()?.zipCode : '3540'}`} onChange={clientService.handleChange} style={{borderColor: `${clientService.errorAddressData?.zipCode}`}} required />
+                                        </div>
+
+                                        <button onClick={clientService.saveAddress} className="btn btn-primary" disabled={!clientService.isFormValidAddressData()}>{clientService.isAddress() ? 'Modify' : 'Save'}</button>
+                                    </form>
+
+                                </>
+
+                            ) : 
+                            (
+
+                                <>
+                                
+                                    <h2>Add your e-mail address</h2>
+                                
+                                    <form>
+                                        <div className="form-group">
+                                            <input type="text" name="email" placeholder="example@example.com" onChange={clientService.handleChange} style={{borderColor: `${clientService.errorEmail}`}} required/>
+                                        </div>
+                                    </form>
+                                    <button onClick={clientService.saveEmail}>Save</button>
+                                    
+
+                                </>
+
+                            )
+
+                        }
+                        
                     </div>
-
-                    <button onClick={clientService.írdki}>Írd ki.</button>
 
                 </div>
 
