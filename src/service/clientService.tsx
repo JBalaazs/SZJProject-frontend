@@ -5,6 +5,7 @@ import { errorBankType } from "../interfaces/InterfaceCollection";
 import { addressType } from "../interfaces/InterfaceCollection";
 import { POST } from "../endpoints/POST";
 import { GET } from "../endpoints/GET";
+import { PUT } from "../endpoints/PUT";
 
 export function useClientService () {
 
@@ -12,6 +13,7 @@ export function useClientService () {
 
     const endpoints_POST = POST();
     const endpoints_GET = GET();
+    const endpoints_PUT = PUT();
 
     /*useEffect:*/
 
@@ -30,6 +32,12 @@ export function useClientService () {
     const [errorBankData, setErrorBankData] = useState<errorBankType | null>(null);
 
     const [address, setAddress] = useState<addressType | null>(null);
+
+    const [email, setEmail] = useState('');
+
+    const [errorEmail, setErrorEmail] = useState('');
+
+    const [nextPage, setNextPage] = useState(false);
 
     const [errorAddressData, setErrorAddressData] = useState<addressType | null>(null);
 
@@ -276,6 +284,28 @@ export function useClientService () {
 
         }
 
+        /*EMAIL:*/
+        
+        if(name == 'email') {
+
+            const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
+
+            if(isValid)
+            {
+
+                setEmail(value);
+                setErrorEmail('green');
+
+            }
+            else
+            {
+
+                setErrorEmail('red');
+
+            }
+
+        }
+
     }
 
     const getMoney = () => {
@@ -298,36 +328,20 @@ export function useClientService () {
 
                 username: endpoints_GET.detail?.username, 
                 balance: endpoints_GET.detail?.balance, 
-                email: "example@example.com",  /*saveEmail, updateEmail miss.*/
+                email: endpoints_GET.detail.email ? endpoints_GET.detail.email : email, /*saveEmail, updateEmail miss.*/
                 address: address
-                
             
             };
 
-            endpoints_POST.saveAddress(detail);
+            endpoints_PUT.saveAddress(detail);
 
         }
 
     }
 
-    const írdki = () => {
+    const saveEmail = () => {
 
-        if(address && endpoints_GET.detail)
-        {
-    
-            const detail: detailType = {
-    
-                username: endpoints_GET.detail?.username, 
-                balance: endpoints_GET.detail?.balance, 
-                email: endpoints_GET.detail?.email, 
-                address: address
-                    
-                
-            };
-    
-            console.log(detail);
-
-        }
+        setNextPage(true);
 
     }
 
@@ -340,15 +354,17 @@ export function useClientService () {
         isFormValidAddressData,
         saveAddress,
         isAddress,
+        saveEmail,
 
         errorBankData,
         formattedValue,
         errorAddressData,
         address,
         endpoints_GET,
+        email,
+        errorEmail,
+        nextPage
 
-
-        írdki
     }
 
 }

@@ -118,31 +118,6 @@ export function POST () {
 
     }
 
-    const saveAddress = (detail: detailType) => {
-
-        if(token)
-        {
-
-            fetch(`${process.env.REACT_APP_API_URL}/user/update`, {
-
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify({
-                    username: detail.username,
-                    balance: detail.balance,
-                    email: detail.email,
-                    address: detail.address            
-                })
-    
-            })
-
-        }
-
-    }
-
     const login = (loginData: authType) => {
 
         return fetch(`${process.env.REACT_APP_API_URL}/user/auth/login`, {
@@ -210,7 +185,6 @@ export function POST () {
         clearCart,
         createOrder,
         payTheCartsPrice,
-        saveAddress,
         login,
         logOut,
         register,
