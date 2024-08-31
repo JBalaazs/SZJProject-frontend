@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { HTMLInputTypeAttribute, useEffect, useState } from "react";
 import { detailType, formattedValueType } from "../interfaces/InterfaceCollection";
 import { bankType } from "../interfaces/InterfaceCollection";
 import { errorBankType } from "../interfaces/InterfaceCollection";
@@ -6,6 +6,7 @@ import { addressType } from "../interfaces/InterfaceCollection";
 import { POST } from "../endpoints/POST";
 import { GET } from "../endpoints/GET";
 import { PUT } from "../endpoints/PUT";
+import { consumers } from "stream";
 
 export function useClientService () {
 
@@ -40,6 +41,16 @@ export function useClientService () {
     const [nextPage, setNextPage] = useState(false);
 
     const [errorAddressData, setErrorAddressData] = useState<addressType | null>(null);
+
+    const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+    
+    const [isPictureViewVisible, setIsPictureViewVisible] = useState(false);
+
+    const [isPictureChangeVisible, setIsPictureChangeVisible] = useState(false);
+
+    const [profileImage, setProfileImage] = useState('');
+
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     /*Function:*/
 
@@ -306,6 +317,31 @@ export function useClientService () {
 
         }
 
+        /*PROFILE IMAGE:*/
+
+        if(name == 'profileImage')
+        {
+
+            if(event.target.files)
+            {
+
+                const file = event.target.files[0];
+
+                const imageURL = URL.createObjectURL(file);
+
+                setProfileImage(imageURL);
+                
+                if(file)
+                {
+
+                    setImageFile(file);
+
+                }
+
+            }
+
+        }
+
     }
 
     const getMoney = () => {
@@ -345,6 +381,60 @@ export function useClientService () {
 
     }
 
+    const toggleDropDownSettings = () => {
+
+        setIsSettingsVisible(!isSettingsVisible);
+
+    }
+
+    const toggleDropDownViewPicture = () => {
+
+        if(isPictureChangeVisible)
+        {
+
+            setIsPictureChangeVisible(!isPictureChangeVisible);
+            setIsPictureViewVisible(!isPictureViewVisible);
+
+        }
+        else
+        {
+
+            setIsPictureViewVisible(!isPictureViewVisible);
+
+        }
+
+    }
+
+    const toggleDropDownChangePicture = () => {
+
+        if(isPictureViewVisible)
+        {
+
+            setIsPictureViewVisible(!isPictureViewVisible);
+            setIsPictureChangeVisible(!isPictureChangeVisible);
+
+        }
+        else
+        {
+
+            setIsPictureChangeVisible(!isPictureChangeVisible);
+
+        }
+
+    }
+
+    const saveImage = () => {
+
+        if(imageFile)
+        {
+
+            console.log(imageFile);
+            endpoints_POST.upgradePicture(imageFile);
+
+        }
+
+    }
+
     /*Return:*/
 
     return{
@@ -355,6 +445,10 @@ export function useClientService () {
         saveAddress,
         isAddress,
         saveEmail,
+        toggleDropDownSettings,
+        toggleDropDownViewPicture,
+        toggleDropDownChangePicture,
+        saveImage,
 
         errorBankData,
         formattedValue,
@@ -363,7 +457,11 @@ export function useClientService () {
         endpoints_GET,
         email,
         errorEmail,
-        nextPage
+        nextPage,
+        isSettingsVisible,
+        isPictureViewVisible,
+        isPictureChangeVisible,
+        profileImage
 
     }
 

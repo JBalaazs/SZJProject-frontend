@@ -176,6 +176,25 @@ export function POST () {
 
     }
 
+    const upgradePicture = (imageFile: File) => {
+
+        const formData = new FormData();
+        formData.append('file', imageFile);
+
+        fetch(`${process.env.REACT_APP_API_URL}/user/file-server`, {
+
+            method: 'POST',
+            headers: {
+                
+                'Authorization': 'Bearer ' + token,
+
+            },
+            body: formData
+
+        })
+
+    }
+
     /*Return:*/
 
     return{
@@ -188,7 +207,8 @@ export function POST () {
         login,
         logOut,
         register,
-        getBalance
+        getBalance,
+        upgradePicture
     }
 
 }
