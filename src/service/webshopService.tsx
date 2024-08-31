@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigateService } from "./navigateService";
 import { useMenuBarService } from "./menuBarService";
 import { extendedProductType } from "../interfaces/InterfaceCollection";
@@ -89,7 +89,8 @@ export function useWebshopService () {
         getUsername,
         webshopButton,
 
-        endpoints_GET
+        endpoints_GET,
+        
     }
 
 }

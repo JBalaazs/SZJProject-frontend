@@ -21,6 +21,7 @@ const MenuBar = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [hidden, setHidden] = useState(false);
 
     /*useEffect:*/
 
@@ -30,6 +31,33 @@ const MenuBar = () => {
         endpoints_GET.getCartItems();
         
     }, []);
+
+    useEffect(() => {
+
+        const handleScroll = () => {
+
+            const currentScrollTop = document.documentElement.scrollTop;
+
+            if(currentScrollTop > 100)
+            {
+    
+                setHidden(true);
+    
+            }
+            else
+            {
+    
+                setHidden(false);
+    
+            }
+
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll',  handleScroll);
+
+    }, [])
 
     /*useMatch:*/
 
@@ -98,20 +126,22 @@ const MenuBar = () => {
     /*Return:*/
 
     return(
-        <div className="menuBar">
+        <div className={`menuBar ${hidden ? 'hidden' : ''}`}>
 
-            <h4 onClick={() => navigateService.navigate('/')}>SZJ</h4>
+            <button onClick={() => navigateService.navigate('/')} className="szjTitle">SZJ</button>
             <h4 className="menuToggle" onClick={toggleMenu}>☰</h4>
 
             <div className={`menuItems ${isMenuOpen ? 'open' : ''}`}>
 
-                <button onClick={() => navigateService.navigate(getBackRoute())}>Back</button>
-                <button onClick={() => navigateService.navigate('/webshop')}>Webshop</button>
-                <button onClick={() => navigateService.navigate('/addproduct')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Add product</button>
-                <button onClick={() => navigateService.navigate('/cart')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}>Cart ({NumberOfCartItems()})</button>
-                <button onClick={() => navigateService.navigate('/login')} style={{display: `${menuBarService.loginOrLogout().isLogin}`}}>Login</button>
+                <button onClick={() => navigateService.navigate(getBackRoute())} className="menuButton">Back</button>
+                <button onClick={() => navigateService.navigate('/webshop')} className="menuButton">Webshop</button>
+                <button onClick={() => navigateService.navigate('/addproduct')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}} className="menuButton">Add product</button>
+                <button onClick={() => navigateService.navigate('/cart')} style={{display: `${menuBarService.loginOrLogout().cssCode}`}} className="menuButton">Cart ({NumberOfCartItems()})</button>
+                <button onClick={() => navigateService.navigate('/login')} style={{display: `${menuBarService.loginOrLogout().isLogin}`}} className="menuButton">Login</button>
 
             </div>
+
+            <button className="buyAndSellTitle" style={{display: `${menuBarService.loginOrLogout().isLogin}`}}>Buy & Sell With Us!</button>
 
             <div className="profile" onClick={toggleDropDown} style={{display: `${menuBarService.loginOrLogout().cssCode}`}}></div>
 
