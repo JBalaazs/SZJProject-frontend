@@ -17,9 +17,14 @@ export default function Client () {
 
             <div className="profileDIV">
             
-                <div className="profilePic">
+                <div className="profilePic" onClick={clientService.toggleDropDownSettings}>
 
+                    <div className={`profileSettings ${clientService.isSettingsVisible ? 'show' : ''}`}>
 
+                        <button className="profileButton" onClick={clientService.toggleDropDownViewPicture}>Megtekintés</button>
+                        <button className="profileButton" onClick={clientService.toggleDropDownChangePicture}>Megváltoztatás</button>
+
+                    </div>
 
                 </div>
 
@@ -27,6 +32,34 @@ export default function Client () {
 
                     <h1>{clientService.endpoints_GET.detail?.username}</h1>
                     <h3>{clientService.endpoints_GET.detail?.email ? clientService.endpoints_GET.detail?.email : "Add your e-mail"}</h3>
+
+                </div>
+
+            </div>
+
+            <div className="popUps">
+
+                <div className={`popUpViewPicture ${clientService.isPictureViewVisible ? 'show' : ''}`}>
+
+                    <p>Picture.</p>
+
+                </div>
+
+                <div className={`popUpChangePicture ${clientService.isPictureChangeVisible ? 'show' : ''}`}>
+
+                    <input type="file" name="profileImage" onChange={clientService.handleChange} accept="image/*" />
+
+                    {
+
+                        clientService.profileImage && (
+
+                            <img src={clientService.profileImage} className="showImage"/>
+
+                        )
+
+                    }
+
+                    <button onClick={clientService.saveImage} className="popUpPictureButton">Upload</button>
 
                 </div>
 
