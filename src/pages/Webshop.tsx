@@ -14,7 +14,9 @@ export default function Webshop () {
 
         <div className='WebshopDesign'>
             
-            <MenuBar />
+            <div className='menuBarPosition'>
+                <MenuBar />
+            </div>
 
             <h1 className='title_Webshop'>Shop Now and Experience the Difference!</h1>
 
@@ -28,15 +30,26 @@ export default function Webshop () {
 
                             <div className='productsInside' key={x.productId}>
 
-                                <p className='productTitle'>{x.productName}</p>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
 
-                                <p className='productDescription'>{x.description}</p>
+                                    <div style={{height: '100px', width: '100px', border: 'solid 1px red'}}>Pic</div>
 
-                                <p className='productPrice'>{x.price}$</p>
+                                    {webshopService.webshopButton(x)}
 
-                                {webshopService.webshopButton(x)}
 
-                                <p className='productStock'>{x.stock} pcs available</p>
+                                </div>
+
+                                <div>
+
+                                    <p className='productTitle'>{x.productName}</p>
+
+                                    <p className='productDescription'>{x.description}</p>
+
+                                    <p className='productPrice'>{x.price}$</p>
+
+                                    <p className='productStock'>{x.stock} pcs available</p>
+
+                                </div>
 
                             </div>
 

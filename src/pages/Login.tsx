@@ -23,12 +23,14 @@ export default function Login () {
                     <input type='text' name='username' placeholder='Username' className='inputStyle_Login' onChange={loginService.handleChange} />
                     <input type='password' name='password' placeholder='Password' className='inputStyle_Login' onChange={loginService.handleChange} />
                     <button className='btn btn-primary loginButton' onClick={async () => {
-                       if(loginService.loginData)
-                       {
+                    
+                    if(loginService.loginData)
+                    {
 
-                            await loginService.loginUser(loginService.loginData.username, loginService.loginData.password)
+                        await loginService.loginUser(loginService.loginData.username, loginService.loginData.password)
 
-                       }
+                    }
+                    
                     }}>Login</button>
 
                     {

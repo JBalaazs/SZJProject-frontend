@@ -14,24 +14,25 @@
 /*Home:*/
 
 .insideDIV_Home{
-    border: solid 1px black;
     padding: 90px;
     border-radius: 25px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    box-shadow: 5px 5px 5px 8px black;
     animation: slideIn_DIV 0.5s ease-in;
 }
 
 .homeButton{
     width: 200px;
+    height: 100px;
     margin: 10px;
     font-weight: bold;
+    background-color: blueviolet;
+    border: none;
 }
 
 .homeButton:hover{
-    background-color: blueviolet;
+    background: linear-gradient(155deg, blueviolet 70%, white 30%);
     border: solid 1px black;
 }
 
@@ -92,14 +93,13 @@
 }
 
 .insideDIV_Login{
-    border: solid 1px black;
     padding: 90px;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    box-shadow: 5px 5px 5px 8px black;
+    animation: slideIn_DIV 0.5s ease-in;
+    box-shadow: 2px 1px 10px black;
 }
 
 .inputStyle_Login {
@@ -182,7 +182,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 5px 5px 5px 8px white;
+    box-shadow: 2px 1px 10px white;
     animation: slideIn_DIV 0.5s ease-in;
 }
 
@@ -240,18 +240,22 @@
 }
 
 .productsInside{
-    height: 350px;
-    width: 250px;
-    margin: 50px;
+    height: 250px;
+    width: 350px;
+    margin: 20px;
     border-radius: 25px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
     padding-left: 10px;
     padding-right: 10px;
     border: solid 1px black;
     box-shadow: 1px 2px 3px black;
     animation: slideIn_DIV 0.5s ease-in;
+    color: black;
+    padding: 15px;
 }
 
 .productTitle{
@@ -295,20 +299,15 @@
 
 .title_Webshop{
     text-align: center;
-    margin-top: 20px;
+    margin-top: 100px;
     margin-bottom: 20px;
     color: black;
     font-weight: bold;
 }
 
 .WebshopDesign{
-    width: 100wh;
-    height: 100wh;
-}
-
-.title_Webshop{
-    text-align: center;
-    margin-top: 100px;
+    height: 100vh;
+    background: linear-gradient(150deg, rgb(211, 160, 160) 10%, rgb(146, 216, 221) 90%);
 }
 
 /*BuyIt:*/
@@ -412,17 +411,6 @@
 }
 
 /*AddProduct*/
-
-.insideDIV_Login{
-    border: solid 1px black;
-    padding: 90px;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 5px 5px 5px 8px black;
-    animation: slideIn_DIV 0.5s ease-in;
-}
 
 .inputStyle_AddProduct {
     padding: 12px;
@@ -781,28 +769,73 @@ button:hover {
 
 .menuBar{
     position: fixed;
-    top: 0px;
-    width: 100%;
+    top: 20px;
+    width: 50%;
     height: 60px;
     display: flex;
     flex-direction: row;
     gap: 20px;
     align-items: center;
     padding: 20px;
-    background-color: gray;
+    background-color: transparent;
+    border-radius: 25px;
     z-index: 2;
+    box-shadow: 1px 2px 10px black;
+    animation: slideIn_DIV 0.5s ease-in;
 }
 
-.menuBar button{
-    width: auto;
+.menuBar.hidden{
     background-color: gray;
+}
+
+.menuButton{
+    width: auto;
+    background-color: transparent;
     height: 60px;
     border-radius: 0px;
 }
 
-.menuBar button:hover{
+.menuButton:hover{
     background-color: gainsboro;
     color: black;
+}
+
+.szjTitle{
+    border: solid 1px white;
+    height: 45px;
+    font-weight: bold;
+    font-size: 18px;
+    width: auto;
+    background-color: transparent;
+}
+
+.szjTitle:hover{
+    background: linear-gradient(155deg, gainsboro 80%, black 20%);
+    color: black;
+}
+
+.buyAndSellTitle{
+    border: solid 1px white;
+    height: 45px;
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    position: absolute;
+    right: 80px;
+    background-color: transparent;
+    width: auto;
+}
+
+.buyAndSellTitle:hover{
+    cursor: default;
+    background-color: transparent;
+}
+
+.menuBarPosition{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
 }
 
 .menuBar h4{
@@ -890,6 +923,18 @@ button:hover {
     }
  }
 
+ @media (max-width: 1315px) {
+    .buyAndSellTitle{
+        display: none;
+    }
+ }
+
+ @media (max-width: 1201px) {
+    .WebshopDesign{
+        height: 100%;
+    }
+ }
+
  @media (max-width: 1196px) {
     .betweenProfileAndData{
         margin-left: 50px;
@@ -911,12 +956,20 @@ button:hover {
     }
  }
 
+@media (max-width: 846px) {
+    .insideDIV_Home{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 @media (max-width: 768px) {
     .insideDIV_Home{
         padding: 75px;
     }
     .homeButton{
         width: 175px;
+        height: 90px;
     }
     .insideDIV_Login{
         padding: 75px;
@@ -929,6 +982,7 @@ button:hover {
 @media (max-width: 686px) {
     .menuBar{
         flex-direction: column;
+        background-color: gray;
         height: auto;
     }
     .menuToggle {
