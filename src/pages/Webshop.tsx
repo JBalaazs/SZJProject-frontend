@@ -12,13 +12,13 @@ export default function Webshop () {
 
     return(
 
-        <div className='WebshopDesign'>
+        <div className='webshopDesign'>
             
             <div className='menuBarPosition'>
                 <MenuBar />
             </div>
 
-            <h1 className='title_Webshop'>Shop Now and Experience the Difference!</h1>
+            <h1 className='title_Webshop' style={{color: 'white'}}>Shop Now and Experience the Difference!</h1>
 
             <div className='productsOutside'>
 

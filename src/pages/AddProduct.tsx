@@ -10,9 +10,13 @@ export default function AddProduct () {
     /*Return:*/
 
     return(
-        <>
+        <div className="addProductDesign">
 
-            <MenuBar />
+            <div className="menuBarPosition">
+
+                <MenuBar />
+
+            </div>
 
             <div className="outsideDIV">
                 
@@ -37,7 +41,7 @@ export default function AddProduct () {
 
             </div>
 
-        </>
+        </div>
     )
 
 }

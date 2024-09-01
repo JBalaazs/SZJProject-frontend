@@ -44,7 +44,7 @@ const MenuBar = () => {
                 setHidden(true);
     
             }
-            else
+            else if(location.pathname != '/client')
             {
     
                 setHidden(false);
@@ -56,6 +56,17 @@ const MenuBar = () => {
         window.addEventListener('scroll', handleScroll);
 
         return () => window.removeEventListener('scroll',  handleScroll);
+
+    }, [])
+
+    useEffect(() => {
+
+        if(location.pathname == '/client')
+        {
+
+            setHidden(true);
+
+        }
 
     }, [])
 

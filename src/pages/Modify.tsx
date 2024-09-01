@@ -12,9 +12,13 @@ export default function Modify () {
     /*Return:*/
 
     return(
-        <>
+        <div className="modifyDesign">
 
-            <MenuBar />
+            <div className="menuBarPosition">
+
+                <MenuBar />
+
+            </div>
 
             <div className="outsideDIV">
                 
@@ -59,7 +63,7 @@ export default function Modify () {
 
             </div>
 
-        </>
+        </div>
     )
 
 }

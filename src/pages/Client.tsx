@@ -11,9 +11,13 @@ export default function Client () {
 
     return(
 
-        <>
+        <div className="clientDesign">
 
-            <MenuBar />
+            <div className="menuBarPosition">
+
+                <MenuBar />
+
+            </div>
 
             <div className="profileDIV">
             
@@ -164,7 +168,7 @@ export default function Client () {
 
             </div>
 
-        </>
+        </div>
 
     )
 

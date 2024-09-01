@@ -149,7 +149,7 @@ export function useBuyItService () {
             return{
 
                 buttonStyle:
-                    "danger",
+                    "pimary",
 
                 disabled:
                     true

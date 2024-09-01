@@ -74,7 +74,7 @@ export function useAddProductService () {
             return{
 
                 pTag:
-                    <p style={{color: "green"}}>{numberOfCharacters}/100</p>
+                    <p style={{color: "white"}}>{numberOfCharacters}/100</p>
 
             }
 
