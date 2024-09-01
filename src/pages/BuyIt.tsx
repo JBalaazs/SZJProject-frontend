@@ -10,11 +10,13 @@ export default function BuyIt () {
     /*Return:*/
 
     return(
-        <>
+        <div className="buyItDesign">
 
-            <MenuBar />
+            <div className="menuBarPosition">
+                <MenuBar />
+            </div>
 
-            <h1 className="title_Webshop">Order your item(s).</h1>
+            <h1 className="title_Webshop" style={{color: 'white'}}>Order your item(s).</h1>
 
             <div className="buyItBox">
 
@@ -52,7 +54,7 @@ export default function BuyIt () {
                         className={`btn btn-${buyItService.buyItButton_Input().buttonStyle} buyitButton`}
                         disabled={buyItService.buyItButton_Input().disabled}
                         onClick={buyItService.addToCart}>
-                        Add To Cart</button>,
+                        Add To Cart</button>
 
                     {
 
@@ -61,9 +63,10 @@ export default function BuyIt () {
                     }
 
                 </div>
+
             </div>
 
-        </>
+        </div>
     );
 
 }
