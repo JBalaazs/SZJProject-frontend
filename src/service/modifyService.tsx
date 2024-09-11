@@ -33,6 +33,8 @@ export function useModifyService () {
 
     useEffect(() => {
 
+        endpoints_GET.getProducts();
+
         const foundProduct = productDatasThatWillBeModify();
 
         if(foundProduct)
